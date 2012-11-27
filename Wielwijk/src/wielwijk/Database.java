@@ -1,6 +1,7 @@
 package wielwijk;
 
 import java.sql.*;
+import java.util.*;
 
 /**
  *
@@ -8,43 +9,79 @@ import java.sql.*;
  */
 public class Database {
     
+    private Connection connection;
     
     public Database() {
         
     }
     
     public static void main(String[] args) {
-        System.out.println("bla");
-        /*try{
-            Connection dbConnection=DriverManager.getConnection("jdbc:mysql://sql.ewi.tudelft.nl:3306/ti1210b12","ti1210b12","informaticus");
-           }
-           catch( SQLException x ){
-                   System.out.println( "Couldn’t get connection!" );
-           }*/
-//        try {
-//            System.out.println("Loading driver...");
-//            Class.forName("com.mysql.jdbc.Driver");
-//            System.out.println("Driver loaded!");
-//        } catch (ClassNotFoundException e) {
-//            throw new RuntimeException("Cannot find the driver in the classpath!", e);
-//        }
-//        
-//        String url = "jdbc:mysql://sql.ewi.tudelft.nl:3306/ti1210b12";
-//        String username = "ti1210b12";
-//        String password = "informaticus";
-//        
-//        Connection connection = null;
-//        
-//        try {
-//            System.out.println("Connecting database...");
-//            connection = DriverManager.getConnection(url, username, password);
-//            System.out.println("Database connected!");
-//        } catch (SQLException e) {
-//            throw new RuntimeException("Cannot connect the database!", e);
-//        } finally {
-//            System.out.println("Closing the connection.");
-//            if (connection != null) try { connection.close(); } catch (SQLException ignore) {}
-//        }
+        try {
+            System.out.println("Loading driver...");
+            Class.forName("com.mysql.jdbc.Driver");
+            System.out.println("Driver loaded!");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException("Cannot find the driver in the classpath!", e);
+        }
+        String username = "ti1210b12";
+        String password = "informaticus";
+        
+        Database db = new Database();
+        db.connect("sql.ewi.tudelft.nl", "ti1210b12", "ti1210b12", "informaticus");
+        
+        List res = db.query("SELECT * FROM users");
+        
+        for (int i = 0; i < res.size(); i++) {
+            Map<String, Object> map = (HashMap<String, Object>) res.get(i);
+
+            Iterator it = map.entrySet().iterator();
+            while (it.hasNext()) {
+                Map.Entry pairs = (Map.Entry)it.next();
+                System.out.println(pairs.getKey() + " = " + pairs.getValue());
+                it.remove(); // avoids a ConcurrentModificationException
+            }
+            
+            System.out.println("----------");
+        }
+    }
+    
+    public void connect(String host, String database, String username, String password) {
+        String url = "jdbc:mysql://" + host + ":3306/" + database;
+        
+        try {
+            System.out.println("Connecting database...");
+            connection = DriverManager.getConnection(url, username, password);
+            System.out.println("Database connected!");
+            
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Cannot connect the database!", e);
+        }
+    }
+    
+    public List query(String query) {
+        try {
+            Statement stmt = connection.createStatement();
+            ResultSet res = stmt.executeQuery(query);
+                        
+            List data_list = new ArrayList<HashMap<String, Object>>();
+            
+            ResultSetMetaData rsmd = res.getMetaData();
+            int count = rsmd.getColumnCount();
+            
+            while (res.next()) {
+                Map<String, Object> data = new HashMap<String, Object>();
+                for (int i = 1; i <= count; i++) {
+                    String name = rsmd.getColumnName(i);
+                    data.put(name, res.getObject(i));
+                }
+                data_list.add(data);
+            }
+
+            return data_list;
+        } catch (SQLException e) {
+            throw new RuntimeException("Cannot connect the database!", e);
+        }
     }
     
 }
