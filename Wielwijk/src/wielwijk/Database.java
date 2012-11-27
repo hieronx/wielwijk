@@ -37,7 +37,7 @@ public class Database {
         try {
             connection = DriverManager.getConnection(url, username, password);
         } catch (SQLException e) {
-            throw new RuntimeException("Cannot connect the database!", e);
+            throw new RuntimeException("Cannot connect to the database!", e);
         }
     }
     
@@ -49,26 +49,33 @@ public class Database {
      */
     public List query(String query) {
         try {
+            // Voer de query uit
             Statement stmt = connection.createStatement();
             ResultSet res = stmt.executeQuery(query);
-                        
+            
+            // Een ArrayList van HashMaps
             List data_list = new ArrayList<HashMap<String, Object>>();
             
+            // Haal aantal kolommen in resultaten op
             ResultSetMetaData rsmd = res.getMetaData();
             int count = rsmd.getColumnCount();
             
             while (res.next()) {
+                // Creeer een HashMap van key-value pairs
                 Map<String, Object> data = new HashMap<String, Object>();
                 for (int i = 1; i <= count; i++) {
+                    // Haal de naam van de desbetreffende kolom op en de waarde als Object en voeg toe aan de HashMap
                     String name = rsmd.getColumnName(i);
                     data.put(name, res.getObject(i));
                 }
+                
+                // Voeg de HashMap toe aan de ArrayList
                 data_list.add(data);
             }
 
             return data_list;
         } catch (SQLException e) {
-            throw new RuntimeException("Cannot connect the database!", e);
+            throw new RuntimeException("Cannot connect to the database!", e);
         }
     }
     
