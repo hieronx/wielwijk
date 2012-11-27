@@ -1,5 +1,9 @@
 package wielwijk;
 
+/**
+ *
+ * @author jeroen
+ */
 public class Activity {
 
     private String name;
@@ -13,6 +17,19 @@ public class Activity {
     private String lower_limit_date;
     private boolean cancelled;
 
+    /**
+     *
+     * @param nm
+     * @param lc
+     * @param des
+     * @param dtb
+     * @param dte
+     * @param fe
+     * @param lul
+     * @param uul
+     * @param lld
+     * @param cl
+     */
     public Activity(String nm, String lc, String des, String dtb, String dte, int fe, int lul, int uul, String lld, boolean cl) {
         name = nm;
         location = lc;
@@ -26,10 +43,18 @@ public class Activity {
         cancelled = cl;
     }
 
+    /**
+     *
+     * @param user
+     */
     public void addUserAct(User user) {
         //database add user verhaaltje
     }
-     public void removeUserAct(User user) {
+     /**
+     *
+     * @param user
+     */
+    public void removeUserAct(User user) {
         //database remove user verhaaltje
     }
 }

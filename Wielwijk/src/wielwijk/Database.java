@@ -11,10 +11,17 @@ public class Database {
     
     private Connection connection;
     
+    /**
+     *
+     */
     public Database() {
         
     }
     
+    /**
+     *
+     * @param args
+     */
     public static void main(String[] args) {
         try {
             Class.forName("com.mysql.jdbc.Driver");

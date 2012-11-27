@@ -2,8 +2,16 @@ package wielwijk;
 
 import java.util.*;
 
+/**
+ *
+ * @author jeroen
+ */
 public class Wielwijk {
 
+    /**
+     *
+     * @param args
+     */
     public static void main(String[] args) {
         // Test de database
         Database db = new Database();
