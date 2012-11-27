@@ -43,6 +43,14 @@ public class Database {
 //        }
     }
     
+    /**
+     * Connectie maken met de remote database
+     * 
+     * @param host
+     * @param database
+     * @param username
+     * @param password 
+     */
     public void connect(String host, String database, String username, String password) {
         String url = "jdbc:mysql://" + host + ":3306/" + database;
         
@@ -53,6 +61,12 @@ public class Database {
         }
     }
     
+    /**
+     * Een query uitvoeren op de database
+     * 
+     * @param query
+     * @return Een ArrayList van HashMaps(key, value)
+     */
     public List query(String query) {
         try {
             Statement stmt = connection.createStatement();
