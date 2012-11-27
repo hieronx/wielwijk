@@ -1,6 +1,4 @@
-
 package wielwijk;
-
 
 public class Activity {
 
@@ -15,10 +13,10 @@ public class Activity {
     private String lower_limit_date;
     private boolean cancelled;
 
-    public Activity(String nm, String lc, String des, String dtb, String dte, int fe, int lul, int uul, String lld, boolean cl){
-        name=nm;
-        location=lc;
-        description=des;
+    public Activity(String nm, String lc, String des, String dtb, String dte, int fe, int lul, int uul, String lld, boolean cl) {
+        name = nm;
+        location = lc;
+        description = des;
         datetime_begin = dtb;
         datetime_end = dte;
         fee = fe;
@@ -28,10 +26,10 @@ public class Activity {
         cancelled = cl;
     }
 
-    public void addUserAct(User user){
+    public void addUserAct(User user) {
         //database add user verhaaltje
     }
-     public void removeUserAct(User user){
+     public void removeUserAct(User user) {
         //database remove user verhaaltje
     }
 }
