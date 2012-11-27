@@ -17,9 +17,7 @@ public class Database {
     
     public static void main(String[] args) {
         try {
-            System.out.println("Loading driver...");
             Class.forName("com.mysql.jdbc.Driver");
-            System.out.println("Driver loaded!");
         } catch (ClassNotFoundException e) {
             throw new RuntimeException("Cannot find the driver in the classpath!", e);
         }
@@ -29,31 +27,27 @@ public class Database {
         Database db = new Database();
         db.connect("sql.ewi.tudelft.nl", "ti1210b12", "ti1210b12", "informaticus");
         
-        List res = db.query("SELECT * FROM users");
-        
-        for (int i = 0; i < res.size(); i++) {
-            Map<String, Object> map = (HashMap<String, Object>) res.get(i);
-
-            Iterator it = map.entrySet().iterator();
-            while (it.hasNext()) {
-                Map.Entry pairs = (Map.Entry)it.next();
-                System.out.println(pairs.getKey() + " = " + pairs.getValue());
-                it.remove(); // avoids a ConcurrentModificationException
-            }
-            
-            System.out.println("----------");
-        }
+//        List res = db.query("SELECT * FROM users");
+//        
+//        for (int i = 0; i < res.size(); i++) {
+//            Map<String, Object> map = (HashMap<String, Object>) res.get(i);
+//
+//            Iterator it = map.entrySet().iterator();
+//            while (it.hasNext()) {
+//                Map.Entry pairs = (Map.Entry)it.next();
+//                System.out.println(pairs.getKey() + " = " + pairs.getValue());
+//                it.remove(); // avoids a ConcurrentModificationException
+//            }
+//            
+//            System.out.println("----------");
+//        }
     }
     
     public void connect(String host, String database, String username, String password) {
         String url = "jdbc:mysql://" + host + ":3306/" + database;
         
         try {
-            System.out.println("Connecting database...");
             connection = DriverManager.getConnection(url, username, password);
-            System.out.println("Database connected!");
-            
-
         } catch (SQLException e) {
             throw new RuntimeException("Cannot connect the database!", e);
         }
