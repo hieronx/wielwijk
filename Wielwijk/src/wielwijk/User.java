@@ -37,14 +37,56 @@ public class User {
      * 
      */
     public void suspend() {
-        // suspend meuk, werk database bij
+        if (active == true) {
+            // werk database bij
+            active = false;
+        }
     }
     
     /**
      * 
      */
     public void unsuspend() {
-        // unsuspend meuk, werk database bij
+        if (active == false) {
+            // werk database bij
+            active = true;
+        }
+    }
+    
+     
+    /**
+     * 
+     */
+    public String getName() {
+        return name;
+    }
+    
+    /**
+     * 
+     */
+    public String getBirthdate() {
+        return birthdate;
+    }
+    
+    /**
+     * 
+     */
+    public int getPicture() {
+        return picture;
+    }
+    
+    /**
+     * 
+     */
+    public boolean isActive() {
+        return active;
+    }
+    
+    /**
+     * 
+     */
+    public boolean isBoard() {
+        return board;
     }
 }
 //user class, spreek voor zich
