@@ -24,11 +24,11 @@ public class UserContainer {
      * @param picture
      * @param board
      */
-    public void addBoard(String name, String password,String birthdate, boolean active, int picture, boolean board) {
-        Board newBoard = new Board(name, password, birthdate, active, picture);
+    public void addBoard(String name, String password, int picture, String address, String birthdate) {
+        Board newBoard = new Board(name, password, active, picture, birthdate);
 
         db.query("INSERT INTO users (name, password, active, board, picture, address)" +
-        " VALUES (" + name + ", " + password + ", 1, 1, NULL, " + address);
+        " VALUES (" + name + ", " + password + ", 1, 1, NULL, " + address + ", " + birthdate);
         //picture nog niet toegevoegd
     }
 
@@ -41,11 +41,11 @@ public class UserContainer {
      * @param picture
      * @param board
      */
-    public void addMember(String name, String password,String birthdate, boolean active, int picture, boolean board) {
-        Member newMember = new Member(name, password, birthdate, active, picture);
+    public void addMember(String name, String password, int picture, String address, String birthdate) {
+        Member newMember = new Member(name, password, active, picture, birthdate);
         
         db.query("INSERT INTO users (name, password, active, board, picture, address)" +
-        " VALUES (" + name + ", " + password + ", 1, 0, NULL, " + address);
+        " VALUES (" + name + ", " + password + ", 1, 0, NULL, " + address + ", " + birthdate);
         //database create verhaaltje komt hier
     }
     
