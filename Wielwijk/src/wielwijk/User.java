@@ -34,14 +34,14 @@ public class User {
     /**
      * 
      */
-    public void Suspend() {
+    public void suspend() {
         // suspend meuk, werk database bij
     }
     
     /**
      * 
      */
-    public void Unsuspend() {
+    public void unsuspend() {
         // unsuspend meuk, werk database bij
     }
 }
