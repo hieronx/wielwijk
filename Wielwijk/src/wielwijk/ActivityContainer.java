@@ -44,7 +44,7 @@ public class ActivityContainer {
      *
      * @param activity
      */
-    public void findActivity(Activity activity) {
+    public List findActivity(Activity activity) {
         List l = Wielwijk.db.query("SELECT * FROM activities WHERE id = " + activity.getId());
         
         return l;
