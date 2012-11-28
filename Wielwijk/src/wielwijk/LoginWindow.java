@@ -22,21 +22,18 @@ class LoginWindow extends JFrame {
         label2.setText("Wachtwoord:");
         text2 = new JPasswordField(15);
         
-        
         label3 = new JLabel();
         label3.setText("Wielwijk wandelvereniging");
 
         submit = new JButton("Inloggen");
 
         panel = new JPanel(new GridLayout(3,1));
-        panel.setMaximumSize(new Dimension(300, 100) );
+        panel.setMaximumSize(new Dimension(250, 80));
         panel.add(label1);
         panel.add(text1);
         panel.add(label2);
         panel.add(text2);
         add(Box.createRigidArea(new Dimension(0, 200)));
-        add(label3);
-        add(Box.createRigidArea(new Dimension(0, 30)));
         add(panel);
         add(submit);
         setTitle("Inloggen Wielwijk controlepaneel");

@@ -18,15 +18,15 @@ public class UserListWindow extends JFrame {
    */
   JTextArea myText = new JTextArea("My text");
  
+  private JLabel label, label2, label3, label4, label5;  
+  
   /**
    * The top level panel which holds all.
    */
-  JPanel holdAll = new JPanel();
+  JPanel container = new JPanel();
   
-  public UserListWindow()
-  { 
-    holdAll.setLayout(new BorderLayout());
-    holdAll.add(myText, BorderLayout.CENTER);
+  public UserListWindow() { 
+    container.setLayout(new GridLayout(3, 2));
     
     Database db = new Database();
     db.connect();
@@ -35,13 +35,13 @@ public class UserListWindow extends JFrame {
 
     String usernames = "USERS\n";
     for (int i = 0; i < res.size(); i++) {
-        Map<String, Object> map = (HashMap<String, Object>) res.get(i);
-        usernames = usernames + "\n" + map.get("name");
+        Map<String, Object> map = (HashMap<String, Object>) res.get(i);        
+        label = new JLabel();
+        label.setText((String) map.get("name") + " uit " + map.get("address"));
+        container.add(label);
     }
     
-    myText.setText(usernames);
-    
-    getContentPane().add(holdAll, BorderLayout.CENTER);
+    getContentPane().add(container, BorderLayout.CENTER);
   
     setDefaultCloseOperation(DISPOSE_ON_CLOSE);
   }
@@ -49,16 +49,15 @@ public class UserListWindow extends JFrame {
   /**
    * The program    * @param args the program start up parameters, not used.
    */
-  public static void main(String[] args)
-  {
-    UserListWindow myApplication = new UserListWindow();
- 
-    // Specify where will it appear on the screen:
-    myApplication.setLocation(10, 10);
-    myApplication.setSize(300, 300);
- 
-    // Show it!
-    myApplication.setVisible(true);
+  public static void main(String[] args) {
+    try {
+        UserListWindow frame = new UserListWindow();
+        frame.setSize(800, 600);
+        frame.setVisible(true);
+    }
+    catch(Exception e) {
+        JOptionPane.showMessageDialog(null, e.getMessage());
+    }
   }
     
 }
