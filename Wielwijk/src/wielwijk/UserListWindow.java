@@ -52,7 +52,7 @@ public class UserListWindow extends JFrame {
     for (int i = 0; i < res.size(); i++) {
         Map<String, Object> map = (HashMap<String, Object>) res.get(i);
         
-        panel = new JPanel(new GridLayout(3,1));
+        panel = new JPanel(new FlowLayout());
         label = new JLabel();
         label.setText((String) map.get("name"));
         label2 = new JLabel();

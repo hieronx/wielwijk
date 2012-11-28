@@ -27,8 +27,13 @@ public class LoadImage extends Component {
     }
 
     public Dimension getPreferredSize() {
-             return new Dimension(100,100);
         
+             return new Dimension(20,20);
+//        if (img == null) {
+//             return new Dimension(100,100);
+//        } else {
+//           return new Dimension(img.getWidth(null), img.getHeight(null));
+//       }
     }
     
 }
