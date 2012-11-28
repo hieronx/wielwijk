@@ -48,6 +48,10 @@ public class Database {
         }
     }
     
+    public void connect() {
+        this.connect("sql.ewi.tudelft.nl", "ti1210b12", "ti1210b12", "informaticus");
+    }
+    
     /**
      * Een query uitvoeren op de database
      * 

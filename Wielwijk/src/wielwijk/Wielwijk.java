@@ -15,7 +15,7 @@ public class Wielwijk {
     public static void main(String[] args) {
         // Test de database
         Database db = new Database();
-        db.connect("sql.ewi.tudelft.nl", "ti1210b12", "ti1210b12", "informaticus");
+        db.connect();
         
         List res = db.query("SELECT * FROM users");
         
