@@ -28,7 +28,7 @@ public class UserContainer {
         Board newBoard = new Board(name, password, birthdate, active, picture);
 
         db.query("INSERT INTO users (name, password, active, board, picture, address)" +
-        "VALUES (" + name + ", " + password + ", " + "1, 1, NULL, " + address)
+        " VALUES (" + name + ", " + password + ", 1, 1, NULL, " + address);
         //picture nog niet toegevoegd
     }
 
@@ -44,6 +44,8 @@ public class UserContainer {
     public void addMember(String name, String password,String birthdate, boolean active, int picture, boolean board) {
         Member newMember = new Member(name, password, birthdate, active, picture);
         
+        db.query("INSERT INTO users (name, password, active, board, picture, address)" +
+        " VALUES (" + name + ", " + password + ", 1, 0, NULL, " + address);
         //database create verhaaltje komt hier
     }
     
