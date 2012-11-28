@@ -16,7 +16,7 @@ public class Member extends User {
      * @param act
      * @param pic
      */
-    public Member(String nm, String pw, String bd, boolean act, int pic) {
-        super(nm, pw, bd, act, pic, false);
+    public Member(String nm, String pw, int pic, String ad, String bd) {
+        super(nm, pw, pic, ad, bd, false);
     }
 }

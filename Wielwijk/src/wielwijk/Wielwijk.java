@@ -14,6 +14,6 @@ public class Wielwijk {
      */
     public static void main(String[] args) {
         UserContainer uc = new UserContainer();
-        uc.addMember("Pietje", "banaan", "", "Verweggistan", "");
+        uc.addMember("Pietje", "banaan", 0, "Verweggistan", "33-33-3333");
     }
 }

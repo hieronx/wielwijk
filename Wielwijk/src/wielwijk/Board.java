@@ -16,7 +16,7 @@ public class Board extends User {
      * @param act
      * @param pic
      */
-    public Board(String nm, String pw, String bd, boolean act, int pic) {
-        super(nm, pw, bd, act, pic, true);
+    public Board(String nm, String pw, int pic, String ad, String bd) {
+        super(nm, pw, pic, ad, bd, true);
     }
 }

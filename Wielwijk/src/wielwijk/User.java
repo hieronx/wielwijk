@@ -12,6 +12,7 @@ public class User {
     private boolean active;
     private int picture;
     private boolean board;
+    private String address;
     
     /**
      *
@@ -22,11 +23,12 @@ public class User {
      * @param pic
      * @param brd
      */
-    public User(String nm, String pw, String bd, boolean act, int pic, boolean brd) {
+    public User(String nm, String pw, int pic, String ad, String bd, boolean brd) {
         name = nm;
         password = pw;
         birthdate = bd;
-        active = act;
+        active = true;
+        address = ad;
         picture = pic;
         board = brd;
     }

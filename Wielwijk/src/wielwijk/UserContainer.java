@@ -25,9 +25,9 @@ public class UserContainer {
      * @param board
      */
     public void addBoard(String name, String password, int picture, String address, String birthdate) {
-        Board newBoard = new Board(name, password, active, picture, birthdate);
+        Board newBoard = new Board(name, password, picture, address, birthdate);
 
-        db.query("INSERT INTO users (name, password, active, board, picture, address)" +
+        db.exec("INSERT INTO users (name, password, active, board, picture, address)" +
         " VALUES (" + name + ", " + password + ", 1, 1, NULL, " + address + ", " + birthdate);
         //picture nog niet toegevoegd
     }
@@ -42,7 +42,7 @@ public class UserContainer {
      * @param board
      */
     public void addMember(String name, String password, int picture, String address, String birthdate) {
-        Member newMember = new Member(name, password, active, picture, birthdate);
+        Member newMember = new Member(name, password, picture, address, birthdate);
         
         db.query("INSERT INTO users (name, password, active, board, picture, address)" +
         " VALUES (" + name + ", " + password + ", 1, 0, NULL, " + address + ", " + birthdate);
