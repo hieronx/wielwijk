@@ -18,7 +18,9 @@ public class UserListWindow extends JFrame {
    */
   JTextArea myText = new JTextArea("My text");
  
-  private JLabel label, label2, label3, label4, label5;  
+  private JLabel label, label2, label3, label4, label5; 
+  
+  JPanel panel;
   
   //BufferedImage myPicture;
   
@@ -43,14 +45,22 @@ public class UserListWindow extends JFrame {
 //    }
 //    JLabel picLabel = new JLabel(new ImageIcon(myPicture));
 //    getContentPane().add(picLabel);
+    
 
     
     String usernames = "USERS\n";
     for (int i = 0; i < res.size(); i++) {
-        Map<String, Object> map = (HashMap<String, Object>) res.get(i);        
+        Map<String, Object> map = (HashMap<String, Object>) res.get(i);
+        
+        panel = new JPanel(new GridLayout(3,1));
         label = new JLabel();
-        label.setText((String) map.get("name") + " uit " + map.get("address"));
-        container.add(label);
+        label.setText((String) map.get("name"));
+        label2 = new JLabel();
+        label2.setText((String) map.get("address"));
+        panel.add(label);
+        panel.add(label2);
+        panel.add(new LoadImage("pic.jpg"));
+        container.add(panel);
     }
     
     getContentPane().add(container, BorderLayout.CENTER);
