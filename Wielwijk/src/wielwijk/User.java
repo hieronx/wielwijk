@@ -5,7 +5,8 @@ package wielwijk;
  * @author jeroen
  */
 public class User {
-
+    
+    private int id;
     private String name;
     private String password;
     private String birthdate;
@@ -36,7 +37,7 @@ public class User {
     /**
      * 
      */
-    public void suspend(id) {
+    public void suspend() {
         if (active == true) {
             Wielwijk.db.exec("UPDATE users SET active = 0 WHERE id = " + id);
             active = false;
@@ -46,7 +47,7 @@ public class User {
     /**
      * 
      */
-    public void unsuspend(id) {
+    public void unsuspend() {
         if (active == false) {
             Wielwijk.db.exec("UPDATE users SET active = 1 WHERE id = " + id);
             active = true;
