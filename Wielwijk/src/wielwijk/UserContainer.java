@@ -1,5 +1,7 @@
 package wielwijk;
 
+import java.util.*;
+
 /**
  *
  * @author jeroen
@@ -56,7 +58,7 @@ public class UserContainer {
      *
      * @param user
      */
-    public List findUser(User user) {
+    public List findUser(String name) {
       List results = db.query("SELECT * FROM users WHERE name LIKE '%" + name + "%'");
       return results;
         //database zoek user verhaaltje

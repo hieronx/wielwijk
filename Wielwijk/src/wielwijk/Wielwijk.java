@@ -13,11 +13,8 @@ public class Wielwijk {
      * @param args
      */
     public static void main(String[] args) {
-        // Test de database
-        Database db = new Database();
-        db.connect();
-        
-        List res = db.query("SELECT * FROM users");
+        UserContainer uc = new UserContainer();
+        List res = uc.findUser("off");
         
         for (int i = 0; i < res.size(); i++) {
             Map<String, Object> map = (HashMap<String, Object>) res.get(i);
