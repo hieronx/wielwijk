@@ -26,9 +26,10 @@ public class UserContainer {
      */
     public void addBoard(String name, String password,String birthdate, boolean active, int picture, boolean board) {
         Board newBoard = new Board(name, password, birthdate, active, picture);
-        
 
-        //database create verhaaltje komt hier
+        db.query("INSERT INTO users (name, password, active, board, picture, address)" +
+        "VALUES (" + name + ", " + password + ", " + "1, 1, NULL, " + address)
+        //picture nog niet toegevoegd
     }
 
     /**
@@ -53,7 +54,7 @@ public class UserContainer {
     public void removeUser(User user) {
         //datebase remove user verhaalte
     }
-    
+
     /**
      *
      * @param user
