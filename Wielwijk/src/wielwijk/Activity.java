@@ -6,6 +6,7 @@ package wielwijk;
  */
 public class Activity {
 
+    private int id;
     private String name;
     private String location;
     private String description;
@@ -63,6 +64,9 @@ public class Activity {
      * @param activity
      */
     public void cancel() {
-        //database cancel verhaaltje
+        if (cancelled == false) {
+            Wielwijk.db.exec("UPDATE activities SET cancelled=1 WHERE id="+id);
+            cancelled = true;
+        }
     }
 }
