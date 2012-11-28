@@ -8,12 +8,17 @@ import java.util.*;
  */
 public class Wielwijk {
 
+    public static Database db;
+    
     /**
      *
      * @param args
      */
     public static void main(String[] args) {
+        db = new Database();
+        db.connect();
+        
         UserContainer uc = new UserContainer();
-        uc.addBoard("Pietje", "banaan", 0, "Verweggistan", "33-33-3333");
+        uc.addMember("Pietje", "banaan", 0, "Verweggistan", "33-33-3333");
     }
 }

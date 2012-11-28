@@ -8,13 +8,6 @@ import java.util.*;
  */
 public class UserContainer {
 
-    private Database db;
-    
-    UserContainer() {
-        db = new Database();
-        db.connect();
-    }
-
     /**
      *
      * @param name
@@ -27,7 +20,7 @@ public class UserContainer {
     public void addBoard(String name, String password, int picture, String address, String birthdate) {
         Board newBoard = new Board(name, password, picture, address, birthdate);
 
-        db.exec("INSERT INTO users (name, password, active, board, picture, address) VALUES ('" + name + "', '" + password + "', 1, 1, 0, '" + address + "')");
+        Wielwijk.db.exec("INSERT INTO users (name, password, active, board, picture, address) VALUES ('" + name + "', '" + password + "', 1, 1, 0, '" + address + "')");
         //picture nog niet toegevoegd
     }
 
@@ -43,7 +36,8 @@ public class UserContainer {
     public void addMember(String name, String password, int picture, String address, String birthdate) {
         Member newMember = new Member(name, password, picture, address, birthdate);
         
-        db.exec("INSERT INTO users (name, password, active, board, picture, address) VALUES ('" + name + "', '" + password + "', 1, 0, 0, '" + address + "')");
+        Wielwijk.db.exec("INSERT INTO users (name, password, active, board, picture, address) VALUES ('" + name + "', '" + password + "', 1, 0, 0, '" + address + "')");
+        //database create verhaaltje komt hier
     }
     
     /**
@@ -51,7 +45,7 @@ public class UserContainer {
      * @param user
      */
     public void removeUser(int id) {
-        db.exec("DELETE FROM users WHERE id = " + id);
+        Wielwijk.db.exec("DELETE FROM users WHERE id = " + id);
         //deletes user by id
         //not by name, names are not unique in database
     }
@@ -61,7 +55,7 @@ public class UserContainer {
      * @param user
      */
     public List findUser(String name) {
-      List results = db.query("SELECT * FROM users WHERE name LIKE '%" + name + "%'");
+      List results = Wielwijk.db.query("SELECT * FROM users WHERE name LIKE '%" + name + "%'");
       return results;
     }
     
