@@ -44,15 +44,16 @@ public class UserContainer {
         Member newMember = new Member(name, password, picture, address, birthdate);
         
         db.exec("INSERT INTO users (name, password, active, board, picture, address) VALUES ('" + name + "', '" + password + "', 1, 0, 0, '" + address + "')");
-        //database create verhaaltje komt hier
     }
     
     /**
      *
      * @param user
      */
-    public void removeUser(User user) {
-        //datebase remove user verhaalte
+    public void removeUser(int id) {
+        db.exec("DELETE FROM users WHERE id = " + id);
+        //deletes user by id
+        //not by name, names are not unique in database
     }
 
     /**
@@ -62,7 +63,6 @@ public class UserContainer {
     public List findUser(String name) {
       List results = db.query("SELECT * FROM users WHERE name LIKE '%" + name + "%'");
       return results;
-        //database zoek user verhaaltje
     }
     
 }
