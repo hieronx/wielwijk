@@ -42,6 +42,10 @@ public class Activity {
         upper_user_limit = uul;
         lower_limit_date = lld;
         cancelled = cl;
+        
+        Wielwijk.db.exec ("INSERT INTO activities (name, location, description, datetime_begin, datetime_end, fee, lower_user_limit, upper_user_limit, lower_limit_date, cancelled) " +
+                "VALUES ( '" + name + "', '" + location + "', '" + description + "', '" + datetime_begin + "', '" + datetime_end + "', '" + fee + "', '" + lower_user_limit + "', '" + upper_user_limit + "', '" + cancelled + "')");
+        
     }
 
     /**

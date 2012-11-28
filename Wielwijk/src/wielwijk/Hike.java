@@ -34,5 +34,8 @@ public class Hike extends Activity {
         distance = dis;
         d_height = ht;
         checkpoints = new ArrayList<Checkpoint>();
+        
+        Wielwijk.db.exec("UPDATE activities SET distance = "+dis+", height_difference = "+ht+", type = 0 WHERE id = "+super.getId());
+        
     }
 }
