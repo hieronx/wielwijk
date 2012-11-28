@@ -20,6 +20,8 @@ public class UserListWindow extends JFrame {
  
   private JLabel label, label2, label3, label4, label5;  
   
+  //BufferedImage myPicture;
+  
   /**
    * The top level panel which holds all.
    */
@@ -32,7 +34,17 @@ public class UserListWindow extends JFrame {
     db.connect();
 
     java.util.List res = db.query("SELECT * FROM users");
+    
+//    try {
+//       BufferedImage myPicture = ImageIO.read(new File("pic.jpg"));
+//    System.out.println("xd");
+//    }catch(IOException e){
+//        e.printStackTrace();
+//    }
+//    JLabel picLabel = new JLabel(new ImageIcon(myPicture));
+//    getContentPane().add(picLabel);
 
+    
     String usernames = "USERS\n";
     for (int i = 0; i < res.size(); i++) {
         Map<String, Object> map = (HashMap<String, Object>) res.get(i);        
