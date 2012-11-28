@@ -30,5 +30,19 @@ public class User {
         picture = pic;
         board = brd;
     }
+    
+    /**
+     * 
+     */
+    public void Suspend() {
+        // suspend meuk, werk database bij
+    }
+    
+    /**
+     * 
+     */
+    public void Unsuspend() {
+        // unsuspend meuk, werk database bij
+    }
 }
 //user class, spreek voor zich

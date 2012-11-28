@@ -36,29 +36,12 @@ public class UserContainer {
         //database create verhaaltje komt hier
     }
     
-    
     /**
      *
      * @param user
      */
     public void removeUser(User user) {
         //datebase remove user verhaalte
-    }
-    
-    /**
-     *
-     * @param user
-     */
-    public void suspendUser(User user) {
-        //datebase user.active verhaaltje
-    }
-    
-    /**
-     *
-     * @param user
-     */
-    public void unsuspenduser(User user) {
-        //datebase user.activer verhaaltje
     }
     
     /**
