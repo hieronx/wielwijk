@@ -36,19 +36,19 @@ public class User {
     /**
      * 
      */
-    public void suspend() {
+    public void suspend(id) {
         if (active == true) {
-            // werk database bij
+            Wielwijk.db.exec("UPDATE users SET active = 0 WHERE id = " + id)
             active = false;
         }
     }
-    
+
     /**
      * 
      */
-    public void unsuspend() {
+    public void unsuspend(id) {
         if (active == false) {
-            // werk database bij
+            Wielwijk.db.exec("UPDATE users SET active = 1 WHERE id = " + id)
             active = true;
         }
     }

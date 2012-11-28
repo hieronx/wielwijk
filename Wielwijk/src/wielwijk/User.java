@@ -38,7 +38,7 @@ public class User {
      */
     public void suspend(id) {
         if (active == true) {
-            Wielwijk.db.exec("UPDATE users SET active = 0 WHERE id = " + id)
+            Wielwijk.db.exec("UPDATE users SET active = 0 WHERE id = " + id);
             active = false;
         }
     }
@@ -48,7 +48,7 @@ public class User {
      */
     public void unsuspend(id) {
         if (active == false) {
-            Wielwijk.db.exec("UPDATE users SET active = 1 WHERE id = " + id)
+            Wielwijk.db.exec("UPDATE users SET active = 1 WHERE id = " + id);
             active = true;
         }
     }
