@@ -35,14 +35,6 @@ public class ActivityContainer {
         //database remove  verhaalte
     }
 
-    /**
-     *
-     * @param activity
-     */
-    public void cancelActivity(Activity activity) {
-        //database cancel verhaaltje
-    }
-
 
     /**
      *

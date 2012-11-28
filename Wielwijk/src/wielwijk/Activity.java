@@ -57,4 +57,12 @@ public class Activity {
     public void removeUserAct(User user) {
         //database remove user verhaaltje
     }
+    
+    /**
+     *
+     * @param activity
+     */
+    public void cancel() {
+        //database cancel verhaaltje
+    }
 }
