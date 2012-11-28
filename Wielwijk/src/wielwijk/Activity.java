@@ -65,8 +65,15 @@ public class Activity {
      */
     public void cancel() {
         if (cancelled == false) {
-            Wielwijk.db.exec("UPDATE activities SET cancelled=1 WHERE id="+id);
+            Wielwijk.db.exec("UPDATE activities SET cancelled = 1 WHERE id="+id);
             cancelled = true;
         }
+    }
+    
+    /**
+     * 
+     */
+    public int getId() {
+        return id;
     }
 }
