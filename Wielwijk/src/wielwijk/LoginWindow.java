@@ -54,6 +54,13 @@ class LoginWindow extends JFrame {
         layout2.add(submit);
         add(layout2);
         
+        submit.addActionListener(new ActionListener() { 
+            public void actionPerformed(ActionEvent e) { 
+                setVisible(false);
+                UserListWindow.main(null);
+            } 
+        });
+        
         setTitle("Inloggen Wielwijk controlepaneel");
     }
     

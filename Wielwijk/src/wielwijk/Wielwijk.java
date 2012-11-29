@@ -18,7 +18,6 @@ public class Wielwijk {
         db = new Database();
         db.connect();
         
-        String[] tekst = null;
-        UserListWindow.main(tekst);
+        LoginWindow.main(null);
     }
 }
