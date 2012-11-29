@@ -6,7 +6,7 @@ import java.awt.event.*;
  
 class LoginWindow extends JFrame {
     
-    JButton submit;
+    JButton submit, userlist;
     JPanel panel, layout, layout2;
     JLabel label, label2,label3;
     final JTextField text, text2;
@@ -51,10 +51,19 @@ class LoginWindow extends JFrame {
         // Inloggen knop
         layout2 = new JPanel();
         submit = new JButton("Inloggen");
+        userlist = new JButton("Gebruikerslijst");
         layout2.add(submit);
+        layout2.add(userlist);
         add(layout2);
         
         submit.addActionListener(new ActionListener() { 
+            public void actionPerformed(ActionEvent e) { 
+                setVisible(false);
+                CalendarWindow.main(null);
+            } 
+        });
+        
+        userlist.addActionListener(new ActionListener() { 
             public void actionPerformed(ActionEvent e) { 
                 setVisible(false);
                 UserListWindow.main(null);
