@@ -40,9 +40,11 @@ public class UserListWindow extends JFrame {
         Map<String, Object> map = (HashMap<String, Object>) res.get(i);
         
         panel = new JPanel(new BorderLayout());
-        panel.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
+        //panel.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
+        
         
         layout = new JPanel();
+        layout.add(Box.createRigidArea(new Dimension(0, 50)));
         label = new JLabel();
         label.setText((String) map.get("name"));
         layout.add(label);

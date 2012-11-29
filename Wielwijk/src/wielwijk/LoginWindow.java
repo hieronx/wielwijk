@@ -7,35 +7,53 @@ import java.awt.event.*;
 class LoginWindow extends JFrame {
     
     JButton submit;
-    JPanel panel;
-    JLabel label1,label2, label3;
-    final JTextField  text1,text2;
+    JPanel panel, layout, layout2;
+    JLabel label, label2,label3;
+    final JTextField text, text2;
     
     LoginWindow() {
         setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
-
-        label1 = new JLabel();
-        label1.setText("Gebruikersnaam:");
-        text1 = new JTextField(15);
-
-        label2 = new JLabel();
-        label2.setText("Wachtwoord:");
-        text2 = new JPasswordField(15);
         
-        label3 = new JLabel();
-        label3.setText("Wielwijk wandelvereniging");
-
-        submit = new JButton("Inloggen");
-
+        // Onzichtbaar blok van 200px hoog
+        add(Box.createRigidArea(new Dimension(0, 200)));
+        
+        // Koptekst
+        layout = new JPanel();
+        layout.setMaximumSize(new Dimension(400, 20));
+        label = new JLabel();
+        label.setText("Wielwijk wandelvereniging");
+        label.setFont(label.getFont().deriveFont(26.0f));
+        layout.add(label);
+        add(layout);
+        
+        add(Box.createRigidArea(new Dimension(0, 20)));
+        
+        // GridLayout van 3x1 voor formulier
         panel = new JPanel(new GridLayout(3,1));
         panel.setMaximumSize(new Dimension(250, 80));
-        panel.add(label1);
-        panel.add(text1);
+        
+        label2 = new JLabel();
+        label2.setText("Gebruikersnaam:");
+        label2.setFont(label2.getFont().deriveFont(14.0f));
+        text = new JTextField(15);
         panel.add(label2);
+        panel.add(text);
+
+        label3 = new JLabel();
+        label3.setText("Wachtwoord:");
+        label3.setFont(label3.getFont().deriveFont(14.0f));
+        text2 = new JPasswordField(15);
+        panel.add(label3);
         panel.add(text2);
-        add(Box.createRigidArea(new Dimension(0, 200)));
+
         add(panel);
-        add(submit);
+        
+        // Inloggen knop
+        layout2 = new JPanel();
+        submit = new JButton("Inloggen");
+        layout2.add(submit);
+        add(layout2);
+        
         setTitle("Inloggen Wielwijk controlepaneel");
     }
     
