@@ -18,7 +18,7 @@ public class Wielwijk {
         db = new Database();
         db.connect();
         
-        UserContainer uc = new UserContainer();
-        uc.removeUser(2);
+        String[] tekst = null;
+        UserListWindow.main(tekst);
     }
 }

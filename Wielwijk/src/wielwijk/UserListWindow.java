@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import javax.swing.*;
+import javax.swing.border.EtchedBorder;
 
 /**
  *
@@ -18,9 +19,9 @@ public class UserListWindow extends JFrame {
    */
   JTextArea myText = new JTextArea("My text");
  
-  private JLabel label, label2, label3, label4, label5; 
+  private JLabel label; 
   
-  JPanel panel;
+  JPanel panel, layout;
   
   //BufferedImage myPicture;
   
@@ -34,29 +35,22 @@ public class UserListWindow extends JFrame {
 
     java.util.List res = Wielwijk.db.query("SELECT * FROM users");
     
-//    try {
-//       BufferedImage myPicture = ImageIO.read(new File("pic.jpg"));
-//    System.out.println("xd");
-//    }catch(IOException e){
-//        e.printStackTrace();
-//    }
-//    JLabel picLabel = new JLabel(new ImageIcon(myPicture));
-//    getContentPane().add(picLabel);
-    
-
-    
     String usernames = "USERS\n";
     for (int i = 0; i < res.size(); i++) {
         Map<String, Object> map = (HashMap<String, Object>) res.get(i);
         
-        panel = new JPanel(new FlowLayout());
+        panel = new JPanel(new BorderLayout());
+        panel.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
+        
+        layout = new JPanel();
         label = new JLabel();
         label.setText((String) map.get("name"));
-        label2 = new JLabel();
-        label2.setText((String) map.get("address"));
-        panel.add(label);
-        panel.add(label2);
-        panel.add(new LoadImage("pic.jpg"));
+        layout.add(label);
+        panel.add(layout, BorderLayout.NORTH);
+        
+        JLabel iconLabel = new JLabel(new ImageIcon("pic.jpg"));
+        panel.add(iconLabel, BorderLayout.CENTER);
+        
         container.add(panel);
     }
     
@@ -73,6 +67,7 @@ public class UserListWindow extends JFrame {
         UserListWindow frame = new UserListWindow();
         frame.setSize(800, 600);
         frame.setVisible(true);
+        
     }
     catch(Exception e) {
         JOptionPane.showMessageDialog(null, e.getMessage());
