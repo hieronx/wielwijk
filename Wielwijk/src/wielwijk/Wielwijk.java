@@ -19,6 +19,6 @@ public class Wielwijk {
         db.connect();
         
         UserContainer uc = new UserContainer();
-        uc.addMember("Pietje", "banaan", 0, "Verweggistan", "33-33-3333");
+        uc.removeUser(2);
     }
 }

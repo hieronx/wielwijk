@@ -31,11 +31,8 @@ public class UserListWindow extends JFrame {
   
   public UserListWindow() { 
     container.setLayout(new GridLayout(3, 2));
-    
-    Database db = new Database();
-    db.connect();
 
-    java.util.List res = db.query("SELECT * FROM users");
+    java.util.List res = Wielwijk.db.query("SELECT * FROM users");
     
 //    try {
 //       BufferedImage myPicture = ImageIO.read(new File("pic.jpg"));
