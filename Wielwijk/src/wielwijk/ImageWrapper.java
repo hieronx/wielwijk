@@ -10,7 +10,7 @@ import javax.swing.*;
 /**
  * This class demonstrates how to load an Image from an external file
  */
-public class LoadImage extends Component {
+public class ImageWrapper extends Component {
           
     BufferedImage img;
 
@@ -18,7 +18,7 @@ public class LoadImage extends Component {
         g.drawImage(img, 0, 0, null);
     }
 
-    public LoadImage(String path) {
+    public ImageWrapper(String path) {
        try {
            img = ImageIO.read(new File(path));
        } catch (IOException e) {

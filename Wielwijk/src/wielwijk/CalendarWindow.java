@@ -2,10 +2,6 @@ package wielwijk;
 
 
 import java.awt.*;
-import java.awt.event.*;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
 import javax.swing.*;
 
 /**
@@ -31,7 +27,7 @@ public class CalendarWindow extends JFrame {
         calendar.setLayout(new GridLayout(7, 5));
         calendar.setBorder(BorderFactory.createEmptyBorder(2,2,2,2));
         
-        for (int i = 1; i <= 31; i++) {
+        for (int i = 1; i <= 30; i++) {
             JPanel item = new JPanel(new BorderLayout());
             
             JPanel layout2 = new JPanel();

@@ -53,7 +53,7 @@ public class Database {
     }
     
     /**
-     * Een query uitvoeren op de database
+     * Een query uitvoeren op de database en de resultaten terug geven
      * 
      * @param query
      * @return Een ArrayList van HashMaps(key, value)
@@ -90,6 +90,12 @@ public class Database {
         }
     }
     
+    /**
+     * Een query uitvoeren op de database
+     * 
+     * @param query
+     * @return Aantal veranderde rijen
+     */
     public int exec(String query) {
         try {
             // Voer de query uit

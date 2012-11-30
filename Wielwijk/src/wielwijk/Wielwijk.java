@@ -16,7 +16,7 @@ public class Wielwijk {
      */
     public static void main(String[] args) {
         db = new Database();
-        db.connect();
+        //db.connect();
         
         LoginWindow.main(null);
     }
