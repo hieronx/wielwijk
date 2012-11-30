@@ -13,23 +13,15 @@ import javax.swing.*;
  */
 public class UserListWindow extends JFrame {
   
-  /**
-   * The text area.
-   */
   JTextArea myText = new JTextArea("My text");
  
   private JLabel label; 
   
   JPanel panel, layout;
-  
-  //BufferedImage myPicture;
-  
-  /**
-   * The top level panel which holds all.
-   */
   JPanel container = new JPanel();
   
-  public UserListWindow() { 
+  public UserListWindow() {
+    setTitle("Wandelvereniging Wielwijk");
     container.setLayout(new GridLayout(3, 2));
 
     java.util.List res = Wielwijk.db.query("SELECT * FROM users");
@@ -39,8 +31,6 @@ public class UserListWindow extends JFrame {
         Map<String, Object> map = (HashMap<String, Object>) res.get(i);
         
         panel = new JPanel(new BorderLayout());
-        //panel.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
-        
         
         layout = new JPanel();
         layout.add(Box.createRigidArea(new Dimension(0, 50)));

@@ -12,6 +12,7 @@ class LoginWindow extends JFrame {
     final JTextField text, text2;
     
     LoginWindow() {
+        setTitle("Wandelvereniging Wielwijk");
         setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
         
         // Onzichtbaar blok van 200px hoog
@@ -69,8 +70,6 @@ class LoginWindow extends JFrame {
                 UserListWindow.main(null);
             } 
         });
-        
-        setTitle("Inloggen Wielwijk controlepaneel");
     }
     
     public static void main(String arg[]) {

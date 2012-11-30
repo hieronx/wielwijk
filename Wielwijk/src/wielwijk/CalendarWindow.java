@@ -15,6 +15,7 @@ public class CalendarWindow extends JFrame {
     JLabel month, label, index;
     
     public CalendarWindow() {
+        setTitle("Wandelvereniging Wielwijk");
         getContentPane().setLayout(new BorderLayout());
         
         JPanel layout = new JPanel();
