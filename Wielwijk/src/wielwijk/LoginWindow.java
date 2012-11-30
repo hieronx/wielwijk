@@ -3,6 +3,8 @@ package wielwijk;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.HashMap;
+import java.util.Map;
  
 class LoginWindow extends JFrame {
     
@@ -58,17 +60,26 @@ class LoginWindow extends JFrame {
         add(layout2);
         
         submit.addActionListener(new ActionListener() { 
-            public void actionPerformed(ActionEvent e) { 
-                setVisible(false);
-                CalendarWindow.main(null);
-            } 
+            public void actionPerformed(ActionEvent e) {
+                String name = text.getText();
+                String password = text2.getText();
+                java.util.List res = Wielwijk.db.query("SELECT COUNT(*) AS c FROM users WHERE name = '" + name + "' AND password = '" + password + "'");
+                Map<String, Object> map = (HashMap<String, Object>) res.get(0);
+                if ((Long) map.get("c") == 1) {
+                    setVisible(false);
+                    CalendarWindow.main(null);
+                }
+                else {
+                    JOptionPane.showMessageDialog(null, "Gebruikersnaam en/of wachtwoord zijn niet correct ingevuld");
+                }
+            }
         });
         
         userlist.addActionListener(new ActionListener() { 
-            public void actionPerformed(ActionEvent e) { 
+            public void actionPerformed(ActionEvent e) {
                 setVisible(false);
                 UserListWindow.main(null);
-            } 
+            }
         });
     }
     
