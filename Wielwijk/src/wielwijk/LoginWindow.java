@@ -74,8 +74,8 @@ class LoginWindow {
                 java.util.List res = Wielwijk.db.query("SELECT COUNT(*) AS c FROM users WHERE name = '" + name + "' AND password = '" + password + "'");
                 Map<String, Object> map = (HashMap<String, Object>) res.get(0);
                 if ((Long) map.get("c") == 1) {
-                    //Wielwijk.gui.setVisible(false);
-                    //CalendarWindow.main(null);
+                CalendarWindow calendar = new CalendarWindow();
+                Wielwijk.gui.showWindow(1);
                 }
                 else {
                     JOptionPane.showMessageDialog(null, "Gebruikersnaam en/of wachtwoord zijn niet correct ingevuld");

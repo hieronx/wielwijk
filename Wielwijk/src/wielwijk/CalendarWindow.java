@@ -8,22 +8,26 @@ import javax.swing.*;
  *
  * @author jeroen
  */
-public class CalendarWindow extends JFrame {
+public class CalendarWindow {
     
+    JPanel container;
     JPanel calendar = new JPanel();
     JPanel panel, item, layout, layout2;
     JLabel month, label, index;
     
     public CalendarWindow() {
-        setTitle("Wandelvereniging Wielwijk");
-        getContentPane().setLayout(new BorderLayout());
+        JPanel window = new JPanel();
+        int window_id = Wielwijk.gui.addWindow(window);
         
+        JPanel container = new JPanel();
+        container.setLayout(new BorderLayout());
+
         JPanel layout = new JPanel();
         JLabel month = new JLabel();
         month.setText("November");
         month.setFont(month.getFont().deriveFont(26.0f));
         layout.add(month);
-        add(layout, BorderLayout.NORTH);
+        container.add(layout, BorderLayout.NORTH);
         
         calendar.setLayout(new GridLayout(7, 5));
         calendar.setBorder(BorderFactory.createEmptyBorder(2,2,2,2));
@@ -49,21 +53,9 @@ public class CalendarWindow extends JFrame {
             
             calendar.add(panel);
         }
-        add(calendar, BorderLayout.CENTER);
-    }
-    
-    /**
-     * The program    * @param args the program start up parameters, not used.
-     */
-    public static void main(String[] args) {
-        try {
-            CalendarWindow frame = new CalendarWindow();
-            frame.setSize(800, 600);
-            frame.setVisible(true);
-        }
-        catch(Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
-        }
+        container.add(calendar, BorderLayout.CENTER);
+        
+        Wielwijk.gui.addElement(window_id, container);
     }
     
 }

@@ -15,8 +15,6 @@ public class UserListWindow {
   
   JTextArea myText = new JTextArea("My text");
  
-  public int window_id;
-  
   private JLabel label; 
   
   JPanel panel, layout;
@@ -24,7 +22,7 @@ public class UserListWindow {
   
   public UserListWindow() {
     JPanel window = new JPanel();
-    window_id = Wielwijk.gui.addWindow(window);
+    int window_id = Wielwijk.gui.addWindow(window);
          
     JPanel container = new JPanel();
     container.setLayout(new GridLayout(3, 2));
