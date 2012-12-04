@@ -39,8 +39,7 @@ public class UserContainerTest {
         int picture = 0;
         String address = "";
         String birthdate = "";
-        UserContainer instance = new UserContainer();
-        instance.addBoard(name, password, picture, address, birthdate);
+        UserContainer.addBoard(name, password, picture, address, birthdate);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
@@ -56,8 +55,7 @@ public class UserContainerTest {
         int picture = 0;
         String address = "";
         String birthdate = "";
-        UserContainer instance = new UserContainer();
-        instance.addMember(name, password, picture, address, birthdate);
+        UserContainer.addMember(name, password, picture, address, birthdate);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
@@ -69,8 +67,7 @@ public class UserContainerTest {
     public void testRemoveUser() {
         System.out.println("removeUser");
         int id = 0;
-        UserContainer instance = new UserContainer();
-        instance.removeUser(id);
+        UserContainer.removeUser(id);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
@@ -82,9 +79,22 @@ public class UserContainerTest {
     public void testFindUser() {
         System.out.println("findUser");
         String name = "";
-        UserContainer instance = new UserContainer();
         List expResult = null;
-        List result = instance.findUser(name);
+        List result = UserContainer.findUser(name);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getUserById method, of class UserContainer.
+     */
+    @Test
+    public void testGetUserById() {
+        System.out.println("getUserById");
+        int id = 0;
+        User expResult = null;
+        User result = UserContainer.getUserById(id);
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
