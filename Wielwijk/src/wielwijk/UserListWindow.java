@@ -11,7 +11,7 @@ import javax.swing.*;
  *
  * @author jeroen
  */
-public class UserListWindow extends JFrame {
+public class UserListWindow extends GUI {
   
   JTextArea myText = new JTextArea("My text");
  
@@ -21,7 +21,9 @@ public class UserListWindow extends JFrame {
   JPanel container = new JPanel();
   
   public UserListWindow() {
-    setTitle("Wandelvereniging Wielwijk");
+    JPanel window = new JPanel();
+    int window_id = this.addWindow(window);
+    
     container.setLayout(new GridLayout(3, 2));
 
     java.util.List res = Wielwijk.db.query("SELECT * FROM users");

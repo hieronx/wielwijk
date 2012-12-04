@@ -6,19 +6,23 @@ import java.awt.event.*;
 import java.util.HashMap;
 import java.util.Map;
  
-class LoginWindow extends JFrame {
+class LoginWindow extends GUI {
     
     JButton submit, userlist;
-    JPanel panel, layout, layout2;
+    JPanel container, panel, layout, layout2;
     JLabel label, label2,label3;
+    BoxLayout window;
     final JTextField text, text2;
     
     LoginWindow() {
-        setTitle("Wandelvereniging Wielwijk");
-        setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
+        JPanel window = new JPanel();
+        int window_id = this.addWindow(window);
+        
+        JPanel container = new JPanel();
+        container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
         
         // Onzichtbaar blok van 200px hoog
-        add(Box.createRigidArea(new Dimension(0, 200)));
+        container.add(Box.createRigidArea(new Dimension(0, 200)));
         
         // Koptekst
         layout = new JPanel();
@@ -27,9 +31,9 @@ class LoginWindow extends JFrame {
         label.setText("Wielwijk wandelvereniging");
         label.setFont(label.getFont().deriveFont(26.0f));
         layout.add(label);
-        add(layout);
+        container.add(layout);
         
-        add(Box.createRigidArea(new Dimension(0, 20)));
+        container.add(Box.createRigidArea(new Dimension(0, 20)));
         
         // GridLayout van 3x1 voor formulier
         panel = new JPanel(new GridLayout(3,1));
@@ -49,7 +53,7 @@ class LoginWindow extends JFrame {
         panel.add(label3);
         panel.add(text2);
 
-        add(panel);
+        container.add(panel);
         
         // Inloggen knop
         layout2 = new JPanel();
@@ -57,7 +61,11 @@ class LoginWindow extends JFrame {
         userlist = new JButton("Gebruikerslijst");
         layout2.add(submit);
         layout2.add(userlist);
-        add(layout2);
+        container.add(layout2);
+        
+        addElement(window_id, container);
+        
+        this.showWindow(window_id);
         
         submit.addActionListener(new ActionListener() { 
             public void actionPerformed(ActionEvent e) {
@@ -81,16 +89,5 @@ class LoginWindow extends JFrame {
                 UserListWindow.main(null);
             }
         });
-    }
-    
-    public static void main(String arg[]) {
-        try {
-            LoginWindow frame = new LoginWindow();
-            frame.setSize(800, 600);
-            frame.setVisible(true);
-        }
-        catch(Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
-        }
     }
 }

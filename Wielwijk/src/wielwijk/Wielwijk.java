@@ -10,14 +10,20 @@ public class Wielwijk {
 
     public static Database db;
     
+    public static GUI gui;
+    
+    private GUI login;
+    
     /**
      *
      * @param args
      */
     public static void main(String[] args) {
         db = new Database();
-        db.connect();
+        //db.connect();
         
-        LoginWindow.main(null);
+        gui = new GUI();
+        
+        GUI login = new LoginWindow();
     }
 }
