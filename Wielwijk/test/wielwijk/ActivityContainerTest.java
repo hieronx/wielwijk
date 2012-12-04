@@ -33,6 +33,7 @@ public class ActivityContainerTest {
      */
     @Test
     public void testAddActivity() {
+        Wielwijk.getDBConnection();
         System.out.println("addActivity");
         String name = "";
         String location = "";
