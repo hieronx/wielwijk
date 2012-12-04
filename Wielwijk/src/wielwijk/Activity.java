@@ -90,8 +90,7 @@ public class Activity {
     }
     
     public static void main(String args[]) {
-        Wielwijk.db = new Database();
-        Wielwijk.db.connect();
+        Wielwijk.getDBConnection();
         
         User u = UserContainer.getUserById(1);
         Activity a = ActivityContainer.getActivityById(1);

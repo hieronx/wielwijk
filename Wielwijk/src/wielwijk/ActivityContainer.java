@@ -60,9 +60,9 @@ public class ActivityContainer {
         
         java.util.Map<String, Object> map = (HashMap<String, Object>) res.get(0);
         
-        return new Activity((String)map.get("name"),(String)map.get("location"),(String)map.get("destination"),(String)map.get("datetime_begin"),(String)map.get("datetime_end"),
+        return new Activity((String)map.get("name"),(String)map.get("location"),(String)map.get("destination"),map.get("datetime_begin").toString(),map.get("datetime_end").toString(),
                 (Integer)map.get("fee"),(Integer)map.get("lower_user_limit"),(Integer)map.get("upper_user_limit"),
-                (String)map.get("lower_limit_date"),(Boolean)map.get("cancelled"));
+                map.get("lower_limit_date").toString(),(Boolean)map.get("cancelled"));
     }
 
 }
