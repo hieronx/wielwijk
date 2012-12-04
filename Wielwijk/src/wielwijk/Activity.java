@@ -6,7 +6,7 @@ package wielwijk;
  */
 public class Activity {
 
-    private int id;
+    private long id;
     private String name;
     private String location;
     private String description;
@@ -45,6 +45,36 @@ public class Activity {
         
         
     }
+    
+    /**
+     * 
+     * @param nm
+     * @param lc
+     * @param des
+     * @param dtb
+     * @param dte
+     * @param fe
+     * @param lul
+     * @param uul
+     * @param lld
+     * @param cl
+     * @param id 
+     */
+    public Activity(String nm, String lc, String des, String dtb, String dte, int fe, int lul, int uul, String lld, boolean cl, long idd) {
+        name = nm;
+        location = lc;
+        description = des;
+        datetime_begin = dtb;
+        datetime_end = dte;
+        fee = fe;
+        lower_user_limit = lul;
+        upper_user_limit = uul;
+        lower_limit_date = lld;
+        cancelled = cl;
+        id = idd;
+        
+    }
+
 
     /**
      *
@@ -56,7 +86,7 @@ public class Activity {
                 "WHERE user_id = "+user.getId()+" AND activity_id="+id);
         if (res.size()>0) return;
         
-        Wielwijk.db.query("INSERT INTO activity_registrations (user_id, activity_id, organiser) "+
+        Wielwijk.db.exec("INSERT INTO activity_registrations (user_id, activity_id, organiser) "+
                 "VALUES ("+user.getId()+", "+id+", "+(organiser ? "1" : "0")+")");
     }
      /**
@@ -85,7 +115,7 @@ public class Activity {
     /**
      * 
      */
-    public int getId() {
+    public long getId() {
         return id;
     }
     
