@@ -51,16 +51,26 @@ public class Activity {
     /**
      *
      * @param user
+     * @param organiser
      */
-    public void addUserAct(User user) {
-        //database add user verhaaltje
+    public void addUserAct(User user, boolean organiser) {
+        java.util.List res = Wielwijk.db.query("SELECT * FROM activity_registrations "+
+                "WHERE user_id = "+user.getId()+" AND activity_id="+id);
+        if (res.size()>0) return;
+        
+        Wielwijk.db.query("INSERT INTO activity_registrations (user_id, activity_id, organiser) "+
+                "VALUES ("+user.getId()+", "+id+", "+(organiser ? "1" : "0")+")");
     }
      /**
      *
      * @param user
      */
     public void removeUserAct(User user) {
-        //database remove user verhaaltje
+        java.util.List res = Wielwijk.db.query("SELECT * FROM activity_registrations "+
+                "WHERE user_id = "+user.getId()+" AND activity_id="+id);
+        if (res.size()==0) return;
+        
+        Wielwijk.db.query("REMOVE FROM activity_registrations WHERE user_id = "+user.getId()+" AND activity_id="+id);
     }
     
     /**
@@ -79,5 +89,10 @@ public class Activity {
      */
     public int getId() {
         return id;
+    }
+    
+    public static void main(String args[]) {
+        User u = UserContainer.getUserById(1);
+        
     }
 }
