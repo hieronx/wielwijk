@@ -6,7 +6,7 @@ import java.awt.event.*;
 import java.util.HashMap;
 import java.util.Map;
  
-class LoginWindow extends GUI {
+class LoginWindow {
     
     JButton submit, userlist;
     JPanel container, panel, layout, layout2;
@@ -16,7 +16,7 @@ class LoginWindow extends GUI {
     
     LoginWindow() {
         JPanel window = new JPanel();
-        int window_id = this.addWindow(window);
+        int window_id = Wielwijk.gui.addWindow(window);
         
         JPanel container = new JPanel();
         container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
@@ -63,9 +63,9 @@ class LoginWindow extends GUI {
         layout2.add(userlist);
         container.add(layout2);
         
-        addElement(window_id, container);
+        Wielwijk.gui.addElement(window_id, container);
         
-        this.showWindow(window_id);
+        Wielwijk.gui.showWindow(window_id);
         
         submit.addActionListener(new ActionListener() { 
             public void actionPerformed(ActionEvent e) {
@@ -74,8 +74,8 @@ class LoginWindow extends GUI {
                 java.util.List res = Wielwijk.db.query("SELECT COUNT(*) AS c FROM users WHERE name = '" + name + "' AND password = '" + password + "'");
                 Map<String, Object> map = (HashMap<String, Object>) res.get(0);
                 if ((Long) map.get("c") == 1) {
-                    setVisible(false);
-                    CalendarWindow.main(null);
+                    //Wielwijk.gui.setVisible(false);
+                    //CalendarWindow.main(null);
                 }
                 else {
                     JOptionPane.showMessageDialog(null, "Gebruikersnaam en/of wachtwoord zijn niet correct ingevuld");
@@ -85,8 +85,8 @@ class LoginWindow extends GUI {
         
         userlist.addActionListener(new ActionListener() { 
             public void actionPerformed(ActionEvent e) {
-                setVisible(false);
-                UserListWindow.main(null);
+                UserListWindow userlist = new UserListWindow();
+                Wielwijk.gui.showWindow(1);
             }
         });
     }

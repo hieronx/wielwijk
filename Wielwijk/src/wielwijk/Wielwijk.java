@@ -20,10 +20,10 @@ public class Wielwijk {
      */
     public static void main(String[] args) {
         db = new Database();
-        //db.connect();
+        db.connect();
         
         gui = new GUI();
         
-        GUI login = new LoginWindow();
+        LoginWindow login = new LoginWindow();
     }
 }

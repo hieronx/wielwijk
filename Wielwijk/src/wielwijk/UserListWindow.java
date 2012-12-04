@@ -11,19 +11,22 @@ import javax.swing.*;
  *
  * @author jeroen
  */
-public class UserListWindow extends GUI {
+public class UserListWindow {
   
   JTextArea myText = new JTextArea("My text");
  
+  public int window_id;
+  
   private JLabel label; 
   
   JPanel panel, layout;
-  JPanel container = new JPanel();
+  JPanel container;
   
   public UserListWindow() {
     JPanel window = new JPanel();
-    int window_id = this.addWindow(window);
-    
+    window_id = Wielwijk.gui.addWindow(window);
+         
+    JPanel container = new JPanel();
     container.setLayout(new GridLayout(3, 2));
 
     java.util.List res = Wielwijk.db.query("SELECT * FROM users");
@@ -47,24 +50,7 @@ public class UserListWindow extends GUI {
         container.add(panel);
     }
     
-    getContentPane().add(container, BorderLayout.CENTER);
-  
-    setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-  }
- 
-  /**
-   * The program    * @param args the program start up parameters, not used.
-   */
-  public static void main(String[] args) {
-    try {
-        UserListWindow frame = new UserListWindow();
-        frame.setSize(800, 600);
-        frame.setVisible(true);
-        
-    }
-    catch(Exception e) {
-        JOptionPane.showMessageDialog(null, e.getMessage());
-    }
+    Wielwijk.gui.addElement(window_id, container);
   }
     
 }
