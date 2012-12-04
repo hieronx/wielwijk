@@ -43,8 +43,6 @@ public class Activity {
         lower_limit_date = lld;
         cancelled = cl;
         
-        Wielwijk.db.exec ("INSERT INTO activities (name, location, description, datetime_begin, datetime_end, fee, lower_user_limit, upper_user_limit, lower_limit_date, cancelled) " +
-                "VALUES ( '" + name + "', '" + location + "', '" + description + "', '" + datetime_begin + "', '" + datetime_end + "', '" + fee + "', '" + lower_user_limit + "', '" + upper_user_limit + "', '" + cancelled + "')");
         
     }
 
@@ -93,6 +91,8 @@ public class Activity {
     
     public static void main(String args[]) {
         User u = UserContainer.getUserById(1);
+        Activity a = ActivityContainer.getActivityById(1);
         
+        a.addUserAct(u, false);
     }
 }

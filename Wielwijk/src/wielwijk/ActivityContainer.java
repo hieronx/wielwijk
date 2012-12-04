@@ -21,9 +21,11 @@ public class ActivityContainer {
      * @param lower_limit_date
      * @param cancelled
      */
-    public Activity addActivity(String name, String location, String description, String datetime_begin, String datetime_end, int fee, int lower_user_limit, int upper_user_limit, String lower_limit_date, boolean cancelled) {
+    public static Activity addActivity(String name, String location, String description, String datetime_begin, String datetime_end, int fee, int lower_user_limit, int upper_user_limit, String lower_limit_date, boolean cancelled) {
         Activity newActivity = new Activity(name, location, description, datetime_begin, datetime_end, fee, lower_user_limit, upper_user_limit, lower_limit_date, cancelled);
-
+        Wielwijk.db.exec ("INSERT INTO activities (name, location, description, datetime_begin, datetime_end, fee, lower_user_limit, upper_user_limit, lower_limit_date, cancelled) " +
+                "VALUES ( '" + name + "', '" + location + "', '" + description + "', '" + datetime_begin + "', '" + datetime_end + "', '" + fee + "', '" + lower_user_limit + "', '" + upper_user_limit + "', '" + cancelled + "')");
+        
         
         return newActivity;
     }
@@ -33,7 +35,7 @@ public class ActivityContainer {
      *
      * @param activity
      */
-    public void removeActivity(Activity activity) {
+    public static void removeActivity(Activity activity) {
         Wielwijk.db.exec ("REMOVE FROM activities WHERE id = " + activity.getId());
     }
 
@@ -42,7 +44,7 @@ public class ActivityContainer {
      *
      * @param activity
      */
-    public List findActivity(Activity activity) {
+    public static List findActivity(Activity activity) {
         List l = Wielwijk.db.query("SELECT * FROM activities WHERE id = " + activity.getId());
         
         return l;
@@ -52,7 +54,7 @@ public class ActivityContainer {
      * 
      * @param id
      */
-    public Activity getActivityById(int id) {
+    public static Activity getActivityById(int id) {
         List res = Wielwijk.db.query("SELECT * FROM activities WHERE id = "+id);
         if (res.size()==0) return null;
         
