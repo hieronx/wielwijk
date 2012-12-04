@@ -26,4 +26,9 @@ public class Wielwijk {
         
         LoginWindow login = new LoginWindow();
     }
+    
+    public static void getDBConnection() {
+        db = new Database();
+        db.connect();
+    }
 }
