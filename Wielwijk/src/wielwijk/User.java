@@ -6,7 +6,7 @@ package wielwijk;
  */
 public class User {
     
-    private int id;
+    private long id;
     private String name;
     private String password;
     private String birthdate;
@@ -36,6 +36,27 @@ public class User {
     
     /**
      * 
+     * @param nm
+     * @param pw
+     * @param pic
+     * @param ad
+     * @param bd
+     * @param brd
+     * @param idd 
+     */
+    public User(String nm, String pw, int pic, String ad, String bd, boolean brd, long idd) {
+        name = nm;
+        password = pw;
+        birthdate = bd;
+        active = true;
+        address = ad;
+        picture = pic;
+        board = brd;
+        id = idd;
+    }
+    
+    /**
+     * 
      */
     public void suspend() {
         if (active == true) {
@@ -58,7 +79,7 @@ public class User {
     /**
      * 
      */
-    public int getId() {
+    public long getId() {
         return id;
     }
     

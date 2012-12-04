@@ -70,7 +70,7 @@ public class UserContainer {
         java.util.Map<String, Object> map = (HashMap<String, Object>) res.get(0);
         
         return new User((String)map.get("name"),(String)map.get("password"),(Integer)map.get("picture"),
-                (String)map.get("address"),map.get("birthdate").toString(),(Boolean)map.get("board"));
+                (String)map.get("address"),map.get("birthdate").toString(),(Boolean)map.get("board"),(Long)map.get("id"));
         
     }
     
