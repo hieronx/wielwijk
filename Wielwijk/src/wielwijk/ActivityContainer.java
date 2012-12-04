@@ -48,5 +48,18 @@ public class ActivityContainer {
         return l;
     }
     
+    /**
+     * 
+     * @param id
+     */
+    public Activity getActivityById(int id) {
+        List res = Wielwijk.db.query("SELECT * FROM activities WHERE id = "+id);
+        if (res.size()==0) return null;
+        
+        java.util.Map<String, Object> map = (HashMap<String, Object>) res.get(0);
+        
+        return new User((String)map.get("name"),(String)map.get("password"),Integer.parseInt((String)map.get("picture")),
+                (String)map.get("ad"),(String)map.get("bd"),(Integer.parseInt((String)map.get("board"))==1));
+    }
 
 }

@@ -92,7 +92,7 @@ public class Activity {
     }
     
     public static void main(String args[]) {
-        java.util.List l = UserContainer.findUser("Sytze");
-        User u = User.getUserById()
+        User u = UserContainer.getUserById(1);
+        
     }
 }
