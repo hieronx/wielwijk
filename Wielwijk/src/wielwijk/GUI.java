@@ -18,7 +18,7 @@ public class GUI extends JFrame {
     
     GUI() {
         setTitle("Wandelvereniging Wielwijk");
-        setSize(800, 600);
+        setSize(1000, 600);
         setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
   
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);

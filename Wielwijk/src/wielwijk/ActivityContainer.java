@@ -64,5 +64,19 @@ public class ActivityContainer {
                 (Integer)map.get("fee"),(Integer)map.get("lower_user_limit"),(Integer)map.get("upper_user_limit"),
                 map.get("lower_limit_date").toString(),(Boolean)map.get("cancelled"),(Long)map.get("id"));
     }
+    
+    public static Activity getActivityByDay(int year, int month, int day) {
+        List res = Wielwijk.db.query("SELECT * FROM activities WHERE "+
+                "YEAR(datetime_begin)="+Integer.toString(year)+
+                "AND MONTH(datetime_begin)="+Integer.toString(month)+
+                "AND DAY(datetime_begin)="+Integer.toString(day));
+        if (res.size()==0) return null;
+        
+        java.util.Map<String, Object> map = (HashMap<String, Object>) res.get(0);
+        
+        return new Activity((String)map.get("name"),(String)map.get("location"),(String)map.get("destination"),map.get("datetime_begin").toString(),map.get("datetime_end").toString(),
+                (Integer)map.get("fee"),(Integer)map.get("lower_user_limit"),(Integer)map.get("upper_user_limit"),
+                map.get("lower_limit_date").toString(),(Boolean)map.get("cancelled"),(Long)map.get("id"));
+    }
 
 }
