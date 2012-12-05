@@ -67,9 +67,9 @@ public class ActivityContainer {
     
     public static Activity getActivityByDay(int year, int month, int day) {
         List res = Wielwijk.db.query("SELECT * FROM activities WHERE "+
-                "YEAR(datetime_begin)="+Integer.toString(year)+
-                "AND MONTH(datetime_begin)="+Integer.toString(month)+
-                "AND DAY(datetime_begin)="+Integer.toString(day));
+                "YEAR(datetime_begin)="+year+
+                " AND MONTH(datetime_begin)="+month+
+                " AND DAY(datetime_begin)="+day);
         if (res.size()==0) return null;
         
         java.util.Map<String, Object> map = (HashMap<String, Object>) res.get(0);

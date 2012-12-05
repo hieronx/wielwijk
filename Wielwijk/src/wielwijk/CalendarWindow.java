@@ -76,22 +76,17 @@ public class CalendarWindow {
     }
     
     private JPanel getActivity(int yr, int m, int d, boolean current) {
-        //Activity act = ActivityContainer.getActivityByDay(yr, m, d);
-        //if (act!=null) {
-            
-        //}
+        
         
         JPanel item = new JPanel(new BorderLayout());
 
         JPanel layout2 = new JPanel();
-        JLabel index = new JLabel();
-        index.setText(Integer.toString(d));
+        JLabel index = new JLabel(Integer.toString(d));
         layout2.add(index);
         layout2.add(Box.createRigidArea(new Dimension(30, 0)));
         item.add(layout2, BorderLayout.WEST);
 
-        JLabel label = new JLabel();
-        label.setText("Activiteit");
+        JLabel label = new JLabel("---------");
         item.add(Box.createRigidArea(new Dimension(0, 60)), BorderLayout.CENTER);
         item.add(label, BorderLayout.CENTER);
 
@@ -105,12 +100,18 @@ public class CalendarWindow {
             layout2.setBackground(Color.WHITE);
             item.setBackground(Color.WHITE);
         }
+        Activity act = ActivityContainer.getActivityByDay(yr, m, d);
+        
+        if (act!=null) {
+            label.setText(act.getName());
+        }
         
         return panel;
     }
     
     public static void main(String[] args) {
         Wielwijk.gui = new GUI();
+        Wielwijk.getDBConnection();
         
         CalendarWindow cw = new CalendarWindow();
         Wielwijk.gui.showWindow(0);
