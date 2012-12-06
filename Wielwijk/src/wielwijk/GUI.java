@@ -4,6 +4,10 @@ import java.awt.*;
 import javax.swing.*;
 import java.util.*;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+
 /**
  *
  * @author jeroen
@@ -17,13 +21,38 @@ public class GUI extends JFrame {
     private int active_window_id;
     
     GUI() {
+        // Basis instellingen
         setTitle("Wandelvereniging Wielwijk");
         setSize(1000, 600);
         setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
+                
+        // Menu
+        JMenuBar menubar = new JMenuBar();
 
+        JMenu file = new JMenu("Bestand");
+        file.setMnemonic(KeyEvent.VK_F);
+
+        JMenuItem eMenuItem = new JMenuItem("Afsluiten");
+        eMenuItem.setMnemonic(KeyEvent.VK_C);
+        eMenuItem.setToolTipText("Sluit programma af");
+        eMenuItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent event) {
+                System.exit(0);
+            }
+
+        });
+
+        file.add(eMenuItem);
+
+        menubar.add(file);
+
+        setJMenuBar(menubar);
+
+        // Theme a la OS
         try{UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());}
         catch(Exception e){}
-
+        
+        // Correct afsluiten
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }
     
