@@ -20,7 +20,10 @@ public class GUI extends JFrame {
         setTitle("Wandelvereniging Wielwijk");
         setSize(1000, 600);
         setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
-  
+
+        try{UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());}
+        catch(Exception e){}
+
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }
     
