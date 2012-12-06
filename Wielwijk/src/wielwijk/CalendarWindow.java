@@ -33,6 +33,7 @@ public class CalendarWindow {
         SimpleDateFormat day = new SimpleDateFormat("d");
         SimpleDateFormat dayword = new SimpleDateFormat("EEEE");
         int thismonth = Integer.parseInt(mnth.format(today.getTime()));
+        int thisday = Integer.parseInt(day.format(today.getTime()));
         
         JPanel window = new JPanel();
         int window_id = Wielwijk.gui.addWindow(window);
@@ -66,7 +67,7 @@ public class CalendarWindow {
             int m = Integer.parseInt(mnth.format(cal.getTime()));
             int y = Integer.parseInt(year.format(cal.getTime()));
 
-            calendar.add(getActivity(y, m, d, m==thismonth));
+            calendar.add(getActivity(y, m, d, m==thismonth, d==thisday));
 
             cal.add(Calendar.DATE, +1);
         }
@@ -75,7 +76,7 @@ public class CalendarWindow {
         Wielwijk.gui.addElement(window_id, container);
     }
     
-    private JPanel getActivity(int yr, int m, int d, boolean current) {
+    private JPanel getActivity(int yr, int m, int d, boolean current, boolean today) {
         
         
         JPanel item = new JPanel(new BorderLayout());
@@ -99,6 +100,11 @@ public class CalendarWindow {
             panel.setBackground(Color.WHITE);
             layout2.setBackground(Color.WHITE);
             item.setBackground(Color.WHITE);
+        }
+        if (today) {
+            panel.setBackground(Color.ORANGE);
+            layout2.setBackground(Color.ORANGE);
+            item.setBackground(Color.ORANGE);
         }
         Activity act = ActivityContainer.getActivityByDay(yr, m, d);
         
