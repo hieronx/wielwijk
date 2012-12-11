@@ -20,7 +20,7 @@ public class Wielwijk {
      */
     public static void main(String[] args) {
         db = new Database();
-        db.connect();
+        //db.connect();
         
         System.setProperty("apple.laf.useScreenMenuBar", "true");
         System.setProperty("com.apple.mrj.application.apple.menu.about.name", "Wielwijk");
