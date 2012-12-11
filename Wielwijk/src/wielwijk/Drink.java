@@ -25,5 +25,8 @@ public class Drink extends Activity {
      */
     public Drink(String nm, String lc, String des, String dtb, String dte, int fe, int lul, int uul, String lld, boolean cl) {
         super(nm, lc, des, dtb, dte, fe, lul, uul, lld, cl);
+
+        Wielwijk.db.exec ("INSERT INTO activities (name, location, description, datetime_begin, datetime_end, fee, lower_user_limit, upper_user_limit, lower_limit_date, cancelled, type) " +
+           "VALUES ( '" + nm + "', '" + lc + "', '" + des + "', '" + dtb + "', '" + dte + "', '" + fe + "', '" + lul + "', '" + uul + "', '" + lld + "', '" + cl + "', 2)");
     }
 }

@@ -7,6 +7,7 @@ import java.util.*;
  */
 public class ActivityContainer {
     private static ArrayList<Activity> activities = new ArrayList<Activity>();
+    
     /**
      *
      * @param hike
@@ -15,12 +16,6 @@ public class ActivityContainer {
         activities.add(hike);
     }
 
-    //oude code, nog nodig voor aanpassingen in drink en meeting.
-    //NIET VERWIJDEREN
-    //Activity newActivity = new Activity(name, location, description, datetime_begin, datetime_end, fee, lower_user_limit, upper_user_limit, lower_limit_date, cancelled);
-    //Wielwijk.db.exec ("INSERT INTO activities (name, location, description, datetime_begin, datetime_end, fee, lower_user_limit, upper_user_limit, lower_limit_date, cancelled) " +
-    //       "VALUES ( '" + name + "', '" + location + "', '" + description + "', '" + datetime_begin + "', '" + datetime_end + "', '" + fee + "', '" + lower_user_limit + "', '" + upper_user_limit + "', '" + cancelled + "')");
-    //       return newActivity;
     /**
      *
      * @param activity
