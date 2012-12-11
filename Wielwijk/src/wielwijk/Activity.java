@@ -4,7 +4,7 @@ package wielwijk;
  *
  * @author jeroen
  */
-public class Activity {
+public abstract class Activity {
 
     private long id;
     private String name;
