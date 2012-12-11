@@ -18,9 +18,10 @@ public class UserContainer {
      * @param board
      */
     public static void addBoard(String name, String password, int picture, String address, String birthdate) {
+        Wielwijk.getDBConnection();
         Board newBoard = new Board(name, password, picture, address, birthdate);
 
-        Wielwijk.db.exec("INSERT INTO users (name, password, active, board, picture, address) VALUES ('" + name + "', '" + password + "', 1, 1, 0, '" + address + "')");
+        Wielwijk.db.exec("INSERT INTO users (name, password, active, board, picture, address, birthdate) VALUES ('" + name + "', '" + password + "', 1, 1, 0, '" + address + "', '" + birthdate +"')");
         //picture nog niet toegevoegd
     }
 
@@ -73,5 +74,8 @@ public class UserContainer {
                 (String)map.get("address"),map.get("birthdate").toString(),(Boolean)map.get("board"),(Long)map.get("id"));
         
     }
-    
+    public static void main(String[] args) {
+        Wielwijk.getDBConnection();
+        addBoard("a","a",1,"a","a");
+    }
 }

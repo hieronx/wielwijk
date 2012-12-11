@@ -5,11 +5,14 @@
 
 package wielwijk;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.Before;
 
 /**
  *
@@ -20,9 +23,12 @@ public class UserContainerTest {
     public UserContainerTest() {
     }
 
-    @BeforeClass
-    public static void setUpClass() throws Exception {
+   
+    @Before
+    public void setUp() {
+        Wielwijk.getDBConnection();
     }
+    
 
     @AfterClass
     public static void tearDownClass() throws Exception {
@@ -33,15 +39,25 @@ public class UserContainerTest {
      */
     @Test
     public void testAddBoard() {
+       
         System.out.println("addBoard");
-        String name = "";
-        String password = "";
-        int picture = 0;
-        String address = "";
-        String birthdate = "";
-        UserContainer.addBoard(name, password, picture, address, birthdate);
+        String name = "test";
+        String password = "test";
+        int picture = 12;
+        String address = "test";
+        String birthdate = "0000-00-00";
+        UserContainer.addBoard("test", password, picture, address, birthdate);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+        java.util.List results = Wielwijk.db.query("SELECT * FROM users WHERE name LIKE '%test%'");
+        System.out.println(results.get(0));
+        assertTrue(results.get(3).toString() == name);
+        assertTrue(results.get(7).toString() == password);
+        assertTrue(results.get(0).toString() == Integer.toString(picture));
+        assertTrue(results.get(3).toString() == address);
+        assertTrue(results.get(4).toString() == birthdate);
+        
+        
     }
 
     /**
@@ -80,7 +96,7 @@ public class UserContainerTest {
         System.out.println("findUser");
         String name = "";
         List expResult = null;
-        List result = UserContainer.findUser(name);
+        List result = UserContainer.findUser("henk");
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
