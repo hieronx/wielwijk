@@ -40,6 +40,6 @@ public class Hike extends Activity {
                 + " lower_limit_date, cancelled, distance, height_difference, type) "
                 + "VALUES ( '" + nm + "', '" + lc + "', '" + des + "', '" + dtb + "', '"
                 + dte + "', '" + fe + "', '" + lul + "', '" + uul + "', '" + lld + "', '" + cl
-                + "', '" + dis + "', '" + ht + "', 0)");
+                + "', '" + distance + "', '" + d_height + "', 0)");
     }
 }

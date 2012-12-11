@@ -41,8 +41,6 @@ public class ActivityWindow {
         blackline = BorderFactory.createLineBorder(Color.black);
         textpanel.setBorder(blackline);
 
-       
-
         //overige parameters activiteit in tekstvak
         //wandeling/borrel/vergadering
 
