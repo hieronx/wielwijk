@@ -6,7 +6,6 @@ import java.util.*;
  * @author jeroen
  */
 public class Hike extends Activity {
-    private int sort = 0;
     private int distance;
     private int d_height;
     private ArrayList<Checkpoint> checkpoints = new ArrayList<Checkpoint>();

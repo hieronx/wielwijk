@@ -6,7 +6,6 @@ package wielwijk;
  * @author jeroen
  */
 public class Drink extends Activity {
-    private int sort = 2;
     //in de database een kolom waarin staat aangegeven wat voor soort activity
     //het is. 0 = hike, 1 = meeting, 2 = drink
     
