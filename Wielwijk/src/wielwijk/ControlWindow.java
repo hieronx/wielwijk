@@ -46,15 +46,18 @@ public class ControlWindow {
         GridLayout jPanel2Layout = new GridLayout(1, 2);
         jPanel2.setLayout(jPanel2Layout);
         
-        JPanel layout = new JPanel(new BorderLayout());
+        //jPanel2.add(Box.createRigidArea(new Dimension(0, 50)));
+        
         String[] data = {"Jeroen Offerijns", "Bart Slangewal", "Yannick Verhoog", "Sytze Zeijlmaker"};
         JList myList = new JList(data);
         myList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        myList.setSize(100, 400);
-
-        layout.add(myList, BorderLayout.CENTER);
+        myList.setFixedCellWidth(10);
+        myList.setSize(100, 100);
         
-        jPanel2.add(layout);
+        JScrollPane pane = new JScrollPane(myList);
+        pane.setSize(new Dimension(10, 10));
+
+        jPanel2.add(pane);
         
         JLabel label2 = new JLabel("Bart Slangewal");
         jPanel2.add(label2);

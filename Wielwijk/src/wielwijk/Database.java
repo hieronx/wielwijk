@@ -44,7 +44,7 @@ public class Database {
         try {
             connection = DriverManager.getConnection(url, username, password);
         } catch (SQLException e) {
-            throw new RuntimeException("Cannot connect to the database!", e);
+            throw new RuntimeException("Cannot connect to the database: " + e.getMessage() + " (State: " + e.getSQLState() + "; Code: " + e.getErrorCode() + ")", e);
         }
     }
     
@@ -86,7 +86,7 @@ public class Database {
 
             return data_list;
         } catch (SQLException e) {
-            throw new RuntimeException("Cannot connect to the database!", e);
+            throw new RuntimeException("SQLException was thrown: " + e.getMessage() + " (State: " + e.getSQLState() + "; Code: " + e.getErrorCode() + ")", e);
         }
     }
     
