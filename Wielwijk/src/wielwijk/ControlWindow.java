@@ -62,9 +62,12 @@ public class ControlWindow {
         
         String[] data = {"Jeroen Offerijns", "Bart Slangewal", "Yannick Verhoog", "Sytze Zeijlmaker", "Bart Slangewal", "Yannick Verhoog", "Sytze Zeijlmaker", "Bart Slangewal", "Yannick Verhoog", "Sytze Zeijlmaker", "Bart Slangewal", "Yannick Verhoog", "Sytze Zeijlmaker"};
         JList myList = new JList(data);
+        myList.setFont(myList.getFont().deriveFont(16.0f));
         myList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         
         JScrollPane pane = new JScrollPane(myList);
+        Border invis = BorderFactory.createMatteBorder(0, 0, 0, 160, Wielwijk.gui.getBackground());
+        pane.setBorder(invis);
         
         panel.add(pane, BorderLayout.CENTER);
         
@@ -72,8 +75,8 @@ public class ControlWindow {
         
         // Rechts
         JPanel panel2 = new JPanel(new BorderLayout());
-        Border empty2 = BorderFactory.createMatteBorder(20, 20, 20, 20, Wielwijk.gui.getBackground());
-        panel2.setBorder(empty);
+        Border empty2 = BorderFactory.createMatteBorder(0, 20, 0, 0, Wielwijk.gui.getBackground());
+        panel2.setBorder(empty2);
         
         JLabel label2 = new JLabel("Bart Slangewal");
         label2.setFont(label2.getFont().deriveFont(20.0f));
@@ -117,6 +120,9 @@ public class ControlWindow {
         footer.add(wrapper3);
         
         JPanel wrapper4 = new JPanel(new BorderLayout());
+        Border empty3 = BorderFactory.createMatteBorder(0, 20, 0, 0, Wielwijk.gui.getBackground());
+        wrapper4.setBorder(empty3);
+        
         JButton save = new JButton("Opslaan");
         wrapper4.add(save, BorderLayout.WEST);
         
@@ -137,6 +143,8 @@ public class ControlWindow {
         org.jdesktop.layout.GroupLayout jPanel4Layout = new org.jdesktop.layout.GroupLayout(jPanel4);
 
         jTabbedPane1.addTab("Financiën", jPanel4);
+        
+        jTabbedPane1.setSelectedIndex(1);
 
         // Toevoegen aan GUI
         container.add(jTabbedPane1);
