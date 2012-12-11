@@ -103,7 +103,7 @@ public class Database {
             int rows_affected = stmt.executeUpdate(query);
             return rows_affected;
         } catch (SQLException e) {
-            throw new RuntimeException("Cannot connect to the database!", e);
+            throw new RuntimeException("SQLException was thrown: " + e.getMessage() + " (State: " + e.getSQLState() + "; Code: " + e.getErrorCode() + ")", e);
         }
     }
     

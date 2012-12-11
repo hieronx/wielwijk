@@ -25,6 +25,7 @@ public class GUI extends JFrame {
         setTitle("Wandelvereniging Wielwijk");
         setSize(1000, 600);
         setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
+        setResizable(false);
                 
         // Menu
         JMenuBar menubar = new JMenuBar();
