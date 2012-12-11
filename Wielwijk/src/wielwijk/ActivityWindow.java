@@ -5,6 +5,7 @@ import java.awt.event.*;
 import java.util.Iterator;
 import java.util.Map;
 import javax.swing.*;
+import javax.swing.border.*;
 
 /**
  *
@@ -13,8 +14,9 @@ import javax.swing.*;
 public class ActivityWindow {
 
     private JLabel name, slaapplaatsen;
-    JPanel container, panel, leftlayout, rightlayout;
+    JPanel container, textpanel, leftlayout, rightlayout;
     Activity act;
+    Border blackline;
 
     public ActivityWindow(Activity activity) {
         act = activity;
@@ -31,9 +33,15 @@ public class ActivityWindow {
         JPanel rightlayout = new JPanel();          //layout voor rechterhelft
         rightlayout.setLayout(new FlowLayout());
 
-        name = new JLabel();
+        name = new JLabel();                        //naam wandeling boven beschrijving
         name.setText(act.getName());
         leftlayout.add(name);
+        
+        JPanel textpanel = new JPanel();
+        blackline = BorderFactory.createLineBorder(Color.black);
+        textpanel.setBorder(blackline);
+
+       
 
         //overige parameters activiteit in tekstvak
         //wandeling/borrel/vergadering
@@ -55,11 +63,12 @@ public class ActivityWindow {
     }
 
     public static void main(String[] args) {
-        Activity activity = new Activity("Rondje", "Delft", "een klein rondje", "11-12-2012", "12-12-2012", 10, 5, 50, "2012-11-12", false);
         Wielwijk.gui = new GUI();
         Wielwijk.getDBConnection();
+        Hike temp = new Hike("Rondje", "Delft", "een klein rondje", "11-12-2012", "12-12-2012", 10, 5, 50, "2012-11-12", false, 10000, 500);
 
-        ActivityWindow aw = new ActivityWindow(activity);
+
+        ActivityWindow aw = new ActivityWindow(temp);
         Wielwijk.gui.showWindow(0);
     }
 }
