@@ -13,6 +13,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.Before;
+import java.text.SimpleDateFormat;
 
 /**
  *
@@ -41,21 +42,25 @@ public class UserContainerTest {
     public void testAddBoard() {
        
         System.out.println("addBoard");
-        String name = "test";
+        String name = "asdsadffd";
         String password = "test";
         int picture = 12;
         String address = "test";
-        String birthdate = "0000-00-00";
-        UserContainer.addBoard("test", password, picture, address, birthdate);
+        String birthdate = "2011-11-11";
+        
+        UserContainer.addBoard(name, password, picture, address, birthdate);
         // TODO review the generated test code and remove the default call to fail.
         
-        java.util.List results = Wielwijk.db.query("SELECT * FROM users WHERE name LIKE '%test%'");
-        System.out.println(results.get(0));
-        assertTrue(results.get(3).toString() == name);
-        assertTrue(results.get(7).toString() == password);
-        assertTrue(results.get(0).toString() == Integer.toString(picture));
-        assertTrue(results.get(3).toString() == address);
-        assertTrue(results.get(4).toString() == birthdate);
+        boolean result=false;
+        java.util.List results = Wielwijk.db.query("SELECT password, address, birthdate, picture FROM users WHERE name LIKE '%"+ name+ "%'");
+        if (results.get(0).toString().equals("{picture=" + picture +", address=" + address + ", birthdate=" + birthdate + ", password=" + password + "}")){
+            result=true;
+        } else{
+            System.out.println(results.get(0));
+            System.out.println("{picture=" + picture +", address=" + address + ", birthdate=" + birthdate + ", password=" + password + "}");
+        }
+        assertEquals(result,true);
+        
         
         
     }
@@ -66,14 +71,24 @@ public class UserContainerTest {
     @Test
     public void testAddMember() {
         System.out.println("addMember");
-        String name = "";
-        String password = "";
-        int picture = 0;
-        String address = "";
-        String birthdate = "";
+        String name = "Piet Test";
+        String password = "test";
+        int picture = 12;
+        String address = "test";
+        String birthdate = "2011-11-11";
+        
         UserContainer.addMember(name, password, picture, address, birthdate);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+        boolean result=false;
+        java.util.List results = Wielwijk.db.query("SELECT password, address, birthdate, picture FROM users WHERE name LIKE '%"+ name+ "%'");
+        if (results.get(0).toString().equals("{picture=" + picture +", address=" + address + ", birthdate=" + birthdate + ", password=" + password + "}")){
+            result=true;
+        } else{
+            System.out.println(results.get(0));
+            System.out.println("{picture=" + picture +", address=" + address + ", birthdate=" + birthdate + ", password=" + password + "}");
+        }
+        assertEquals(result,true);
     }
 
     /**

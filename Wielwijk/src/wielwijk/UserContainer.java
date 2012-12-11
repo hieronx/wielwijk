@@ -1,6 +1,8 @@
 package wielwijk;
 
 import java.util.*;
+import java.sql.Date;
+
 
 /**
  *
@@ -18,10 +20,13 @@ public class UserContainer {
      * @param board
      */
     public static void addBoard(String name, String password, int picture, String address, String birthdate) {
-        Wielwijk.getDBConnection();
-        Board newBoard = new Board(name, password, picture, address, birthdate);
-
-        Wielwijk.db.exec("INSERT INTO users (name, password, active, board, picture, address, birthdate) VALUES ('" + name + "', '" + password + "', 1, 1, 0, '" + address + "', '" + birthdate +"')");
+        Date bday=Date.valueOf(birthdate);
+        System.out.println(bday);
+     
+        Wielwijk.db.exec("INSERT INTO users (name, password, active, board, picture, address, birthdate) VALUES ('" + name + "', '" + password + "', 1, 1," + picture + ", '" + address + "', '" + bday +"')");
+        
+        
+    
         //picture nog niet toegevoegd
     }
 
@@ -35,10 +40,11 @@ public class UserContainer {
      * @param board
      */
     public static void addMember(String name, String password, int picture, String address, String birthdate) {
-        Member newMember = new Member(name, password, picture, address, birthdate);
+        Date bday=Date.valueOf(birthdate);
+        Member newMember = new Member(name, password, picture, address, birthdate);//nodig??
         
-        Wielwijk.db.exec("INSERT INTO users (name, password, active, board, picture, address) VALUES ('" + name + "', '" + password + "', 1, 0, 0, '" + address + "')");
-        //database create verhaaltje komt hier
+        Wielwijk.db.exec("INSERT INTO users (name, password, active, board, picture, address, birthdate) VALUES ('" + name + "', '" + password + "', 1, 1," + picture + ", '" + address + "', '" + bday +"')");
+       
     }
     
     /**
@@ -76,6 +82,6 @@ public class UserContainer {
     }
     public static void main(String[] args) {
         Wielwijk.getDBConnection();
-        addBoard("a","a",1,"a","a");
+        addBoard("a","a",1,"a","1122-11-01");
     }
 }
