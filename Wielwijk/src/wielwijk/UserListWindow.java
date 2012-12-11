@@ -12,13 +12,10 @@ import javax.swing.*;
  * @author jeroen
  */
 public class UserListWindow {
-  
-  JTextArea myText = new JTextArea("My text");
- 
+
   private JLabel label; 
   
-  JPanel panel, layout;
-  JPanel container;
+  JPanel panel, layout, container;
   
   public UserListWindow() {
     JPanel window = new JPanel();
@@ -50,5 +47,4 @@ public class UserListWindow {
     
     Wielwijk.gui.addElement(window_id, container);
   }
-    
 }
