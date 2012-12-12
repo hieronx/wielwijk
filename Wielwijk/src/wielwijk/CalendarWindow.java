@@ -114,7 +114,8 @@ public class CalendarWindow {
             if (act!=null) {
                 SimpleDateFormat fmt = new SimpleDateFormat("HH:mm");
                 fmt.setTimeZone(TimeZone.getTimeZone("CET"));
-                l.setText("<html><body style='width: 65px; height: 40px'><b>"+act.getName()+"</b><br />"+fmt.format(act.getDatetimeBegin())+"</body></html>");
+                l.setText("<html><body style='width: 65px; height: 40px'><b>"+act.getName()+"</b><br />"+
+                        fmt.format(act.getDatetimeBegin())+" - "+fmt.format(act.getDatetimeEnd())+"</body></html>");
                 this.setCursor(new Cursor(Cursor.HAND_CURSOR));
             }
             
