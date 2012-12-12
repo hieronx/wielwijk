@@ -82,7 +82,7 @@ public class CalendarWindow {
         Activity act;
         boolean white;
         boolean orange;
-        JPanel layout2;
+        JPanel layout;
         JPanel item;
         
         public CalendarDay(int yr, int m, int d, boolean current, boolean today) {
@@ -90,10 +90,10 @@ public class CalendarWindow {
             white = current;
             item = new JPanel(new BorderLayout());
 
-            layout2 = new JPanel();
+            layout = new JPanel();
             JLabel index = new JLabel(Integer.toString(d));
-            layout2.add(index);
-            item.add(layout2, BorderLayout.WEST);
+            layout.add(index);
+            item.add(layout, BorderLayout.WEST);
             
             JLabel l = new JLabel("<html><body style='width: 65px; height: 40px'></body></html>");
             l.setBackground(calendar.getBackground());
@@ -111,7 +111,8 @@ public class CalendarWindow {
             act = ActivityContainer.getActivityByDay(yr, m, d);
 
             if (act!=null) {
-                l.setText("<html><body style='width: 65px'><b>"+act.getName()+"</b><br />"+act.getDescription()+"</body></html>");
+                SimpleDateFormat fmt = new SimpleDateFormat("hh:mm");
+                l.setText("<html><body style='width: 65px; height: 40px'><b>"+act.getName()+"</b><br />"+fmt.format(act.getDatetimeBegin())+"</body></html>");
                 this.setCursor(new Cursor(Cursor.HAND_CURSOR));
             }
             
@@ -120,7 +121,7 @@ public class CalendarWindow {
         
         private void Paint(Color c) {
             this.setBackground(c);
-            layout2.setBackground(c);
+            layout.setBackground(c);
             item.setBackground(c);
         }
         
