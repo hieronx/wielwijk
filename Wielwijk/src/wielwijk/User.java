@@ -93,6 +93,13 @@ public class User {
     /**
      * 
      */
+    public String getPassword() {
+        return password;
+    }
+    
+    /**
+     * 
+     */
     public String getBirthdate() {
         return birthdate;
     }
@@ -116,6 +123,10 @@ public class User {
      */
     public boolean isBoard() {
         return board;
+    }
+    
+    public String toString() {
+        return name;
     }
 }
 //user class, spreek voor zich
