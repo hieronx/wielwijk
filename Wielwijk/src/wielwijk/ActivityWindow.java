@@ -33,63 +33,60 @@ public class ActivityWindow {
         leftlayout.setLayout(new BorderLayout());
         
         JPanel rightlayout = new JPanel();          //layout voor rechterhelft
-        rightlayout.setLayout(new FlowLayout());
+        rightlayout.setLayout(new BorderLayout());
 
-            JPanel wrapper = new JPanel();
-            name = new JLabel();                        //naam wandeling boven beschrijving   
-            name.setFont(name.getFont().deriveFont(26.0f));
-            name.setText(act.getName());
-            wrapper.add(Box.createRigidArea(new Dimension(0, 60)));
-            wrapper.add(name);
-            leftlayout.add(wrapper, BorderLayout.NORTH);
-            
-        
-            JPanel textpanel = new JPanel();
-        
-            Border empty = BorderFactory.createMatteBorder(20, 20, 20, 20, Wielwijk.gui.getBackground());
-            leftlayout.setBorder(empty);
-            textpanel.setLayout(new GridLayout(5, 2));
-            
-            //textpanel.add(Box.createRigidArea(new Dimension(400, 0)));
-            
-            Component margin = Box.createRigidArea(new Dimension(0, 20));
-            
-            // Locatie
-            JLabel location = new JLabel();
-            location.setText("Locatie: ");
-            location.setFont(location.getFont().deriveFont(16.0f));
-            textpanel.add(location);
-            
-            JLabel loc = new JLabel();
-            loc.setText(act.getLocation());
-            textpanel.add(loc);
-            
-            textpanel.add(margin);
-            textpanel.add(margin);
-            
+        JPanel wrapper = new JPanel(new BorderLayout());
+        name = new JLabel();                        //naam wandeling boven beschrijving   
+        name.setFont(name.getFont().deriveFont(26.0f));
+        name.setText(act.getName());
+        wrapper.add(name, BorderLayout.NORTH);
+        wrapper.add(Box.createRigidArea(new Dimension(450, 20)), BorderLayout.CENTER);
+        leftlayout.add(wrapper, BorderLayout.NORTH);
 
-            // Begintijd
-            JLabel time_begin = new JLabel();
-            time_begin.setText("Begintijd: ");
-            textpanel.add(time_begin);
-            
-            JLabel tb = new JLabel();
-            tb.setText(printFormat.format((java.util.Date) act.getDatetimeBegin()));
-            textpanel.add(tb);
-            
-            textpanel.add(margin);
-            textpanel.add(margin);
 
-            // Eindtijd
-            JLabel time_end = new JLabel();
-            time_end.setText("Eindtijd: ");
-            textpanel.add(time_end);
-            
-            JLabel te = new JLabel();
-            te.setText(printFormat.format((java.util.Date) act.getDatetimeEnd()));
-            textpanel.add(te);
+        JPanel textpanel = new JPanel();
 
-            leftlayout.add(textpanel, BorderLayout.CENTER);
+        Border empty = BorderFactory.createMatteBorder(20, 20, 20, 20, Wielwijk.gui.getBackground());
+        leftlayout.setBorder(empty);
+        textpanel.setLayout(new GridLayout(3, 2, 0, 10));
+
+        // Locatie
+        JLabel location = new JLabel();
+        location.setText("Locatie");
+        location.setFont(location.getFont().deriveFont(16.0f));
+        location.setForeground(new Color(100, 100, 100));
+        textpanel.add(location);
+
+        JLabel loc = new JLabel();
+        loc.setText(act.getLocation());
+        loc.setFont(loc.getFont().deriveFont(16.0f));
+        textpanel.add(loc);
+
+        // Begintijd
+        JLabel time_begin = new JLabel();
+        time_begin.setText("Begintijd");
+        time_begin.setFont(time_begin.getFont().deriveFont(16.0f));
+        time_begin.setForeground(new Color(100, 100, 100));
+        textpanel.add(time_begin);
+
+        JLabel tb = new JLabel();
+        tb.setText(printFormat.format((java.util.Date) act.getDatetimeBegin()));
+        tb.setFont(tb.getFont().deriveFont(16.0f));
+        textpanel.add(tb);
+
+        // Eindtijd
+        JLabel time_end = new JLabel();
+        time_end.setText("Eindtijd");
+        time_end.setFont(time_end.getFont().deriveFont(16.0f));
+        time_end.setForeground(new Color(100, 100, 100));
+        textpanel.add(time_end);
+
+        JLabel te = new JLabel();
+        te.setText(printFormat.format((java.util.Date) act.getDatetimeEnd()));
+        te.setFont(te.getFont().deriveFont(16.0f));
+        textpanel.add(te);
+
+        leftlayout.add(textpanel, BorderLayout.CENTER);
 
 
         //overige parameters activiteit in tekstvak
@@ -97,12 +94,13 @@ public class ActivityWindow {
 
         container.add(leftlayout);                  //voegt linkerhelft toe aan container
 
-
-
-        slaapplaatsen = new JLabel();
-        slaapplaatsen.setBorder(blackline);
-        slaapplaatsen.setText("Slaapplaatsen:");
-        rightlayout.add(slaapplaatsen);
+        JPanel wrapper2 = new JPanel(new BorderLayout());
+        slaapplaatsen = new JLabel("Slaapplaatsen");                        //naam wandeling boven beschrijving   
+        slaapplaatsen.setFont(slaapplaatsen.getFont().deriveFont(26.0f));
+        wrapper2.add(slaapplaatsen, BorderLayout.NORTH);
+        
+        rightlayout.add(Box.createRigidArea(new Dimension(450, 20)), BorderLayout.NORTH);
+        rightlayout.add(wrapper2, BorderLayout.CENTER);
 
         //slaapplaatsen ophalen uit db, lijst maken
         //lijst weergeven in bovengenoemd tekstvak (selecteerbaar, scrollable?, welke parameters?)
