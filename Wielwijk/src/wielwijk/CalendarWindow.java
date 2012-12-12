@@ -26,7 +26,7 @@ public class CalendarWindow {
         Calendar cal = Calendar.getInstance();
         today.setTime(date);
         cal.set(Calendar.DATE, 1);
-        cal.add(Calendar.DATE, -cal.get(Calendar.DAY_OF_WEEK) + 1 - 7);
+        cal.add(Calendar.DATE, -cal.get(Calendar.DAY_OF_WEEK) - 6);
         SimpleDateFormat mnth = new SimpleDateFormat("MM");
         SimpleDateFormat mnthword = new SimpleDateFormat("MMMM");
         SimpleDateFormat year = new SimpleDateFormat("yyyy");
@@ -55,7 +55,6 @@ public class CalendarWindow {
         for (int i=0; i<7; i++) {
             JPanel item = new JPanel(new BorderLayout());
             JLabel daylabel = new JLabel(dayword.format(cal.getTime()));
-            item.add(Box.createRigidArea(new Dimension(30, 0)));
             item.add(daylabel, BorderLayout.CENTER);
             
             calendar.add(item);
@@ -84,12 +83,12 @@ public class CalendarWindow {
         JPanel layout2 = new JPanel();
         JLabel index = new JLabel(Integer.toString(d));
         layout2.add(index);
-        layout2.add(Box.createRigidArea(new Dimension(30, 0)));
         item.add(layout2, BorderLayout.WEST);
-
-        JLabel label = new JLabel("---------");
-        item.add(Box.createRigidArea(new Dimension(0, 60)), BorderLayout.CENTER);
-        item.add(label, BorderLayout.CENTER);
+        
+        JTextArea ta = new JTextArea("----------");
+        ta.setPreferredSize(new Dimension(100,55));
+        ta.setBackground(calendar.getBackground());
+        item.add(ta, BorderLayout.CENTER);
 
         JPanel panel = new JPanel();
         
@@ -100,6 +99,7 @@ public class CalendarWindow {
             panel.setBackground(Color.WHITE);
             layout2.setBackground(Color.WHITE);
             item.setBackground(Color.WHITE);
+            ta.setBackground(Color.WHITE);
         }
         if (today) {
             panel.setBackground(Color.ORANGE);
@@ -109,7 +109,7 @@ public class CalendarWindow {
         Activity act = ActivityContainer.getActivityByDay(yr, m, d);
         
         if (act!=null) {
-            label.setText(act.getName());
+            ta.setText(act.getName());
         }
         
         return panel;
