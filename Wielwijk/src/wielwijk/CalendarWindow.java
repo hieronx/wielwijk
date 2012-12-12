@@ -35,7 +35,7 @@ public class CalendarWindow {
         SimpleDateFormat mnthword = new SimpleDateFormat("MMMM");
         SimpleDateFormat year = new SimpleDateFormat("yyyy");
         SimpleDateFormat day = new SimpleDateFormat("d");
-        SimpleDateFormat dayword = new SimpleDateFormat("EEEE");
+        SimpleDateFormat dayword = new SimpleDateFormat("E");
         int thismonth = Integer.parseInt(mnth.format(today.getTime()));
         int thisday = Integer.parseInt(day.format(today.getTime()));
         
@@ -48,7 +48,7 @@ public class CalendarWindow {
         JPanel layout = new JPanel();
         JLabel month = new JLabel();
         month.setText(mnthword.format(today.getTime()));
-        month.setFont(month.getFont().deriveFont(26.0f));
+        month.setFont(month.getFont().deriveFont(32.0f));
         layout.add(month);
         container.add(layout, BorderLayout.NORTH);
         
@@ -59,6 +59,7 @@ public class CalendarWindow {
         for (int i=0; i<7; i++) {
             JPanel item = new JPanel(new BorderLayout());
             JLabel daylabel = new JLabel(dayword.format(cal.getTime()));
+            daylabel.setFont(daylabel.getFont().deriveFont(26.0f));
             item.add(daylabel, BorderLayout.CENTER);
             
             calendar.add(item);
@@ -96,7 +97,7 @@ public class CalendarWindow {
             layout.add(index);
             item.add(layout, BorderLayout.WEST);
             
-            JLabel l = new JLabel("<html><body style='width: 65px; height: 40px'></body></html>");
+            JLabel l = new JLabel("<html><body style='width: 70px; height: 40px'></body></html>");
             l.setBackground(calendar.getBackground());
             item.add(l, BorderLayout.CENTER);
 
@@ -114,7 +115,7 @@ public class CalendarWindow {
             if (act!=null) {
                 SimpleDateFormat fmt = new SimpleDateFormat("HH:mm");
                 fmt.setTimeZone(TimeZone.getTimeZone("CET"));
-                l.setText("<html><body style='width: 65px; height: 40px'><b>"+act.getName()+"</b><br />"+
+                l.setText("<html><body style='width: 70px; height: 40px'><b>"+act.getName()+"</b><br />"+
                         fmt.format(act.getDatetimeBegin())+" - "+fmt.format(act.getDatetimeEnd())+"</body></html>");
                 this.setCursor(new Cursor(Cursor.HAND_CURSOR));
             }
