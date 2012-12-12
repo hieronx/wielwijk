@@ -82,13 +82,15 @@ public class CalendarWindow {
         Activity act;
         boolean white;
         boolean orange;
+        JPanel layout2;
+        JPanel item;
         
         public CalendarDay(int yr, int m, int d, boolean current, boolean today) {
             orange = today;
             white = current;
-            JPanel item = new JPanel(new BorderLayout());
+            item = new JPanel(new BorderLayout());
 
-            JPanel layout2 = new JPanel();
+            layout2 = new JPanel();
             JLabel index = new JLabel(Integer.toString(d));
             layout2.add(index);
             item.add(layout2, BorderLayout.WEST);
@@ -101,47 +103,52 @@ public class CalendarWindow {
             this.add(item);
 
             if (current) {
-                this.setBackground(Color.WHITE);
-                layout2.setBackground(Color.WHITE);
-                item.setBackground(Color.WHITE);
+                Paint(Color.WHITE);
             }
             if (today) {
-                this.setBackground(Color.ORANGE);
-                layout2.setBackground(Color.ORANGE);
-                item.setBackground(Color.ORANGE);
+                Paint(Color.ORANGE);
             }
             act = ActivityContainer.getActivityByDay(yr, m, d);
 
             if (act!=null) {
-                l.setText("<html><body style='width: 65px'><b>"+act.getName()+"</b>"+act.getDescription()+"</body></html>");
+                l.setText("<html><body style='width: 65px'><b>"+act.getName()+"</b><br />"+act.getDescription()+"</body></html>");
                 this.setCursor(new Cursor(Cursor.HAND_CURSOR));
             }
             
             this.addMouseListener(this);
         }
         
+        private void Paint(Color c) {
+            this.setBackground(c);
+            layout2.setBackground(c);
+            item.setBackground(c);
+        }
+        
         @Override
         public void mouseEntered(MouseEvent e) {
             if (act!=null) {
-                this.setBackground(Color.LIGHT_GRAY);
+                Paint(Color.cyan);
             }
         }
 
         @Override
         public void mouseExited(MouseEvent me) {
             if (white && !orange) {
-                this.setBackground(Color.WHITE);
+                Paint(Color.WHITE);
             } else if (orange) {
-                this.setBackground(Color.ORANGE);
+                Paint(Color.ORANGE);
             } else {
-                this.setBackground(calendar.getBackground());
+                Paint(calendar.getBackground());
             }
             
         }
         
         @Override
         public void mouseClicked(MouseEvent me) {
-            
+            if (act!=null) {
+                ActivityWindow ac = new ActivityWindow(act);
+                Wielwijk.gui.showWindow(1);
+            }
         }
 
         @Override
