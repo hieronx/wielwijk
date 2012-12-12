@@ -113,44 +113,51 @@ public class Activity {
             cancelled = true;
         }
     }
-    
-    /**
-     *
-     */
-    public String getName() {
-        return name;
-    }
-    
-    /**
-     *
-     */
-    public String getLocation() {
-        return location;
-    }
-    
-    /**
-     * 
-     */
+
     public long getId() {
         return id;
     }
-    
+
+    public String getName() {
+        return name;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
     public Date getDatetimeBegin() {
       return datetime_begin;
     }
 
-     public Date getDatetimeEnd() {
+    public Date getDatetimeEnd() {
       return datetime_end;
     }
+    
+    public int getFee() {
+      return fee;
+    }
 
-    /**
-     * 
-     *  
-     */
-    public String getDescription() {
-        return description;
+    public int getLowerUserLimit() {
+      return lower_user_limit;
+    }
+
+    public int getUpperUserLimit() {
+      return upper_user_limit;
+    }
+
+    public String getLowerLimitDate() {
+      return lower_limit_date;
     }
     
+    public boolean getCancelled() {
+      return cancelled;
+    }
+
     public static void main(String args[]) {
         Wielwijk.getDBConnection();
         
