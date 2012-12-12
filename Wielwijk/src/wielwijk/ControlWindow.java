@@ -4,6 +4,7 @@ import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.*;
 import java.util.*;
+import javax.swing.event.*;
 
 /**
  *
@@ -12,6 +13,8 @@ import java.util.*;
 public class ControlWindow {
     
     JPanel left, right;
+    
+    private JLabel selected_user;
     
     private JPanel jPanel1, jPanel2, jPanel3, jPanel4;
     private JTabbedPane jTabbedPane1;
@@ -60,10 +63,19 @@ public class ControlWindow {
         
         panel.add(layout, BorderLayout.NORTH);
         
-        String[] data = {"Jeroen Offerijns", "Bart Slangewal", "Yannick Verhoog", "Sytze Zeijlmaker", "Bart Slangewal", "Yannick Verhoog", "Sytze Zeijlmaker", "Bart Slangewal", "Yannick Verhoog", "Sytze Zeijlmaker", "Bart Slangewal", "Yannick Verhoog", "Sytze Zeijlmaker"};
-        JList myList = new JList(data);
+        java.util.List res = Wielwijk.db.query("SELECT * FROM users");
+        ArrayList<User> data = new ArrayList<User>();
+        for (int i = 0; i < res.size(); i++) {
+            Map<String, Object> map = (HashMap<String, Object>) res.get(i);
+            User user;
+            user = new User((String) map.get("name"), (String) map.get("password"), (Integer) map.get("picture"), (String) map.get("address"), (String) map.get("birthdate").toString(), (Boolean) map.get("board"), (Long) map.get("id"));
+            
+            data.add(user);
+        }
+        JList myList = new JList(data.toArray());
         myList.setFont(myList.getFont().deriveFont(16.0f));
         myList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
         
         JScrollPane pane = new JScrollPane(myList);
         Border invis = BorderFactory.createMatteBorder(0, 0, 0, 160, Wielwijk.gui.getBackground());
@@ -78,9 +90,9 @@ public class ControlWindow {
         Border empty2 = BorderFactory.createMatteBorder(0, 20, 0, 0, Wielwijk.gui.getBackground());
         panel2.setBorder(empty2);
         
-        JLabel label2 = new JLabel("Bart Slangewal");
-        label2.setFont(label2.getFont().deriveFont(20.0f));
-        panel2.add(label2, BorderLayout.NORTH);
+        final JLabel selected_user = new JLabel();
+        selected_user.setFont(selected_user.getFont().deriveFont(20.0f));
+        panel2.add(selected_user, BorderLayout.NORTH);
         
         JPanel form = new JPanel(new GridLayout(3,1));
         
@@ -88,9 +100,9 @@ public class ControlWindow {
         label4.setText("Gebruikersnaam:");
         label4.setFont(label4.getFont().deriveFont(14.0f));
         JPanel wrapper = new JPanel(new BorderLayout());
-        JTextField text = new JTextField(15);
+        final JTextField username = new JTextField(15);
         wrapper.add(Box.createRigidArea(new Dimension(0, 20)), BorderLayout.NORTH);
-        wrapper.add(text, BorderLayout.CENTER);
+        wrapper.add(username, BorderLayout.CENTER);
         form.add(label4);
         form.add(wrapper);
 
@@ -98,11 +110,21 @@ public class ControlWindow {
         label3.setText("Wachtwoord:");
         label3.setFont(label3.getFont().deriveFont(14.0f));
         JPanel wrapper2 = new JPanel(new BorderLayout());
-        JTextField text2 = new JPasswordField(15);
+        final JTextField password = new JPasswordField(15);
         wrapper2.add(Box.createRigidArea(new Dimension(0, 20)), BorderLayout.NORTH);
-        wrapper2.add(text2, BorderLayout.CENTER);
+        wrapper2.add(password, BorderLayout.CENTER);
         form.add(label3);
         form.add(wrapper2);
+
+        JLabel label2 = new JLabel();
+        label2.setText("Geboortedatum:");
+        label2.setFont(label2.getFont().deriveFont(14.0f));
+        JPanel wrapper5 = new JPanel(new BorderLayout());
+        final JTextField birthdate = new JTextField(15);
+        wrapper5.add(Box.createRigidArea(new Dimension(0, 20)), BorderLayout.NORTH);
+        wrapper5.add(birthdate, BorderLayout.CENTER);
+        form.add(label2);
+        form.add(wrapper5);
         
         panel2.add(form, BorderLayout.CENTER);
         
@@ -151,6 +173,18 @@ public class ControlWindow {
         
         Wielwijk.gui.addElement(window_id, container);
         Wielwijk.gui.showWindow(window_id);
+        
+        ListSelectionListener listSelectionListener = new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent listSelectionEvent) {
+                JList list = (JList) listSelectionEvent.getSource();
+                User user = (User) list.getSelectedValue();
+                selected_user.setText(user.getName());
+                username.setText(user.getName());
+                password.setText(user.getPassword());
+                birthdate.setText(user.getBirthdate());
+            }
+        };
+        myList.addListSelectionListener(listSelectionListener);
      }
   }
 
