@@ -115,7 +115,7 @@ public class Activity {
     }
     
     /**
-     * 
+     *
      */
     public String getName() {
         return name;
@@ -128,6 +128,14 @@ public class Activity {
         return id;
     }
     
+    public Date getDatetimeBegin() {
+      return datetime_begin;
+    }
+
+     public Date getDatetimeEnd() {
+      return datetime_end;
+    }
+
     /**
      * 
      *  

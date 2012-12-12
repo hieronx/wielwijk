@@ -21,6 +21,7 @@ public class ActivityWindow {
     public ActivityWindow(Activity activity) {
         act = activity;
         blackline = BorderFactory.createLineBorder(Color.black);   //tekent zwarte rand om panel
+        SimpleDateFormat printFormat = new SimpleDateFormat("HH:mm");
 
         JPanel window = new JPanel();
         int window_id = Wielwijk.gui.addWindow(window);
@@ -38,14 +39,24 @@ public class ActivityWindow {
              name.setText(act.getName());
              leftlayout.add(name);
         
-//             JPanel textpanel = new JPanel();
-//             textpanel.setBorder(blackline);
-//             textpanel.setLayout(new GridLayout(10, 2));
-//                  Label location = new JLabel();
-//                  location.setText("Locatie: ")
-//                  Label loc = new JLabel();
-//                  loc.setText(act.getName);
-//                  Label
+            JPanel textpanel = new JPanel();
+            textpanel.setBorder(blackline);
+            textpanel.setLayout(new GridLayout(10, 2));
+                 Label location = new JLabel();
+                 location.setText("Locatie: ")
+                 Label loc = new JLabel();
+                 loc.setText(act.getName);
+
+                 Label time_begin = new JLabel();
+                 datetime_begin.setText("Begintijd: ");
+                 Label tb = new JLabel();
+                 tb.setText(printFormat.format((java.util.Date) act.getDatetimeBegin()));
+
+                 Label time_end = new JLabel();
+                 datetime_end.setText("Eindtijd: ");
+                 Label te = new JLabel();
+                 te.setText(printFormat.format((java.util.Date) act.getDatetimeEnd()));
+
 
 
         //overige parameters activiteit in tekstvak
