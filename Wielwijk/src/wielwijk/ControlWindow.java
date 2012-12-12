@@ -116,6 +116,16 @@ public class ControlWindow {
         form.add(label3);
         form.add(wrapper2);
 
+//        JLabel label5 = new JLabel();
+//        label5.setText("Adres:");
+//        label5.setFont(label5.getFont().deriveFont(14.0f));
+//        JPanel wrapper6 = new JPanel(new BorderLayout());
+//        final JTextField address = new JTextField(15);
+//        wrapper6.add(Box.createRigidArea(new Dimension(0, 20)), BorderLayout.NORTH);
+//        wrapper6.add(address, BorderLayout.CENTER);
+//        form.add(label5);
+//        form.add(wrapper6);
+
         JLabel label2 = new JLabel();
         label2.setText("Geboortedatum:");
         label2.setFont(label2.getFont().deriveFont(14.0f));
@@ -181,6 +191,7 @@ public class ControlWindow {
                 selected_user.setText(user.getName());
                 username.setText(user.getName());
                 password.setText(user.getPassword());
+                //address.setText(user.getAddress());
                 birthdate.setText(user.getBirthdate());
             }
         };
