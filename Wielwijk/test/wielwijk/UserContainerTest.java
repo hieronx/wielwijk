@@ -109,12 +109,30 @@ public class UserContainerTest {
     @Test
     public void testFindUser() {
         System.out.println("findUser");
-        String name = "";
-        List expResult = null;
-        List result = UserContainer.findUser("henk");
-        assertEquals(expResult, result);
+        
+        //De test user
+        String name = "Piet Test";
+        String password = "test";
+        int picture = 12;
+        String address = "test";
+        String birthdate = "2011-11-11";
+        
+       
+        //expected resulte
+        String expResult = name + password + String.valueOf(picture) + address + birthdate;
+        //functie
+        List result = UserContainer.findUser(name);
+        //haalt de vergelijkbare gegevens uit de functie
+        if (result.isEmpty()) {fail("geen user gevonden");}
+ 
+        java.util.Map<String, Object> map = (HashMap<String, Object>) result.get(0);
+        
+        String formatted = (String)map.get("name") + (String)map.get("password") + (Integer)map.get("picture")+
+                (String)map.get("address")+ map.get("birthdate").toString();
+          //vergelijkt de name, password, picture , adress en birthdate van expected met die van de functie
+        assertEquals(expResult, formatted);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
     }
 
     /**
@@ -123,9 +141,10 @@ public class UserContainerTest {
     @Test
     public void testGetUserById() {
         System.out.println("getUserById");
-        int id = 0;
-        User expResult = null;
-        User result = UserContainer.getUserById(id);
+        int id = 1;
+        User expResult = new User("Jeroen Offerijns", "informaticus", 35, "Haarlem", "1993-11-25",false,1);
+        User result = UserContainer.getUserById(1);
+        System.out.println(result.getName());
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
