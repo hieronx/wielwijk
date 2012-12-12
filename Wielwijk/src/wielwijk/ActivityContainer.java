@@ -56,9 +56,9 @@ public class ActivityContainer {
 
     public static Activity getActivityByDay(int year, int month, int day) {
         List res = Wielwijk.db.query("SELECT * FROM activities WHERE "
-                + "YEAR(datetime_begin)=" + year
-                + " AND MONTH(datetime_begin)=" + month
-                + " AND DAY(datetime_begin)=" + day);
+                + "FROM_UNIXTIME(datetime_begin, '%Y') = '" + year
+                + "' AND FROM_UNIXTIME(datetime_begin, '%c') = '" + month
+                + "' AND FROM_UNIXTIME(datetime_begin, '%d') = '" + day + "'");
         if (res.size() == 0) {
             return null;
         }
