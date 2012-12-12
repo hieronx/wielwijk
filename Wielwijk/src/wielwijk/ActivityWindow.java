@@ -2,10 +2,10 @@ package wielwijk;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 import javax.swing.*;
 import javax.swing.border.*;
+import java.text.*;
 
 /**
  *
@@ -38,14 +38,14 @@ public class ActivityWindow {
              name.setText(act.getName());
              leftlayout.add(name);
         
-             JPanel textpanel = new JPanel();
-             textpanel.setBorder(blackline);
-             texpanel.setLayout(new GridLayout(10, 2));
-                  Label location = new JLabel();
-                  location.setText("Locatie: ")
-                  Label loc = new JLabel();
-                  loc.setText(act.getName);
-                  Label
+//             JPanel textpanel = new JPanel();
+//             textpanel.setBorder(blackline);
+//             textpanel.setLayout(new GridLayout(10, 2));
+//                  Label location = new JLabel();
+//                  location.setText("Locatie: ")
+//                  Label loc = new JLabel();
+//                  loc.setText(act.getName);
+//                  Label
 
 
         //overige parameters activiteit in tekstvak
@@ -73,9 +73,17 @@ public class ActivityWindow {
     public static void main(String[] args) {
         Wielwijk.gui = new GUI();
         Wielwijk.getDBConnection();
-        Date datetime = new SimpleDateFormat("2012-11-19'T'12:00:00").parse(sDate);
+        
+        Date datetime = null;
+        try {
+            SimpleDateFormat isoFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+            isoFormat.setTimeZone(TimeZone.getTimeZone("CET"));
+            datetime = isoFormat.parse("2010-05-23T09:01:02");
+        } catch(ParseException e) {
+            System.out.println(e.getMessage());
+        }
+        
         Hike temp = new Hike("Rondje", "Delft", "een klein rondje", datetime, datetime, 10, 5, 50, "1012-12-11", false, 10000, 500);
-
 
         ActivityWindow aw = new ActivityWindow(temp);
         Wielwijk.gui.showWindow(0);

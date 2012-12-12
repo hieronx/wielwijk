@@ -28,10 +28,10 @@ public class Hike extends Activity {
      * @param dis
      * @param ht
      */
-    public Hike(String nm, String lc, String des, Date dtb, Date dte, int fe, int lul, int uul, String lld, boolean cl, int dis, int ht) {
+    public Hike(String nm, String lc, String des, java.util.Date dtb, java.util.Date dte, int fe, int lul, int uul, String lld, boolean cl, int dis, int ht) {
         super(nm, lc, des, dtb, dte, fe, lul, uul, lld, cl);
 
-        Date lowerlimitdate=Date.valueOf(lld);
+        java.sql.Date lowerlimitdate=java.sql.Date.valueOf(lld);
         distance = dis;
         d_height = ht;
         checkpoints = new ArrayList<Checkpoint>();
@@ -39,8 +39,8 @@ public class Hike extends Activity {
         Wielwijk.db.exec /*System.out.println*/("INSERT INTO activities (name, location, description,"
                 + " datetime_begin, datetime_end, fee, lower_user_limit, upper_user_limit,"
                 + " lower_limit_date, cancelled, distance, height_difference, type) "
-                + "VALUES ( '" + nm + "', '" + lc + "', '" + des + "', '" + dtb.getTime() + "', '"
-                + dtb.getTime() + "', '" + fe + "', '" + lul + "', '" + uul + "', '" + lowerlimitdate + "', '" + (cl ? "1" : "0")
+                + "VALUES ( '" + nm + "', '" + lc + "', '" + des + "', '" + dtb.getTime()/1000 + "', '"
+                + dtb.getTime()/1000 + "', '" + fe + "', '" + lul + "', '" + uul + "', '" + lowerlimitdate + "', '" + (cl ? "1" : "0")
                 + "', '" + distance + "', '" + d_height + "', 0)");
     }
 }

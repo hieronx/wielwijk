@@ -1,5 +1,7 @@
 package wielwijk;
 
+import java.util.*;
+
 /**
  *
  * @author jeroen
@@ -10,8 +12,8 @@ public class Activity {
     private String name;
     private String location;
     private String description;
-    private String datetime_begin;
-    private String datetime_end;
+    private Date datetime_begin;
+    private Date datetime_end;
     private int    fee;
     private int    lower_user_limit;
     private int    upper_user_limit;
@@ -31,7 +33,7 @@ public class Activity {
      * @param lld
      * @param cl
      */
-    public Activity(String nm, String lc, String des, String dtb, String dte, int fe, int lul, int uul, String lld, boolean cl) {
+    public Activity(String nm, String lc, String des, Date dtb, Date dte, int fe, int lul, int uul, String lld, boolean cl) {
         name = nm;
         location = lc;
         description = des;
@@ -60,7 +62,7 @@ public class Activity {
      * @param cl
      * @param id 
      */
-    public Activity(String nm, String lc, String des, String dtb, String dte, int fe, int lul, int uul, String lld, boolean cl, long idd) {
+    public Activity(String nm, String lc, String des, Date dtb, Date dte, int fe, int lul, int uul, String lld, boolean cl, long idd) {
         name = nm;
         location = lc;
         description = des;
@@ -138,8 +140,8 @@ public class Activity {
         Wielwijk.getDBConnection();
         
         User u = UserContainer.getUserById(1);
-        Activity a = ActivityContainer.getActivityById(1);
+        //Activity a = ActivityContainer.getActivityById(1);
         
-        a.addUserAct(u, false);
+        //a.addUserAct(u, false);
     }
 }

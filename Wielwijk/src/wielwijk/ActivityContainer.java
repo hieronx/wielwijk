@@ -46,7 +46,10 @@ public class ActivityContainer {
 
         java.util.Map<String, Object> map = (HashMap<String, Object>) res.get(0);
 
-        return new Activity((String) map.get("name"), (String) map.get("location"), (String) map.get("destination"), map.get("datetime_begin").toString(), map.get("datetime_end").toString(),
+        Date datetimebegin = new Date((Long) map.get("datetime_begin"));
+        Date datetimeend = new Date((Long) map.get("datetime_end"));
+        
+        return new Activity((String) map.get("name"), (String) map.get("location"), (String) map.get("destination"), datetimebegin, datetimeend,
                 (Integer) map.get("fee"), (Integer) map.get("lower_user_limit"), (Integer) map.get("upper_user_limit"),
                 map.get("lower_limit_date").toString(), (Boolean) map.get("cancelled"), (Long) map.get("id"));
     }
@@ -62,7 +65,10 @@ public class ActivityContainer {
 
         java.util.Map<String, Object> map = (HashMap<String, Object>) res.get(0);
 
-        return new Activity((String) map.get("name"), (String) map.get("location"), (String) map.get("destination"), map.get("datetime_begin").toString(), map.get("datetime_end").toString(),
+        Date datetimebegin = new Date((Long) map.get("datetime_begin"));
+        Date datetimeend = new Date((Long) map.get("datetime_end"));
+
+        return new Activity((String) map.get("name"), (String) map.get("location"), (String) map.get("destination"), datetimebegin, datetimeend,
                 (Integer) map.get("fee"), (Integer) map.get("lower_user_limit"), (Integer) map.get("upper_user_limit"),
                 map.get("lower_limit_date").toString(), (Boolean) map.get("cancelled"), (Long) map.get("id"));
     }
