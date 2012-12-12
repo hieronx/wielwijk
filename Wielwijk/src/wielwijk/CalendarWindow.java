@@ -9,6 +9,7 @@ import javax.swing.*;
 import java.util.Calendar;
 import java.util.Date;
 import java.text.SimpleDateFormat;
+import java.util.TimeZone;
 
 /**
  *
@@ -111,7 +112,8 @@ public class CalendarWindow {
             act = ActivityContainer.getActivityByDay(yr, m, d);
 
             if (act!=null) {
-                SimpleDateFormat fmt = new SimpleDateFormat("hh:mm");
+                SimpleDateFormat fmt = new SimpleDateFormat("HH:mm");
+                fmt.setTimeZone(TimeZone.getTimeZone("CET"));
                 l.setText("<html><body style='width: 65px; height: 40px'><b>"+act.getName()+"</b><br />"+fmt.format(act.getDatetimeBegin())+"</body></html>");
                 this.setCursor(new Cursor(Cursor.HAND_CURSOR));
             }
