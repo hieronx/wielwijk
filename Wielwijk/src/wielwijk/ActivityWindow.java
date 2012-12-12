@@ -20,6 +20,7 @@ public class ActivityWindow {
 
     public ActivityWindow(Activity activity) {
         act = activity;
+        blackline = BorderFactory.createLineBorder(Color.black);   //tekent zwarte rand om panel
 
         JPanel window = new JPanel();
         int window_id = Wielwijk.gui.addWindow(window);
@@ -33,20 +34,29 @@ public class ActivityWindow {
         JPanel rightlayout = new JPanel();          //layout voor rechterhelft
         rightlayout.setLayout(new FlowLayout());
 
-        name = new JLabel();                        //naam wandeling boven beschrijving
-        name.setText(act.getName());
-        leftlayout.add(name);
+             name = new JLabel();                        //naam wandeling boven beschrijving
+             name.setText(act.getName());
+             leftlayout.add(name);
         
-        JPanel textpanel = new JPanel();
-        blackline = BorderFactory.createLineBorder(Color.black);
-        textpanel.setBorder(blackline);
+             JPanel textpanel = new JPanel();
+             textpanel.setBorder(blackline);
+             texpanel.setLayout(new GridLayout(10, 2));
+                  Label location = new JLabel();
+                  location.setText("Locatie: ")
+                  Label loc = new JLabel();
+                  loc.setText(act.getName);
+                  Label
+
 
         //overige parameters activiteit in tekstvak
         //wandeling/borrel/vergadering
 
         container.add(leftlayout);                  //voegt linkerhelft toe aan container
 
-        slaapplaatsen = new JLabel();               //moet nog in tekstvak
+
+
+        slaapplaatsen = new JLabel();
+        slaapplaatsen.setBorder(blackline);
         slaapplaatsen.setText("Slaapplaatsen:");
         rightlayout.add(slaapplaatsen);
 
@@ -63,7 +73,8 @@ public class ActivityWindow {
     public static void main(String[] args) {
         Wielwijk.gui = new GUI();
         Wielwijk.getDBConnection();
-        Hike temp = new Hike("Rondje", "Delft", "een klein rondje", "1012-12-12", "1012-12-12", 10, 5, 50, "1012-12-11", false, 10000, 500);
+        Date datetime = new SimpleDateFormat("2012-11-19'T'12:00:00").parse(sDate);
+        Hike temp = new Hike("Rondje", "Delft", "een klein rondje", datetime, datetime, 10, 5, 50, "1012-12-11", false, 10000, 500);
 
 
         ActivityWindow aw = new ActivityWindow(temp);
