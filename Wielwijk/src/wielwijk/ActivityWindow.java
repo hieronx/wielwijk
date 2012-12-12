@@ -27,36 +27,69 @@ public class ActivityWindow {
         int window_id = Wielwijk.gui.addWindow(window);
 
         JPanel container = new JPanel();            //deelt window in tweeen
-        container.setLayout(new GridLayout(1, 1));
+        container.setLayout(new GridLayout(1, 2));
 
         JPanel leftlayout = new JPanel();           //layout voor linkerhelft
-        leftlayout.setLayout(new FlowLayout());
-
+        leftlayout.setLayout(new BorderLayout());
+        
         JPanel rightlayout = new JPanel();          //layout voor rechterhelft
         rightlayout.setLayout(new FlowLayout());
 
-             name = new JLabel();                        //naam wandeling boven beschrijving
-             name.setText(act.getName());
-             leftlayout.add(name);
+            JPanel wrapper = new JPanel();
+            name = new JLabel();                        //naam wandeling boven beschrijving   
+            name.setFont(name.getFont().deriveFont(26.0f));
+            name.setText(act.getName());
+            wrapper.add(Box.createRigidArea(new Dimension(0, 60)));
+            wrapper.add(name);
+            leftlayout.add(wrapper, BorderLayout.NORTH);
+            
         
             JPanel textpanel = new JPanel();
-            textpanel.setBorder(blackline);
-            textpanel.setLayout(new GridLayout(10, 2));
-                 Label location = new JLabel();
-                 location.setText("Locatie: ")
-                 Label loc = new JLabel();
-                 loc.setText(act.getName);
+        
+            Border empty = BorderFactory.createMatteBorder(20, 20, 20, 20, Wielwijk.gui.getBackground());
+            leftlayout.setBorder(empty);
+            textpanel.setLayout(new GridLayout(5, 2));
+            
+            //textpanel.add(Box.createRigidArea(new Dimension(400, 0)));
+            
+            Component margin = Box.createRigidArea(new Dimension(0, 20));
+            
+            // Locatie
+            JLabel location = new JLabel();
+            location.setText("Locatie: ");
+            location.setFont(location.getFont().deriveFont(16.0f));
+            textpanel.add(location);
+            
+            JLabel loc = new JLabel();
+            loc.setText(act.getLocation());
+            textpanel.add(loc);
+            
+            textpanel.add(margin);
+            textpanel.add(margin);
+            
 
-                 Label time_begin = new JLabel();
-                 datetime_begin.setText("Begintijd: ");
-                 Label tb = new JLabel();
-                 tb.setText(printFormat.format((java.util.Date) act.getDatetimeBegin()));
+            // Begintijd
+            JLabel time_begin = new JLabel();
+            time_begin.setText("Begintijd: ");
+            textpanel.add(time_begin);
+            
+            JLabel tb = new JLabel();
+            tb.setText(printFormat.format((java.util.Date) act.getDatetimeBegin()));
+            textpanel.add(tb);
+            
+            textpanel.add(margin);
+            textpanel.add(margin);
 
-                 Label time_end = new JLabel();
-                 datetime_end.setText("Eindtijd: ");
-                 Label te = new JLabel();
-                 te.setText(printFormat.format((java.util.Date) act.getDatetimeEnd()));
+            // Eindtijd
+            JLabel time_end = new JLabel();
+            time_end.setText("Eindtijd: ");
+            textpanel.add(time_end);
+            
+            JLabel te = new JLabel();
+            te.setText(printFormat.format((java.util.Date) act.getDatetimeEnd()));
+            textpanel.add(te);
 
+            leftlayout.add(textpanel, BorderLayout.CENTER);
 
 
         //overige parameters activiteit in tekstvak
@@ -94,7 +127,7 @@ public class ActivityWindow {
             System.out.println(e.getMessage());
         }
         
-        Hike temp = new Hike("Rondje", "Delft", "een klein rondje", datetime, datetime, 10, 5, 50, "1012-12-11", false, 10000, 500);
+        Hike temp = new Hike("Rondje om Delft", "Delft", "een klein rondje", datetime, datetime, 10, 5, 50, "1012-12-11", false, 10000, 500);
 
         ActivityWindow aw = new ActivityWindow(temp);
         Wielwijk.gui.showWindow(0);

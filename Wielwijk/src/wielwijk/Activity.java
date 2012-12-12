@@ -122,6 +122,13 @@ public class Activity {
     }
     
     /**
+     *
+     */
+    public String getLocation() {
+        return location;
+    }
+    
+    /**
      * 
      */
     public long getId() {
