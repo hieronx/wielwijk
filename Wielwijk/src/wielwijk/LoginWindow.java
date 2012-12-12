@@ -22,7 +22,7 @@ class LoginWindow {
         container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
         
         // Onzichtbaar blok van 200px hoog
-        container.add(Box.createRigidArea(new Dimension(0, 200)));
+        container.add(Box.createRigidArea(new Dimension(0, 260)));
         
         // Koptekst
         layout = new JPanel();

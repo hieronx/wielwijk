@@ -40,10 +40,23 @@ public class ActivityWindow {
         name.setFont(name.getFont().deriveFont(26.0f));
         name.setText(act.getName());
         wrapper.add(name, BorderLayout.NORTH);
-        wrapper.add(Box.createRigidArea(new Dimension(450, 20)), BorderLayout.CENTER);
+        wrapper.add(Box.createRigidArea(new Dimension(460, 20)), BorderLayout.CENTER);
         leftlayout.add(wrapper, BorderLayout.NORTH);
 
-
+        // Beschrijving
+        JPanel desc_wrapper = new JPanel(new BorderLayout());
+        
+        JLabel description = new JLabel();
+        description.setText("<html><body><i>" + act.getDescription() + "</i></body></html>");
+        description.setFont(description.getFont().deriveFont(14.0f));
+        description.setForeground(new Color(150, 150, 150));
+        
+        desc_wrapper.add(description, BorderLayout.NORTH);
+        desc_wrapper.add(Box.createRigidArea(new Dimension(0, 20)), BorderLayout.CENTER);
+        
+        leftlayout.add(desc_wrapper, BorderLayout.CENTER);
+        
+        // Waarden
         JPanel textpanel = new JPanel();
 
         Border empty = BorderFactory.createMatteBorder(20, 20, 20, 20, Wielwijk.gui.getBackground());
@@ -86,7 +99,7 @@ public class ActivityWindow {
         te.setFont(te.getFont().deriveFont(16.0f));
         textpanel.add(te);
 
-        leftlayout.add(textpanel, BorderLayout.CENTER);
+        leftlayout.add(textpanel, BorderLayout.SOUTH);
 
 
         //overige parameters activiteit in tekstvak
@@ -99,7 +112,7 @@ public class ActivityWindow {
         slaapplaatsen.setFont(slaapplaatsen.getFont().deriveFont(26.0f));
         wrapper2.add(slaapplaatsen, BorderLayout.NORTH);
         
-        rightlayout.add(Box.createRigidArea(new Dimension(450, 20)), BorderLayout.NORTH);
+        rightlayout.add(Box.createRigidArea(new Dimension(460, 20)), BorderLayout.NORTH);
         rightlayout.add(wrapper2, BorderLayout.CENTER);
 
         //slaapplaatsen ophalen uit db, lijst maken

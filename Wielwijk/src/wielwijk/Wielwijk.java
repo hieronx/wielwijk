@@ -27,7 +27,7 @@ public class Wielwijk {
         
         gui = new GUI();
         
-        ControlWindow login = new ControlWindow();
+        LoginWindow login = new LoginWindow();
     }
     
     public static void getDBConnection() {
