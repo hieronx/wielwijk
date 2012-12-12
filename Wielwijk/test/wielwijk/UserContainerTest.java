@@ -32,7 +32,8 @@ public class UserContainerTest {
     
 
     @AfterClass
-    public static void tearDownClass() throws Exception {
+    public static void tearDownClass()  {
+       
     }
 
     /**
@@ -42,7 +43,7 @@ public class UserContainerTest {
     public void testAddBoard() {
        
         System.out.println("addBoard");
-        String name = "asdsadffd";
+        String name = "Klaas Test";
         String password = "test";
         int picture = 12;
         String address = "test";
@@ -60,6 +61,12 @@ public class UserContainerTest {
             System.out.println("{picture=" + picture +", address=" + address + ", birthdate=" + birthdate + ", password=" + password + "}");
         }
         assertEquals(result,true);
+        
+        //gooit nieuwe boardmember weer weg
+        java.util.List results2 = Wielwijk.db.query("SELECT id FROM users WHERE name LIKE '%Klaas Test%'");
+        java.util.Map<String, Object> map = (HashMap<String, Object>) results2.get(0);
+        int id = Integer.parseInt(String.valueOf((Long)map.get("id")));
+        UserContainer.removeUser(id);
         
         
         
@@ -89,20 +96,15 @@ public class UserContainerTest {
             System.out.println("{picture=" + picture +", address=" + address + ", birthdate=" + birthdate + ", password=" + password + "}");
         }
         assertEquals(result,true);
-    }
-
-    /**
-     * Test of removeUser method, of class UserContainer.
-     */
-    @Test
-    public void testRemoveUser() {
-        System.out.println("removeUser");
-        int id = 0;
+        
+         //gooit nieuwe member weer weg
+        java.util.List results2 = Wielwijk.db.query("SELECT id FROM users WHERE name LIKE '%Piet Test%'");
+        java.util.Map<String, Object> map = (HashMap<String, Object>) results2.get(0);
+        int id = Integer.parseInt(String.valueOf((Long)map.get("id")));
         UserContainer.removeUser(id);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
+  
     /**
      * Test of findUser method, of class UserContainer.
      */
@@ -110,14 +112,15 @@ public class UserContainerTest {
     public void testFindUser() {
         System.out.println("findUser");
         
-        //De test user
+        //maakt test user
         String name = "Piet Test";
         String password = "test";
         int picture = 12;
         String address = "test";
         String birthdate = "2011-11-11";
         
-       
+        UserContainer.addMember(name, password, picture, address, birthdate);
+        
         //expected resulte
         String expResult = name + password + String.valueOf(picture) + address + birthdate;
         //functie
@@ -131,7 +134,12 @@ public class UserContainerTest {
                 (String)map.get("address")+ map.get("birthdate").toString();
           //vergelijkt de name, password, picture , adress en birthdate van expected met die van de functie
         assertEquals(expResult, formatted);
-        // TODO review the generated test code and remove the default call to fail.
+       
+         //gooit nieuwe test user weer weg
+        java.util.List results2 = Wielwijk.db.query("SELECT id FROM users WHERE name LIKE '%Piet Test%'");
+        java.util.Map<String, Object> map2 = (HashMap<String, Object>) results2.get(0);
+        int id = Integer.parseInt(String.valueOf((Long)map2.get("id")));
+        UserContainer.removeUser(id);
         
     }
 
@@ -140,14 +148,38 @@ public class UserContainerTest {
      */
     @Test
     public void testGetUserById() {
+       
         System.out.println("getUserById");
         int id = 1;
-        User expResult = new User("Jeroen Offerijns", "informaticus", 35, "Haarlem", "1993-11-25",false,1);
+        String expResult = "Jeroen Offerijns";
         User result = UserContainer.getUserById(1);
-        System.out.println(result.getName());
-        assertEquals(expResult, result);
+        
+        assertEquals(expResult, result.getName());
+       
+    }
+      /**
+     * Test of removeUser method, of class UserContainer.
+     */
+    @Test
+    public void testRemoveUser() {
+        //maakt test user
+        String name = "Piet Test";
+        String password = "test";
+        int picture = 12;
+        String address = "test";
+        String birthdate = "2011-11-11";
+        
+        UserContainer.addMember(name, password, picture, address, birthdate);
+        
+        //test de remove functie
+        System.out.println("removeUser");
+        java.util.List results = Wielwijk.db.query("SELECT id FROM users WHERE name LIKE '%Piet%'");
+        java.util.Map<String, Object> map = (HashMap<String, Object>) results.get(0);
+        int id = Integer.parseInt(String.valueOf((Long)map.get("id")));
+        System.out.println(id);
+        UserContainer.removeUser(id);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(UserContainer.getUserById(id),null);
     }
 
 }
