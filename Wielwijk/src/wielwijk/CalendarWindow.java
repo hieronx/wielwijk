@@ -2,6 +2,9 @@ package wielwijk;
 
 
 import java.awt.*;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseEvent;
+import java.awt.Cursor;
 import javax.swing.*;
 import java.util.Calendar;
 import java.util.Date;
@@ -66,7 +69,7 @@ public class CalendarWindow {
             int m = Integer.parseInt(mnth.format(cal.getTime()));
             int y = Integer.parseInt(year.format(cal.getTime()));
 
-            calendar.add(getActivity(y, m, d, m==thismonth, d==thisday));
+            calendar.add(new CalendarDay(y, m, d, m==thismonth, d==thisday));
 
             cal.add(Calendar.DATE, +1);
         }
@@ -75,44 +78,80 @@ public class CalendarWindow {
         Wielwijk.gui.addElement(window_id, container);
     }
     
-    private JPanel getActivity(int yr, int m, int d, boolean current, boolean today) {
+    private class CalendarDay extends JPanel implements MouseListener {
+        Activity act;
+        boolean white;
+        boolean orange;
         
-        
-        JPanel item = new JPanel(new BorderLayout());
+        public CalendarDay(int yr, int m, int d, boolean current, boolean today) {
+            orange = today;
+            white = current;
+            JPanel item = new JPanel(new BorderLayout());
 
-        JPanel layout2 = new JPanel();
-        JLabel index = new JLabel(Integer.toString(d));
-        layout2.add(index);
-        item.add(layout2, BorderLayout.WEST);
-        
-        JTextArea ta = new JTextArea("----------");
-        ta.setPreferredSize(new Dimension(100,55));
-        ta.setBackground(calendar.getBackground());
-        item.add(ta, BorderLayout.CENTER);
+            JPanel layout2 = new JPanel();
+            JLabel index = new JLabel(Integer.toString(d));
+            layout2.add(index);
+            item.add(layout2, BorderLayout.WEST);
+            
+            JLabel l = new JLabel("<html><body style='width: 65px; height: 40px'></body></html>");
+            l.setBackground(calendar.getBackground());
+            item.add(l, BorderLayout.CENTER);
 
-        JPanel panel = new JPanel();
-        
-        panel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        panel.add(item);
-        
-        if (current) {
-            panel.setBackground(Color.WHITE);
-            layout2.setBackground(Color.WHITE);
-            item.setBackground(Color.WHITE);
-            ta.setBackground(Color.WHITE);
+            this.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+            this.add(item);
+
+            if (current) {
+                this.setBackground(Color.WHITE);
+                layout2.setBackground(Color.WHITE);
+                item.setBackground(Color.WHITE);
+            }
+            if (today) {
+                this.setBackground(Color.ORANGE);
+                layout2.setBackground(Color.ORANGE);
+                item.setBackground(Color.ORANGE);
+            }
+            act = ActivityContainer.getActivityByDay(yr, m, d);
+
+            if (act!=null) {
+                l.setText("<html><body style='width: 65px'><b>"+act.getName()+"</b>"+act.getDescription()+"</body></html>");
+                this.setCursor(new Cursor(Cursor.HAND_CURSOR));
+            }
+            
+            this.addMouseListener(this);
         }
-        if (today) {
-            panel.setBackground(Color.ORANGE);
-            layout2.setBackground(Color.ORANGE);
-            item.setBackground(Color.ORANGE);
-        }
-        Activity act = ActivityContainer.getActivityByDay(yr, m, d);
         
-        if (act!=null) {
-            ta.setText(act.getName());
+        @Override
+        public void mouseEntered(MouseEvent e) {
+            if (act!=null) {
+                this.setBackground(Color.LIGHT_GRAY);
+            }
+        }
+
+        @Override
+        public void mouseExited(MouseEvent me) {
+            if (white && !orange) {
+                this.setBackground(Color.WHITE);
+            } else if (orange) {
+                this.setBackground(Color.ORANGE);
+            } else {
+                this.setBackground(calendar.getBackground());
+            }
+            
         }
         
-        return panel;
+        @Override
+        public void mouseClicked(MouseEvent me) {
+            
+        }
+
+        @Override
+        public void mousePressed(MouseEvent me) {
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent me) {
+        }
+
     }
     
     public static void main(String[] args) {

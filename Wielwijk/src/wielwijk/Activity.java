@@ -126,6 +126,14 @@ public class Activity {
         return id;
     }
     
+    /**
+     * 
+     *  
+     */
+    public String getDescription() {
+        return description;
+    }
+    
     public static void main(String args[]) {
         Wielwijk.getDBConnection();
         
