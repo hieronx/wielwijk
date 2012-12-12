@@ -1,5 +1,6 @@
 package wielwijk;
 import java.util.*;
+import java.sql.Date;
 
 /**
  *
@@ -41,7 +42,7 @@ public class Hike extends Activity {
                 + " datetime_begin, datetime_end, fee, lower_user_limit, upper_user_limit,"
                 + " lower_limit_date, cancelled, distance, height_difference, type) "
                 + "VALUES ( '" + nm + "', '" + lc + "', '" + des + "', '" + datetimebegin + "', '"
-                + datetimeend + "', '" + fe + "', '" + lul + "', '" + uul + "', '" + lowerlimitdate + "', '" + cl
+                + datetimeend + "', '" + fe + "', '" + lul + "', '" + uul + "', '" + lowerlimitdate + "', '" + (cl ? "1" : "0")
                 + "', '" + distance + "', '" + d_height + "', 0)");
     }
 }

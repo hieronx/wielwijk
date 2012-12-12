@@ -63,7 +63,7 @@ public class ActivityWindow {
     public static void main(String[] args) {
         Wielwijk.gui = new GUI();
         Wielwijk.getDBConnection();
-        Hike temp = new Hike("Rondje", "Delft", "een klein rondje", "11-12-2012", "12-12-2012", 10, 5, 50, "2012-11-12", false, 10000, 500);
+        Hike temp = new Hike("Rondje", "Delft", "een klein rondje", "1012-12-12", "1012-12-12", 10, 5, 50, "1012-12-11", false, 10000, 500);
 
 
         ActivityWindow aw = new ActivityWindow(temp);
