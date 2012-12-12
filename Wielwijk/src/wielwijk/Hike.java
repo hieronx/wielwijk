@@ -30,6 +30,9 @@ public class Hike extends Activity {
      */
     public Hike(String nm, String lc, String des, String dtb, String dte, int fe, int lul, int uul, String lld, boolean cl, int dis, int ht) {
         super(nm, lc, des, dtb, dte, fe, lul, uul, lld, cl);
+        Date datetimebegin=Date.valueOf(dtb);
+        Date datetimeend=Date.valueOf(dte);
+        Date lowerlimitdate=Date.valueOf(lld);
         distance = dis;
         d_height = ht;
         checkpoints = new ArrayList<Checkpoint>();
@@ -37,8 +40,8 @@ public class Hike extends Activity {
         Wielwijk.db.exec /*System.out.println*/("INSERT INTO activities (name, location, description,"
                 + " datetime_begin, datetime_end, fee, lower_user_limit, upper_user_limit,"
                 + " lower_limit_date, cancelled, distance, height_difference, type) "
-                + "VALUES ( '" + nm + "', '" + lc + "', '" + des + "', '" + dtb + "', '"
-                + dte + "', '" + fe + "', '" + lul + "', '" + uul + "', '" + lld + "', '" + cl
+                + "VALUES ( '" + nm + "', '" + lc + "', '" + des + "', '" + datetimebegin + "', '"
+                + datetimeend + "', '" + fe + "', '" + lul + "', '" + uul + "', '" + lowerlimitdate + "', '" + cl
                 + "', '" + distance + "', '" + d_height + "', 0)");
     }
 }
