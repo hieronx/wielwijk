@@ -86,7 +86,7 @@ public class Database {
 
             return data_list;
         } catch (SQLException e) {
-            throw new RuntimeException("SQLException was thrown: " + e.getMessage() + " (State: " + e.getSQLState() + "; Code: " + e.getErrorCode() + ")", e);
+            throw new RuntimeException("SQLException was thrown: " + e.getMessage(), e);
         }
     }
     
