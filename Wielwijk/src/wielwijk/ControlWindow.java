@@ -194,13 +194,15 @@ public class ControlWindow {
             public void valueChanged(ListSelectionEvent listSelectionEvent) {
                 JList list = (JList) listSelectionEvent.getSource();
                 User user = (User) list.getSelectedValue();
-                System.out.println(user);
-                selected_user.setText(user.getName());
-                username.setText(user.getName());
-                password.setText(user.getPassword());
-                address.setText(user.getAddress());
-                birthdate.setText(user.getBirthdate());
-                active_user = user.getId();
+                
+                if (user != null) {
+                    selected_user.setText(user.getName());
+                    username.setText(user.getName());
+                    password.setText(user.getPassword());
+                    address.setText(user.getAddress());
+                    birthdate.setText(user.getBirthdate());
+                    active_user = user.getId();
+                }
             }
         };
         myList.addListSelectionListener(listSelectionListener);
@@ -225,6 +227,7 @@ public class ControlWindow {
                 String dpassword = password.getText();
                 String daddress = address.getText();
                 String dbirthdate = birthdate.getText();
+                
                 if (!isValidDate(dbirthdate)) {
                     JOptionPane.showMessageDialog(null, "De datum die u heeft ingevoerd is invalide");
                 } else {

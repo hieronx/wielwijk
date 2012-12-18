@@ -125,22 +125,22 @@ public class ActivityWindow {
         Wielwijk.gui.addElement(window_id, container);
     }
 
-    public static void main(String[] args) {
-        Wielwijk.gui = new GUI();
-        Wielwijk.getDBConnection();
-        
-        Date datetime = null;
-        try {
-            SimpleDateFormat isoFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-            isoFormat.setTimeZone(TimeZone.getTimeZone("CET"));
-            datetime = isoFormat.parse("2010-05-23T09:01:02");
-        } catch(ParseException e) {
-            System.out.println(e.getMessage());
-        }
-        
-        Hike temp = new Hike("Rondje om Delft", "Delft", "een klein rondje", datetime, datetime, 10, 5, 50, "1012-12-11", false, 10000, 500);
-
-        ActivityWindow aw = new ActivityWindow(temp);
-        Wielwijk.gui.showWindow(0);
-    }
+//    public static void main(String[] args) {
+//        Wielwijk.gui = new GUI();
+//        Wielwijk.getDBConnection();
+//        
+//        Date datetime = null;
+//        try {
+//            SimpleDateFormat isoFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+//            isoFormat.setTimeZone(TimeZone.getTimeZone("CET"));
+//            datetime = isoFormat.parse("2010-05-23T09:01:02");
+//        } catch(ParseException e) {
+//            System.out.println(e.getMessage());
+//        }
+//        
+//        Hike temp = new Hike("Rondje om Delft", "Delft", "een klein rondje", datetime, datetime, 10, 5, 50, "1012-12-11", false, 10000, 500);
+//
+//        ActivityWindow aw = new ActivityWindow(temp);
+//        Wielwijk.gui.showWindow(0);
+//    }
 }

@@ -18,7 +18,7 @@ public class GUI extends JFrame {
     
     private int window_count = 0;
     
-    private int active_window_id = 0;
+    private int active_window_id;
     
     private int last_id;
     
@@ -64,7 +64,6 @@ public class GUI extends JFrame {
         window_count = window_count + 1;
         
         windows.add(window_id, window);
-        getContentPane().add(windows.get(window_id));
         
         last_id = window_id;
         
@@ -84,10 +83,10 @@ public class GUI extends JFrame {
     }
     
     public void showWindow(int window_id) {
-        getContentPane().remove(active_window_id);
-                
-        System.out.println("Replaced window #" + active_window_id + " with window #" + window_id + " (with ID)");
+        System.out.println("BELANGRIJK: Replaced window #" + active_window_id + " with window #" + window_id + " (with ID)");
         
+        if (window_id > 0) getContentPane().remove(active_window_id);
+                
         active_window_id = window_id;
         
         getContentPane().add(windows.get(window_id));
@@ -100,7 +99,7 @@ public class GUI extends JFrame {
         
         System.out.println("Replaced window #" + active_window_id + " with window #" + window_id + " (without ID)");
                 
-        getContentPane().remove(active_window_id);
+        if (window_id > 0) getContentPane().remove(0);
                 
         active_window_id = window_id;
         
