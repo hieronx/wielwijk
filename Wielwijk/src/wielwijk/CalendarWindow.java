@@ -152,7 +152,7 @@ public class CalendarWindow {
         public void mouseClicked(MouseEvent me) {
             if (act!=null) {
                 ActivityWindow ac = new ActivityWindow(act);
-                Wielwijk.gui.showWindow(1);
+                Wielwijk.gui.showWindow();
             }
         }
 
@@ -166,12 +166,12 @@ public class CalendarWindow {
 
     }
     
-    public static void main(String[] args) {
-        Wielwijk.gui = new GUI();
-        Wielwijk.getDBConnection();
-        
-        CalendarWindow cw = new CalendarWindow();
-        Wielwijk.gui.showWindow(0);
-    }
+//    public static void main(String[] args) {
+//        Wielwijk.gui = new GUI();
+//        Wielwijk.getDBConnection();
+//        
+//        CalendarWindow cw = new CalendarWindow();
+//        Wielwijk.gui.showWindow(0);
+//    }
     
 }

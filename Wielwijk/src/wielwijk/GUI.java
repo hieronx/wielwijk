@@ -18,7 +18,9 @@ public class GUI extends JFrame {
     
     private int window_count = 0;
     
-    private int active_window_id;
+    private int active_window_id = 0;
+    
+    private int last_id;
     
     GUI() {
         // Basis instellingen
@@ -60,16 +62,20 @@ public class GUI extends JFrame {
     public int addWindow(JPanel window) {
         int window_id = window_count;
         window_count = window_count + 1;
-        System.out.println("Window ID: " + window_id);
         
         windows.add(window_id, window);
         getContentPane().add(windows.get(window_id));
+        
+        last_id = window_id;
+        
+        System.out.println("Added window #" + window_id);
         
         return window_id;
     }
     
     public void addElement(int window_id, Component element) {
         JPanel window = windows.get(window_id);
+        System.out.println("Added element to window #" + window_id);
         window.add(element);
     }
     
@@ -80,11 +86,31 @@ public class GUI extends JFrame {
     public void showWindow(int window_id) {
         getContentPane().remove(active_window_id);
                 
+        System.out.println("Replaced window #" + active_window_id + " with window #" + window_id + " (with ID)");
+        
         active_window_id = window_id;
         
         getContentPane().add(windows.get(window_id));
         
         setVisible(true);
+    }
+    
+    public void showWindow() {
+        int window_id = getLastId();
+        
+        System.out.println("Replaced window #" + active_window_id + " with window #" + window_id + " (without ID)");
+                
+        getContentPane().remove(active_window_id);
+                
+        active_window_id = window_id;
+        
+        getContentPane().add(windows.get(window_id));
+        
+        setVisible(true);
+    }
+    
+    public int getLastId() {
+        return last_id;
     }
     
 }

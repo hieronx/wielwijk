@@ -19,4 +19,15 @@ public class Member extends User {
     public Member(String nm, String pw, int pic, String ad, String bd) {
         super(nm, pw, pic, ad, bd, false);
     }
+    /**
+     *
+     * @param nm
+     * @param pw
+     * @param bd
+     * @param act
+     * @param pic
+     */
+    public Member(String nm, String pw, int pic, String ad, String bd, long id) {
+        super(nm, pw, pic, ad, bd, false, id);
+    }
 }

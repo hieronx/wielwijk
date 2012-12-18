@@ -1,10 +1,13 @@
 package wielwijk;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.*;
 import javax.swing.border.*;
 import java.util.*;
 import javax.swing.event.*;
+import java.text.*;
 
 /**
  *
@@ -15,6 +18,10 @@ public class ControlWindow {
     JPanel left, right;
     
     private JLabel selected_user;
+    
+    private long active_user;
+    
+    private JList myList;
     
     private JPanel jPanel1, jPanel2, jPanel3, jPanel4;
     private JTabbedPane jTabbedPane1;
@@ -72,7 +79,7 @@ public class ControlWindow {
             
             data.add(user);
         }
-        JList myList = new JList(data.toArray());
+        myList = new JList(data.toArray());
         myList.setFont(myList.getFont().deriveFont(16.0f));
         myList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
@@ -94,7 +101,7 @@ public class ControlWindow {
         selected_user.setFont(selected_user.getFont().deriveFont(20.0f));
         panel2.add(selected_user, BorderLayout.NORTH);
         
-        JPanel form = new JPanel(new GridLayout(3,1));
+        JPanel form = new JPanel(new GridLayout(4,1));
         
         JLabel label4 = new JLabel();
         label4.setText("Gebruikersnaam:");
@@ -110,21 +117,21 @@ public class ControlWindow {
         label3.setText("Wachtwoord:");
         label3.setFont(label3.getFont().deriveFont(14.0f));
         JPanel wrapper2 = new JPanel(new BorderLayout());
-        final JTextField password = new JPasswordField(15);
+        final JTextField password = new JTextField(15);
         wrapper2.add(Box.createRigidArea(new Dimension(0, 20)), BorderLayout.NORTH);
         wrapper2.add(password, BorderLayout.CENTER);
         form.add(label3);
         form.add(wrapper2);
 
-//        JLabel label5 = new JLabel();
-//        label5.setText("Adres:");
-//        label5.setFont(label5.getFont().deriveFont(14.0f));
-//        JPanel wrapper6 = new JPanel(new BorderLayout());
-//        final JTextField address = new JTextField(15);
-//        wrapper6.add(Box.createRigidArea(new Dimension(0, 20)), BorderLayout.NORTH);
-//        wrapper6.add(address, BorderLayout.CENTER);
-//        form.add(label5);
-//        form.add(wrapper6);
+        JLabel label5 = new JLabel();
+        label5.setText("Adres:");
+        label5.setFont(label5.getFont().deriveFont(14.0f));
+        JPanel wrapper6 = new JPanel(new BorderLayout());
+        final JTextField address = new JTextField(15);
+        wrapper6.add(Box.createRigidArea(new Dimension(0, 20)), BorderLayout.NORTH);
+        wrapper6.add(address, BorderLayout.CENTER);
+        form.add(label5);
+        form.add(wrapper6);
 
         JLabel label2 = new JLabel();
         label2.setText("Geboortedatum:");
@@ -182,20 +189,136 @@ public class ControlWindow {
         container.add(jTabbedPane1);
         
         Wielwijk.gui.addElement(window_id, container);
-        Wielwijk.gui.showWindow(window_id);
         
         ListSelectionListener listSelectionListener = new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent listSelectionEvent) {
                 JList list = (JList) listSelectionEvent.getSource();
                 User user = (User) list.getSelectedValue();
+                System.out.println(user);
                 selected_user.setText(user.getName());
                 username.setText(user.getName());
                 password.setText(user.getPassword());
-                //address.setText(user.getAddress());
+                address.setText(user.getAddress());
                 birthdate.setText(user.getBirthdate());
+                active_user = user.getId();
             }
         };
         myList.addListSelectionListener(listSelectionListener);
+        
+        add.addActionListener(new ActionListener() { 
+            public void actionPerformed(ActionEvent e) {
+                //String name, String password, int picture, String address, String birthdate
+                User user = (User) UserContainer.addMember("Jan Modaal", "", 0, "", "2012-12-18");
+                repaintList();
+                selected_user.setText(user.getName());
+                username.setText(user.getName());
+                password.setText(user.getPassword());
+                address.setText(user.getAddress());
+                birthdate.setText(user.getBirthdate());
+                active_user = user.getId();
+            }
+        });
+        
+        save.addActionListener(new ActionListener() { 
+            public void actionPerformed(ActionEvent e) {
+                String dusername = username.getText();
+                String dpassword = password.getText();
+                String daddress = address.getText();
+                String dbirthdate = birthdate.getText();
+                if (!isValidDate(dbirthdate)) {
+                    JOptionPane.showMessageDialog(null, "De datum die u heeft ingevoerd is invalide");
+                } else {
+                    Wielwijk.db.exec("UPDATE users SET name = '" + dusername + "', password = '" + dpassword + "', address = '" + daddress + "', birthdate = '" + dbirthdate + "' WHERE id = " + active_user);
+                    
+                    repaintList();
+                    JOptionPane.showMessageDialog(null, "Lid is succesvol aangepast");
+                }
+            }
+        });
+        
+        delete.addActionListener(new ActionListener() { 
+            public void actionPerformed(ActionEvent e) {
+                selected_user.setText("");
+                username.setText("");
+                password.setText("");
+                address.setText("");
+                birthdate.setText("");
+                Wielwijk.db.exec("DELETE FROM users WHERE id = " + active_user);
+                repaintList();
+                JOptionPane.showMessageDialog(null, "Lid is succesvol verwijderd");
+            }
+        });
      }
+    
+    public void repaintList() {
+        java.util.List res = Wielwijk.db.query("SELECT * FROM users");
+        ArrayList<User> data = new ArrayList<User>();
+        for (int i = 0; i < res.size(); i++) {
+            Map<String, Object> map = (HashMap<String, Object>) res.get(i);
+            User user;
+            user = new User((String) map.get("name"), (String) map.get("password"), (Integer) map.get("picture"), (String) map.get("address"), (String) map.get("birthdate").toString(), (Boolean) map.get("board"), (Long) map.get("id"));
+            
+            data.add(user);
+        }
+        myList.setListData(data.toArray());
+        
+    }
+    
+    // date validation using SimpleDateFormat
+    // it will take a string and make sure it's in the proper 
+    // format as defined by you, and it will also make sure that
+    // it's a legal date
+
+    public boolean isValidDate(String date)
+    {
+        // set date format, this can be changed to whatever format
+        // you want, MM-dd-yyyy, MM.dd.yyyy, dd.MM.yyyy etc.
+        // you can read more about it here:
+        // http://java.sun.com/j2se/1.4.2/docs/api/index.html
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+        // declare and initialize testDate variable, this is what will hold
+        // our converted string
+
+        Date testDate = null;
+
+        // we will now try to parse the string into date form
+        try
+        {
+          testDate = sdf.parse(date);
+        }
+
+        // if the format of the string provided doesn't match the format we 
+        // declared in SimpleDateFormat() we will get an exception
+
+        catch (ParseException e)
+        {
+            String errorMessage;
+          errorMessage = "the date you provided is in an invalid date" +
+                                  " format.";
+          return false;
+        }
+
+        // dateformat.parse will accept any date as long as it's in the format
+        // you defined, it simply rolls dates over, for example, december 32 
+        // becomes jan 1 and december 0 becomes november 30
+        // This statement will make sure that once the string 
+        // has been checked for proper formatting that the date is still the 
+        // date that was entered, if it's not, we assume that the date is invalid
+
+        if (!sdf.format(testDate).equals(date)) 
+        {
+          String errorMessage = "The date that you provided is invalid.";
+          return false;
+        }
+
+        // if we make it to here without getting an error it is assumed that
+        // the date was a valid one and that it's in the proper format
+
+        return true;
+
+    } // end isValidDate
+    
   }
 

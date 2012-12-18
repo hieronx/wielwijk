@@ -6,9 +6,9 @@ package wielwijk;
  */
 public class User {
     
-    private long id;
-    private String name;
-    private String password;
+    public long id;
+    public String name;
+    public String password;
     private String birthdate;
     private boolean active;
     private int picture;

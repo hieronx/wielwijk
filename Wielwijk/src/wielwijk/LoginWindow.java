@@ -65,17 +65,22 @@ class LoginWindow {
         
         Wielwijk.gui.addElement(window_id, container);
         
-        Wielwijk.gui.showWindow(window_id);
+        Wielwijk.gui.showWindow();
         
         submit.addActionListener(new ActionListener() { 
             public void actionPerformed(ActionEvent e) {
                 String name = text.getText();
                 String password = text2.getText();
-                java.util.List res = Wielwijk.db.query("SELECT COUNT(*) AS c FROM users WHERE name = '" + name + "' AND password = '" + password + "'");
+                java.util.List res = Wielwijk.db.query("SELECT COUNT(*) AS c, board FROM users WHERE name = '" + name + "' AND password = '" + password + "'");
                 Map<String, Object> map = (HashMap<String, Object>) res.get(0);
                 if ((Long) map.get("c") == 1) {
-                CalendarWindow calendar = new CalendarWindow();
-                Wielwijk.gui.showWindow(1);
+                    if ((Boolean) map.get("board") == true) {
+                        ControlWindow control = new ControlWindow();
+                        Wielwijk.gui.showWindow();
+                    } else {
+                        CalendarWindow calendar = new CalendarWindow();
+                        Wielwijk.gui.showWindow();
+                    }
                 }
                 else {
                     JOptionPane.showMessageDialog(null, "Gebruikersnaam en/of wachtwoord zijn niet correct ingevuld");
@@ -86,7 +91,7 @@ class LoginWindow {
         userlist.addActionListener(new ActionListener() { 
             public void actionPerformed(ActionEvent e) {
                 UserListWindow userlist = new UserListWindow();
-                Wielwijk.gui.showWindow(1);
+                Wielwijk.gui.showWindow();
             }
         });
     }

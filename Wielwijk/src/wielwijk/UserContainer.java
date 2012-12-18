@@ -39,12 +39,17 @@ public class UserContainer {
      * @param picture
      * @param board
      */
-    public static void addMember(String name, String password, int picture, String address, String birthdate) {
+    public static Member addMember(String name, String password, int picture, String address, String birthdate) {
         Date bday=Date.valueOf(birthdate);
-        Member newMember = new Member(name, password, picture, address, birthdate);//nodig??
-        
         Wielwijk.db.exec("INSERT INTO users (name, password, active, board, picture, address, birthdate) VALUES ('" + name + "', '" + password + "', 1, 1," + picture + ", '" + address + "', '" + bday +"')");
-       
+        
+        java.util.List results = Wielwijk.db.query("SELECT * FROM users WHERE id IN (SELECT MAX(id)FROM users)");
+        java.util.Map<String, Object> map = (HashMap<String, Object>) results.get(0);
+        long id = (Long) map.get("id");
+        
+        Member newMember = new Member(name, password, picture, address, birthdate, id);
+        
+        return newMember;
     }
     
     /**
