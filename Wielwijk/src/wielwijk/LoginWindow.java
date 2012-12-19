@@ -28,8 +28,8 @@ class LoginWindow {
         layout = new JPanel();
         layout.setMaximumSize(new Dimension(400, 20));
         label = new JLabel();
-        label.setText("Wielwijk wandelvereniging");
-        label.setFont(label.getFont().deriveFont(26.0f));
+        label.setText("Welkom");
+        label.setFont(label.getFont().deriveFont(30.0f));
         layout.add(label);
         container.add(layout);
         

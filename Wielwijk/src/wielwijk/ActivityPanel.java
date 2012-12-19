@@ -53,7 +53,8 @@ public class ActivityPanel extends JPanel {
                 (Integer) map.get("lower_user_limit"),
                 (Integer) map.get("upper_user_limit"),
                 (String) map.get("lld"),
-                (Boolean) map.get("cancelled")
+                (Boolean) map.get("cancelled"),
+                (Long) map.get("id")
             );
             
             data.add(act);
@@ -81,51 +82,51 @@ public class ActivityPanel extends JPanel {
         
         JPanel form = new JPanel(new GridLayout(4,1));
         
-        // Gebruikersnaam
+        // Naam
         JLabel label4 = new JLabel();
         label4.setText("Naam:");
         label4.setFont(label4.getFont().deriveFont(14.0f));
         JPanel wrapper = new JPanel(new BorderLayout());
-        final JTextField username = new JTextField(15);
+        final JTextField name = new JTextField(15);
         wrapper.add(Box.createRigidArea(new Dimension(0, 20)), BorderLayout.NORTH);
-        wrapper.add(username, BorderLayout.CENTER);
+        wrapper.add(name, BorderLayout.CENTER);
         form.add(label4);
         form.add(wrapper);
 
-        // Wachtwoord
-        JLabel label3 = new JLabel();
-        label3.setText("Wachtwoord:");
-        label3.setFont(label3.getFont().deriveFont(14.0f));
-        JPanel wrapper2 = new JPanel(new BorderLayout());
-        final JTextField password = new JTextField(15);
-        wrapper2.add(Box.createRigidArea(new Dimension(0, 20)), BorderLayout.NORTH);
-        wrapper2.add(password, BorderLayout.CENTER);
-        form.add(label3);
-        form.add(wrapper2);
-
-        // Adres
+        // Locatie
         JLabel label5 = new JLabel();
-        label5.setText("Adres:");
+        label5.setText("Locatie:");
         label5.setFont(label5.getFont().deriveFont(14.0f));
         JPanel wrapper6 = new JPanel(new BorderLayout());
-        final JTextField address = new JTextField(15);
+        final JTextField location = new JTextField(15);
         wrapper6.add(Box.createRigidArea(new Dimension(0, 20)), BorderLayout.NORTH);
-        wrapper6.add(address, BorderLayout.CENTER);
+        wrapper6.add(location, BorderLayout.CENTER);
         form.add(label5);
         form.add(wrapper6);
 
-        // Geboortedatum
+        // Beschrijving
+        JLabel label3 = new JLabel();
+        label3.setText("Beschrijvijng:");
+        label3.setFont(label3.getFont().deriveFont(14.0f));
+        JPanel wrapper2 = new JPanel(new BorderLayout());
+        final JTextField description = new JTextField(15);
+        wrapper2.add(Box.createRigidArea(new Dimension(0, 20)), BorderLayout.NORTH);
+        wrapper2.add(description, BorderLayout.CENTER);
+        form.add(label3);
+        form.add(wrapper2);
+
+        // Datetime begin
         JLabel label2 = new JLabel();
-        label2.setText("Geboortedatum:");
+        label2.setText("Begindatum:");
         label2.setFont(label2.getFont().deriveFont(14.0f));
         JPanel wrapper5 = new JPanel(new BorderLayout());
         
-        final JTextField birthdate = new JTextField(15);
+        final JTextField datetime_begin = new JTextField(15);
         JLabel label_dateformat = new JLabel("YYYY-MM-DD");
         label_dateformat.setForeground(new Color(100, 100, 100));
         
         wrapper5.add(Box.createRigidArea(new Dimension(0, 20)), BorderLayout.NORTH);
-        wrapper5.add(birthdate, BorderLayout.CENTER);
+        wrapper5.add(datetime_begin, BorderLayout.CENTER);
         wrapper5.add(label_dateformat, BorderLayout.SOUTH); 
        
         form.add(label2);
@@ -163,15 +164,15 @@ public class ActivityPanel extends JPanel {
         ListSelectionListener listSelectionListener = new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent listSelectionEvent) {
                 JList list = (JList) listSelectionEvent.getSource();
-                User user = (User) list.getSelectedValue();
+                Activity act = (Activity) list.getSelectedValue();
                 
-                if (user != null) {
-                    selected_user.setText(user.getName());
-                    username.setText(user.getName());
-                    password.setText(user.getPassword());
-                    address.setText(user.getAddress());
-                    birthdate.setText(user.getBirthdate());
-                    active_user = user.getId();
+                if (act != null) {
+                    selected_act.setText(act.getName());
+                    name.setText(act.getName());
+                    location.setText(act.getLocation());
+                    description.setText(act.getDescription());
+                    datetime_begin.setText(act.getDatetimeBegin().toString());
+                    active_act = act.getId();
                 }
             }
         };
@@ -179,82 +180,79 @@ public class ActivityPanel extends JPanel {
         
         add.addActionListener(new ActionListener() { 
             public void actionPerformed(ActionEvent e) {
-                //String name, String password, int picture, String address, String birthdate
-                User user = (User) UserContainer.addMember("Jan Modaal", "", 0, "", "2012-12-18");
+                Date datetime = null;
+                try {
+                    SimpleDateFormat isoFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+                    isoFormat.setTimeZone(TimeZone.getTimeZone("CET"));
+                    datetime = isoFormat.parse("2012-12-20T18:00:00");
+                } catch(ParseException ex) {
+                    System.out.println(ex.getMessage());
+                }
+
+                //(String nm, String lc, String des, java.util.Date dtb, java.util.Date dte, int fe, int lul, int uul, String lld, boolean cl, int dis, int ht) {
+                Activity act = (Activity) new Hike("Laatste-dag-van-je-leven-wandeling", "Delft", "Een leuke wandeling door het bos van Delft", datetime, datetime, 10, 10, 9000, "2012-12-20", false, 42, 8500);
                 repaintList();
-                selected_user.setText(user.getName());
-                username.setText(user.getName());
-                password.setText(user.getPassword());
-                address.setText(user.getAddress());
-                birthdate.setText(user.getBirthdate());
-                active_user = user.getId();
+                selected_act.setText(act.getName());
+                name.setText(act.getName());
+                location.setText(act.getLocation());
+                description.setText(act.getDescription());
+                datetime_begin.setText(act.getDatetimeBegin().toString());
+                active_act = act.getId();
             }
         });
         
         save.addActionListener(new ActionListener() { 
             public void actionPerformed(ActionEvent e) {
-                selected_user.setText(username.getText());
-                String dusername = username.getText();
-                String dpassword = password.getText();
-                String daddress = address.getText();
-                String dbirthdate = birthdate.getText();
+                selected_act.setText(name.getText());
+                String dname = name.getText();
+                String dlocation = location.getText();
+                String ddescription = description.getText();
+                String ddatetime_begin = datetime_begin.getText();
                 
-                if (!isValidDate(dbirthdate)) {
-                    JOptionPane.showMessageDialog(null, "De datum die u heeft ingevoerd is invalide");
-                } else {
-                    Wielwijk.db.exec("UPDATE users SET name = '" + dusername + "', password = '" + dpassword + "', address = '" + daddress + "', birthdate = '" + dbirthdate + "' WHERE id = " + active_user);
-                    
-                    repaintList();
-                    JOptionPane.showMessageDialog(null, "Lid is succesvol aangepast");
-                }
+                Wielwijk.db.exec("UPDATE activities SET name = '" + dname + "', location = '" + dlocation + "', description = '" + ddescription + "' WHERE id = " + active_act);
+
+                repaintList();
+                JOptionPane.showMessageDialog(null, "Activiteit is succesvol aangepast");
             }
         });
         
         delete.addActionListener(new ActionListener() { 
             public void actionPerformed(ActionEvent e) {
-                selected_user.setText("");
-                username.setText("");
-                password.setText("");
-                address.setText("");
-                birthdate.setText("");
-                Wielwijk.db.exec("DELETE FROM users WHERE id = " + active_user);
+                selected_act.setText("");
+                name.setText("");
+                location.setText("");
+                description.setText("");
+                datetime_begin.setText("");
+                Wielwijk.db.exec("DELETE FROM activities WHERE id = " + active_act);
                 repaintList();
-                JOptionPane.showMessageDialog(null, "Lid is succesvol verwijderd");
+                JOptionPane.showMessageDialog(null, "Activiteit is succesvol verwijderd");
             }
         });
     }
     
     public void repaintList() {
-        java.util.List res = Wielwijk.db.query("SELECT * FROM users");
-        ArrayList<User> data = new ArrayList<User>();
+        java.util.List res = Wielwijk.db.query("SELECT *, DATE_FORMAT(lower_limit_date, '%Y-%m-%d') as lld FROM activities");
+        ArrayList<Activity> data = new ArrayList<Activity>();
         for (int i = 0; i < res.size(); i++) {
             Map<String, Object> map = (HashMap<String, Object>) res.get(i);
-            User user;
-            user = new User((String) map.get("name"), (String) map.get("password"), (Integer) map.get("picture"), (String) map.get("address"), (String) map.get("birthdate").toString(), (Boolean) map.get("board"), (Long) map.get("id"));
+            Activity act;
+            act = new Activity(
+                (String) map.get("name"),
+                (String) map.get("location"),
+                (String) map.get("description"),
+                new Date((Long) map.get("datetime_begin")),
+                new Date((Long) map.get("datetime_end")),
+                (Integer) map.get("fee"),
+                (Integer) map.get("lower_user_limit"),
+                (Integer) map.get("upper_user_limit"),
+                (String) map.get("lld"),
+                (Boolean) map.get("cancelled")
+            );
             
-            data.add(user);
+            data.add(act);
         }
         myList.setListData(data.toArray());
         
-    }
-
-    public boolean isValidDate(String date) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        Date testDate = null;
-
-        try {
-            testDate = sdf.parse(date);
-        } catch (ParseException e) {
-            String errormessage = "the date you provided is in an invalid date format.";
-          return false;
-        }
-        
-        if (!sdf.format(testDate).equals(date)) {
-            String errorMessage = "The date that you provided is invalid.";
-            return false;
-        }
-        
-        return true;
     }
     
 }
