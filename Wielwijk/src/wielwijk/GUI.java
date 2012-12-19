@@ -103,7 +103,18 @@ public class GUI extends JFrame {
                 
         active_window_id = window_id;
         
-        getContentPane().add(windows.get(window_id));
+        JPanel wrapper = new JPanel(new BorderLayout());
+        
+        JPanel panel = windows.get(window_id);
+        
+        JPanel alignment = new JPanel(new BorderLayout());
+        JButton terug = new JButton("Ga terug");
+        alignment.add(terug, BorderLayout.EAST);
+        
+        wrapper.add(panel, BorderLayout.NORTH);
+        wrapper.add(alignment, BorderLayout.SOUTH);
+        
+        getContentPane().add(wrapper);
         
         setVisible(true);
     }
