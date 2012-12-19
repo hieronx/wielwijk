@@ -27,14 +27,14 @@ public class ControlWindow {
         
         // Tabs aanmaken
         jTabbedPane1 = new JTabbedPane();
-        overviewpanel = new JPanel();
+        //overviewpanel = new JPanel();
         userpanel = new JPanel();
         activitypanel = new JPanel();
-        financepanel = new JPanel();
+        //financepanel = new JPanel();
 
         // 1 Overzicht
-        JPanel overviewpanel = new OverviewPanel();
-        jTabbedPane1.addTab("Overzicht", overviewpanel);
+//        JPanel overviewpanel = new OverviewPanel();
+//        jTabbedPane1.addTab("Overzicht", overviewpanel);
         
         // 2 Leden
         JPanel userpanel = new UserPanel();
@@ -45,10 +45,10 @@ public class ControlWindow {
         jTabbedPane1.addTab("Activiteiten", activitypanel);
 
         // 4 Financien
-        JPanel financepanel = new FinancePanel();
-        jTabbedPane1.addTab("Financiën", financepanel);
+//        JPanel financepanel = new FinancePanel();
+//        jTabbedPane1.addTab("Financiën", financepanel);
         
-        jTabbedPane1.setSelectedIndex(1);
+        jTabbedPane1.setSelectedIndex(0);
 
         // Toevoegen aan GUI
         container.add(jTabbedPane1);

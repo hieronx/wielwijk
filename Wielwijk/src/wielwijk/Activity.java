@@ -158,6 +158,10 @@ public class Activity {
       return cancelled;
     }
 
+    public String toString() {
+        return name;
+    }
+    
     public static void main(String args[]) {
         Wielwijk.getDBConnection();
         
