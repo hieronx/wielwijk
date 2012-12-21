@@ -4,9 +4,8 @@ import java.awt.*;
 import javax.swing.*;
 import java.util.*;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
+import java.awt.event.*;
+import javax.swing.border.Border;
 
 /**
  *
@@ -17,9 +16,7 @@ public class GUI extends JFrame {
     ArrayList<JPanel> windows = new ArrayList<JPanel>();
     
     private int window_count = 0;
-    
     private int active_window_id;
-    
     private int last_id;
     
     GUI() {
@@ -95,7 +92,7 @@ public class GUI extends JFrame {
     }
     
     public void showWindow() {
-        int window_id = getLastId();
+        final int window_id = getLastId();
         
         System.out.println("Replaced window #" + active_window_id + " with window #" + window_id + " (without ID)");
                 
@@ -103,18 +100,33 @@ public class GUI extends JFrame {
                 
         active_window_id = window_id;
         
-        JPanel wrapper = new JPanel(new BorderLayout());
+        if (window_id > 0) {
+            JPanel wrapper = new JPanel(new BorderLayout());
+            JPanel panel = windows.get(window_id);
+            JPanel alignment = new JPanel(new BorderLayout());
+            Border empty = BorderFactory.createMatteBorder(0, 0, 20, 20, Wielwijk.gui.getBackground());
+            alignment.setBorder(empty);
+            JButton terug = new JButton("Ga terug");
+            alignment.add(terug, BorderLayout.EAST);
+            wrapper.add(panel, BorderLayout.NORTH);
+            wrapper.add(alignment, BorderLayout.SOUTH);
+            getContentPane().add(wrapper);
         
-        JPanel panel = windows.get(window_id);
+            terug.addActionListener(new ActionListener() { 
+                public void actionPerformed(ActionEvent e) {
+                    //getContentPane().remove(0);
+                    int new_id = window_id - 1;
+                    getContentPane().add(windows.get(new_id));
+                    active_window_id = new_id;
+                    System.out.println("Ga terug naar: " + new_id);
+                    System.out.println("COmponent: " + windows.get(new_id).toString());
+                }
+            });
+        } else {
+            getContentPane().add(windows.get(window_id));
+        }
         
-        JPanel alignment = new JPanel(new BorderLayout());
-        JButton terug = new JButton("Ga terug");
-        alignment.add(terug, BorderLayout.EAST);
-        
-        wrapper.add(panel, BorderLayout.NORTH);
-        wrapper.add(alignment, BorderLayout.SOUTH);
-        
-        getContentPane().add(wrapper);
+        System.out.println("Aantal components: " + getComponentCount());
         
         setVisible(true);
     }
