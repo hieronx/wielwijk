@@ -55,6 +55,17 @@ public class User {
         id = idd;
     }
     
+    public User(String nm, String pw, int pic, String ad, String bd, boolean brd, boolean act, long idd){
+        name = nm;
+        password = pw;
+        birthdate = bd;
+        board = brd;
+        active = act;
+        address = ad;
+        id = idd;
+        picture = pic;
+    }
+    
     /**
      * 
      */

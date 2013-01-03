@@ -48,7 +48,7 @@ public class UserPanel extends JPanel {
         for (int i = 0; i < res.size(); i++) {
             Map<String, Object> map = (HashMap<String, Object>) res.get(i);
             User user;
-            user = new User((String) map.get("name"), (String) map.get("password"), (Integer) map.get("picture"), (String) map.get("address"), (String) map.get("birthdate").toString(), (Boolean) map.get("board"), (Long) map.get("id"));
+            user = new User((String) map.get("name"), (String) map.get("password"), (Integer) map.get("picture"), (String) map.get("address"), (String) map.get("birthdate").toString(), (Boolean) map.get("board"), (Boolean) map.get("active"), (Long) map.get("id"));
             
             data.add(user);
         }
@@ -70,8 +70,12 @@ public class UserPanel extends JPanel {
         Border empty2 = BorderFactory.createMatteBorder(0, 20, 0, 0, Wielwijk.gui.getBackground());
         panel2.setBorder(empty2);
         
+       
         final JLabel selected_user = new JLabel();
         selected_user.setFont(selected_user.getFont().deriveFont(20.0f));
+      
+    
+        
         panel2.add(selected_user, BorderLayout.NORTH);
         
         JPanel form = new JPanel(new GridLayout(4,1));
@@ -149,9 +153,20 @@ public class UserPanel extends JPanel {
         JButton save = new JButton("Opslaan");
         wrapper4.add(save, BorderLayout.WEST);
         
+        JPanel banwrapper = new JPanel(new BorderLayout());
+        
+        JButton ban = new JButton("Schorsen");
+        banwrapper.add(ban, BorderLayout.EAST);
+        
+        JButton unban = new JButton("Schorsing opheffen");
+        banwrapper.add(unban, BorderLayout.WEST);
+        wrapper4.add(banwrapper, BorderLayout.CENTER);
+        
         JButton delete = new JButton("Verwijderen");
         wrapper4.add(delete, BorderLayout.EAST);
         footer.add(wrapper4);
+        
+     
         
         add(footer, BorderLayout.SOUTH);
 
@@ -161,12 +176,18 @@ public class UserPanel extends JPanel {
                 User user = (User) list.getSelectedValue();
                 
                 if (user != null) {
+                    if(!user.isActive()){
+                        System.out.println("geod bezig");
+                        selected_user.setText(user.getName() + " Geschorst");
+                    } else{
                     selected_user.setText(user.getName());
+                    } 
                     username.setText(user.getName());
                     password.setText(user.getPassword());
                     address.setText(user.getAddress());
                     birthdate.setText(user.getBirthdate());
                     active_user = user.getId();
+                    
                 }
             }
         };
@@ -205,6 +226,23 @@ public class UserPanel extends JPanel {
             }
         });
         
+        ban.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e){
+               Wielwijk.db.exec("UPDATE users SET active=0 WHERE id = " + active_user); 
+               selected_user.setText(username.getText() + " Geschorst");
+               repaintList();
+            }
+            
+        });
+        
+        unban.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e){
+               Wielwijk.db.exec("UPDATE users SET active=1 WHERE id = " + active_user); 
+               selected_user.setText(username.getText());
+               repaintList();
+            }
+        });
+        
         delete.addActionListener(new ActionListener() { 
             public void actionPerformed(ActionEvent e) {
                 selected_user.setText("");
@@ -225,7 +263,7 @@ public class UserPanel extends JPanel {
         for (int i = 0; i < res.size(); i++) {
             Map<String, Object> map = (HashMap<String, Object>) res.get(i);
             User user;
-            user = new User((String) map.get("name"), (String) map.get("password"), (Integer) map.get("picture"), (String) map.get("address"), (String) map.get("birthdate").toString(), (Boolean) map.get("board"), (Long) map.get("id"));
+            user = new User((String) map.get("name"), (String) map.get("password"), (Integer) map.get("picture"), (String) map.get("address"), (String) map.get("birthdate").toString(), (Boolean) map.get("board"), (Boolean) map.get("active"), (Long) map.get("id"));
             
             data.add(user);
         }
