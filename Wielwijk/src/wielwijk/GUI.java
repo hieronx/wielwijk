@@ -15,11 +15,13 @@ public class GUI extends JFrame {
     
     ArrayList<JPanel> windows = new ArrayList<JPanel>();
     
+    ArrayList<Integer> history = new ArrayList<Integer>();
+    private int history_count = 0;
+    
     private JPanel cards;
     private JPanel terugPanel;
     
     private int window_count = 0;
-    private int active_window_id;
     private int last_id;
     
     GUI() {
@@ -54,8 +56,13 @@ public class GUI extends JFrame {
         terug.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 CardLayout cl = (CardLayout)(cards.getLayout());
-        
-                cl.previous(cards);
+                
+                history.remove(history_count-1);
+                history_count--;
+                
+                cl.show(cards, Integer.toString(history.get(history_count-1)));
+                
+                terugPanel.setVisible(history_count > 1);
             }
         });
         
@@ -97,7 +104,10 @@ public class GUI extends JFrame {
         
         cl.show(cards, Integer.toString(window_id));
         
-        terugPanel.setVisible(window_id > 0);
+        history.add(history_count, window_id);
+        history_count++;
+        
+        terugPanel.setVisible(history_count > 1);
         
         setVisible(true);
     }
