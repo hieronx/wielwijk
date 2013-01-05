@@ -58,7 +58,9 @@ public class ActivityContainer {
         List res = Wielwijk.db.query("SELECT * FROM activities WHERE "
                 + "FROM_UNIXTIME(datetime_begin, '%Y') = '" + year
                 + "' AND FROM_UNIXTIME(datetime_begin, '%c') = '" + month
-                + "' AND FROM_UNIXTIME(datetime_begin, '%d') = '" + day + "'");
+                + "' AND (FROM_UNIXTIME(datetime_begin, '%d') = '" + day 
+                + "' OR " + "FROM_UNIXTIME(datetime_begin, '%d') = '0" + day 
+                + "')");
         if (res.size() == 0) {
             return null;
         }
