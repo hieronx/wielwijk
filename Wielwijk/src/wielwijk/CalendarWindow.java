@@ -88,7 +88,7 @@ public class CalendarWindow {
         JPanel item;
         
         public CalendarDay(int yr, int m, int d, boolean current, boolean today) {
-            orange = today;
+            orange = today && current;
             white = current;
             item = new JPanel(new BorderLayout());
 
@@ -107,7 +107,7 @@ public class CalendarWindow {
             if (current) {
                 Paint(Color.WHITE);
             }
-            if (today) {
+            if (orange) {
                 Paint(Color.ORANGE);
             }
             act = ActivityContainer.getActivityByDay(yr, m, d);
@@ -166,12 +166,12 @@ public class CalendarWindow {
 
     }
     
-//    public static void main(String[] args) {
-//        Wielwijk.gui = new GUI();
-//        Wielwijk.getDBConnection();
-//        
-//        CalendarWindow cw = new CalendarWindow();
-//        Wielwijk.gui.showWindow(0);
-//    }
+    public static void main(String[] args) {
+        Wielwijk.gui = new GUI();
+        Wielwijk.getDBConnection();
+        
+        CalendarWindow cw = new CalendarWindow();
+        Wielwijk.gui.showWindow(0);
+    }
     
 }
