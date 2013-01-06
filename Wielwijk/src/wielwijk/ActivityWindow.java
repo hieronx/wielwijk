@@ -185,6 +185,8 @@ public class ActivityWindow {
         if (eigenAcc!=null) {
             meldaan.setEnabled(false);
             nieuwslaap.setText(eigenAcc.getAddress()+" verwijderen");
+            tfAdres.setText(eigenAcc.getAddress());
+            tfCap.setText(eigenAcc.getCap()+"");
         } else if (aangemeldeAcc!=null) {
             meldaan.setText("Afmelden voor "+aangemeldeAcc.getAddress());
             nieuwslaap.setEnabled(false);

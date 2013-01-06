@@ -22,6 +22,10 @@ public class Accommodation {
         cap = Cap;
     }
     
+    public int getCap() {
+        return cap;
+    }
+    
     public int getId() {
         return id;
     }
