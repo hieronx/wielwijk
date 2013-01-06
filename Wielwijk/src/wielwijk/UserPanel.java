@@ -196,7 +196,7 @@ public class UserPanel extends JPanel {
         add.addActionListener(new ActionListener() { 
             public void actionPerformed(ActionEvent e) {
                 //String name, String password, int picture, String address, String birthdate
-                User user = (User) UserContainer.addMember("Jan Modaal", "", 0, "", "2012-12-18");
+                User user = (User) UserContainer.addMember("-Nieuw Lid", "", 0, "", "2012-12-18");
                 repaintList();
                 selected_user.setText(user.getName());
                 username.setText(user.getName());

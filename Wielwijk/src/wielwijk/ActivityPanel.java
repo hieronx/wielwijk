@@ -4,6 +4,8 @@ import java.awt.*;
 import java.awt.event.*;
 import java.text.*;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.event.*;
@@ -18,8 +20,12 @@ public class ActivityPanel extends JPanel {
     private JLabel selected_act;
     private long active_act;
     private JList myList;
+    SimpleDateFormat isoFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+    SimpleDateFormat onlyDate = new SimpleDateFormat("yyyy-MM-dd");
     
     public ActivityPanel() {
+        isoFormat.setTimeZone(TimeZone.getTimeZone("CET"));
+        
         BorderLayout jPanel2Layout = new BorderLayout();
         setLayout(jPanel2Layout);
         
@@ -47,8 +53,8 @@ public class ActivityPanel extends JPanel {
                 (String) map.get("name"),
                 (String) map.get("location"),
                 (String) map.get("description"),
-                new Date((Long) map.get("datetime_begin")),
-                new Date((Long) map.get("datetime_end")),
+                new Date((Long) map.get("datetime_begin")*1000),
+                new Date((Long) map.get("datetime_end")*1000),
                 (Integer) map.get("fee"),
                 (Integer) map.get("lower_user_limit"),
                 (Integer) map.get("upper_user_limit"),
@@ -171,7 +177,7 @@ public class ActivityPanel extends JPanel {
                     name.setText(act.getName());
                     location.setText(act.getLocation());
                     description.setText(act.getDescription());
-                    datetime_begin.setText(act.getDatetimeBegin().toString());
+                    datetime_begin.setText(onlyDate.format(act.getDatetimeBegin()));
                     active_act = act.getId();
                 }
             }
@@ -182,15 +188,13 @@ public class ActivityPanel extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 Date datetime = null;
                 try {
-                    SimpleDateFormat isoFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-                    isoFormat.setTimeZone(TimeZone.getTimeZone("CET"));
-                    datetime = isoFormat.parse("2012-12-20T18:00:00");
+                    datetime = isoFormat.parse("2012-12-31T18:00:00");
                 } catch(ParseException ex) {
                     System.out.println(ex.getMessage());
                 }
 
                 //(String nm, String lc, String des, java.util.Date dtb, java.util.Date dte, int fe, int lul, int uul, String lld, boolean cl, int dis, int ht) {
-                Activity act = (Activity) new Hike("Laatste-dag-van-je-leven-wandeling", "Delft", "Een leuke wandeling door het bos van Delft", datetime, datetime, 10, 10, 9000, "2012-12-20", false, 42, 8500);
+                Activity act = (Activity) new Hike("-Nieuwe Wandeling", "", "", datetime, datetime, 10, 10, 9000, "2012-12-20", false, 42, 8500);
                 repaintList();
                 selected_act.setText(act.getName());
                 name.setText(act.getName());
@@ -208,8 +212,18 @@ public class ActivityPanel extends JPanel {
                 String dlocation = location.getText();
                 String ddescription = description.getText();
                 String ddatetime_begin = datetime_begin.getText();
-                
-                Wielwijk.db.exec("UPDATE activities SET name = '" + dname + "', location = '" + dlocation + "', description = '" + ddescription + "' WHERE id = " + active_act);
+
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                Date d = null;
+                try {
+                    d = sdf.parse(ddatetime_begin);
+                } catch (ParseException ex) {
+                    JOptionPane.showMessageDialog(null, "Datum is invalide");
+                    return;
+                }
+
+                Wielwijk.db.exec("UPDATE activities SET name = '" + dname + "', location = '" + dlocation + "', description = '" + ddescription +
+                        "', datetime_begin = '" + d.getTime()/1000 + "' WHERE id = " + active_act);
 
                 repaintList();
                 JOptionPane.showMessageDialog(null, "Activiteit is succesvol aangepast");
@@ -240,8 +254,8 @@ public class ActivityPanel extends JPanel {
                 (String) map.get("name"),
                 (String) map.get("location"),
                 (String) map.get("description"),
-                new Date((Long) map.get("datetime_begin")),
-                new Date((Long) map.get("datetime_end")),
+                new Date((Long) map.get("datetime_begin")*1000),
+                new Date((Long) map.get("datetime_end")*1000),
                 (Integer) map.get("fee"),
                 (Integer) map.get("lower_user_limit"),
                 (Integer) map.get("upper_user_limit"),

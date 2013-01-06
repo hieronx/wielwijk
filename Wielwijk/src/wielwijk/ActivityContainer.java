@@ -12,8 +12,8 @@ public class ActivityContainer {
      *
      * @param hike
      */
-    public static void addActivity(Hike hike) {
-        activities.add(hike);
+    public static void addActivity(Activity act) {
+        activities.add(act);
     }
 
     /**
@@ -51,14 +51,16 @@ public class ActivityContainer {
         
         return new Activity((String) map.get("name"), (String) map.get("location"), (String) map.get("destination"), datetimebegin, datetimeend,
                 (Integer) map.get("fee"), (Integer) map.get("lower_user_limit"), (Integer) map.get("upper_user_limit"),
-                map.get("lower_limit_date").toString(), (Boolean) map.get("cancelled"), (Long) map.get("id"));
+                map.get("lower_limit_date").toString(), (Boolean) map.get("cancelled"), (Integer) map.get("id"));
     }
 
     public static Activity getActivityByDay(int year, int month, int day) {
         List res = Wielwijk.db.query("SELECT * FROM activities WHERE "
                 + "FROM_UNIXTIME(datetime_begin, '%Y') = '" + year
                 + "' AND FROM_UNIXTIME(datetime_begin, '%c') = '" + month
-                + "' AND FROM_UNIXTIME(datetime_begin, '%d') = '" + day + "'");
+                + "' AND (FROM_UNIXTIME(datetime_begin, '%d') = '" + day 
+                + "' OR " + "FROM_UNIXTIME(datetime_begin, '%d') = '0" + day 
+                + "')");
         if (res.size() == 0) {
             return null;
         }
@@ -70,6 +72,6 @@ public class ActivityContainer {
 
         return new Activity((String) map.get("name"), (String) map.get("location"), (String) map.get("destination"), datetimebegin, datetimeend,
                 (Integer) map.get("fee"), (Integer) map.get("lower_user_limit"), (Integer) map.get("upper_user_limit"),
-                map.get("lower_limit_date").toString(), (Boolean) map.get("cancelled"), (Long) map.get("id"));
+                map.get("lower_limit_date").toString(), (Boolean) map.get("cancelled"), (Integer) map.get("id"));
     }
 }
