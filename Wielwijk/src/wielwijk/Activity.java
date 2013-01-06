@@ -8,7 +8,7 @@ import java.util.*;
  */
 public class Activity {
 
-    private long id;
+    private int id;
     private String name;
     private String location;
     private String description;
@@ -62,7 +62,7 @@ public class Activity {
      * @param cl
      * @param id 
      */
-    public Activity(String nm, String lc, String des, Date dtb, Date dte, int fe, int lul, int uul, String lld, boolean cl, long idd) {
+    public Activity(String nm, String lc, String des, Date dtb, Date dte, int fe, int lul, int uul, String lld, boolean cl, int idd) {
         name = nm;
         location = lc;
         description = des;
