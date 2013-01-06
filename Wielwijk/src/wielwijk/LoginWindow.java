@@ -71,15 +71,19 @@ class LoginWindow {
             public void actionPerformed(ActionEvent e) {
                 String name = text.getText();
                 String password = text2.getText();
-                java.util.List res = Wielwijk.db.query("SELECT COUNT(*) AS c, board FROM users WHERE name = '" + name + "' AND password = '" + password + "'");
+                java.util.List res = Wielwijk.db.query("SELECT COUNT(*) AS c, board, active FROM users WHERE name = '" + name + "' AND password = '" + password + "'");
                 Map<String, Object> map = (HashMap<String, Object>) res.get(0);
                 if ((Long) map.get("c") == 1) {
-                    if ((Boolean) map.get("board") == true) {
-                        ControlWindow control = new ControlWindow();
-                        Wielwijk.gui.showWindow();
+                    if ((Boolean) map.get("active") == true) {
+                        if ((Boolean) map.get("board") == true) {
+                            ControlWindow control = new ControlWindow();
+                            Wielwijk.gui.showWindow();
+                        } else {
+                            CalendarWindow calendar = new CalendarWindow();
+                            Wielwijk.gui.showWindow();
+                        }
                     } else {
-                        CalendarWindow calendar = new CalendarWindow();
-                        Wielwijk.gui.showWindow();
+                    JOptionPane.showMessageDialog(null, "Uw account is gedeactiveerd door een beheerder");
                     }
                 }
                 else {
