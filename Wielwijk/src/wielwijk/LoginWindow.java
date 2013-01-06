@@ -14,6 +14,8 @@ class LoginWindow {
     BoxLayout window;
     final JTextField text, text2;
     
+    static User CurrentUser;
+    
     LoginWindow() {
         JPanel window = new JPanel();
         int window_id = Wielwijk.gui.addWindow(window);
@@ -71,10 +73,11 @@ class LoginWindow {
             public void actionPerformed(ActionEvent e) {
                 String name = text.getText();
                 String password = text2.getText();
-                java.util.List res = Wielwijk.db.query("SELECT COUNT(*) AS c, board, active FROM users WHERE name = '" + name + "' AND password = '" + password + "'");
+                java.util.List res = Wielwijk.db.query("SELECT COUNT(*) AS c, board, active, id FROM users WHERE name = '" + name + "' AND password = '" + password + "'");
                 Map<String, Object> map = (HashMap<String, Object>) res.get(0);
                 if ((Long) map.get("c") == 1) {
                     if ((Boolean) map.get("active") == true) {
+                        CurrentUser = UserContainer.getUserById(((Long)map.get("id")).intValue());
                         if ((Boolean) map.get("board") == true) {
                             ControlWindow control = new ControlWindow();
                             Wielwijk.gui.showWindow();

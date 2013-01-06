@@ -17,8 +17,13 @@ public class ActivityWindow {
     JPanel container, textpanel, leftlayout, rightlayout;
     Activity act;
     Border blackline;
+    boolean isAangemeld;
 
     public ActivityWindow(Activity activity) {
+        java.util.List res = Wielwijk.db.query("SELECT * FROM activity_registrations WHERE user_id = '" + LoginWindow.CurrentUser.getId() +
+                "' AND activity_id = '" + activity.getId()+"'");
+        isAangemeld = !res.isEmpty();
+        
         act = activity;
         blackline = BorderFactory.createLineBorder(Color.black);   //tekent zwarte rand om panel
         SimpleDateFormat printFormat = new SimpleDateFormat("HH:mm");
@@ -61,7 +66,7 @@ public class ActivityWindow {
 
         Border empty = BorderFactory.createMatteBorder(20, 20, 20, 20, Wielwijk.gui.getBackground());
         leftlayout.setBorder(empty);
-        textpanel.setLayout(new GridLayout(3, 2, 0, 10));
+        textpanel.setLayout(new GridLayout(4, 2, 0, 10));
 
         // Locatie
         JLabel location = new JLabel();
@@ -121,6 +126,28 @@ public class ActivityWindow {
         //aanmeldknop buiten tekstvak, meld aan voor activiteit en evt. geselecteerde slaapplaats
 
         container.add(rightlayout);                 //voegt rechterhelft toe aan container
+        
+        final JButton aanmeld = new JButton("Aanmelden voor wandeling");
+        if (isAangemeld)
+            aanmeld.setText("Afmelden voor wandeling");
+        aanmeld.addActionListener(new ActionListener() { 
+            public void actionPerformed(ActionEvent e) {
+                aanmeld.setText("...");
+                if (isAangemeld) {
+                    Wielwijk.db.exec("DELETE FROM activity_registrations WHERE user_id = '" + LoginWindow.CurrentUser.getId() +
+                            "' AND activity_id = '" + act.getId() + "'");
+                    isAangemeld = false;
+                    aanmeld.setText("Aanmelden voor wandeling");
+                } else {
+                    Wielwijk.db.exec("INSERT INTO activity_registrations (user_id, activity_id, organiser) VALUES ('" + LoginWindow.CurrentUser.getId() +
+                            "',  '" + act.getId() + "', '0')");
+                    isAangemeld = true;
+                    aanmeld.setText("Afmelden voor wandeling");
+                }
+            }
+        });
+        
+        textpanel.add(aanmeld);
 
         Wielwijk.gui.addElement(window_id, container);
     }
