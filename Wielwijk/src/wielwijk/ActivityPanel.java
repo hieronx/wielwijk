@@ -260,7 +260,8 @@ public class ActivityPanel extends JPanel {
                 (Integer) map.get("lower_user_limit"),
                 (Integer) map.get("upper_user_limit"),
                 (String) map.get("lld"),
-                (Boolean) map.get("cancelled")
+                (Boolean) map.get("cancelled"),
+                ((Long) map.get("id")).intValue()
             );
             
             data.add(act);
