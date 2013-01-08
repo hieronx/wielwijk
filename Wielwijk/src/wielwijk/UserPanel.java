@@ -82,7 +82,7 @@ public class UserPanel extends JPanel {
         
         // Gebruikersnaam
         JLabel label4 = new JLabel();
-        label4.setText("Gebruikersnaam:");
+        label4.setText("Gebruikersnaam (verplicht)");
         label4.setFont(label4.getFont().deriveFont(14.0f));
         JPanel wrapper = new JPanel(new BorderLayout());
         final JTextField username = new JTextField(15);
@@ -93,7 +93,7 @@ public class UserPanel extends JPanel {
 
         // Wachtwoord
         JLabel label3 = new JLabel();
-        label3.setText("Wachtwoord:");
+        label3.setText("Wachtwoord (verplicht)");
         label3.setFont(label3.getFont().deriveFont(14.0f));
         JPanel wrapper2 = new JPanel(new BorderLayout());
         final JTextField password = new JTextField(15);
@@ -104,7 +104,7 @@ public class UserPanel extends JPanel {
 
         // Adres
         JLabel label5 = new JLabel();
-        label5.setText("Adres:");
+        label5.setText("Adres");
         label5.setFont(label5.getFont().deriveFont(14.0f));
         JPanel wrapper6 = new JPanel(new BorderLayout());
         final JTextField address = new JTextField(15);
@@ -115,7 +115,7 @@ public class UserPanel extends JPanel {
 
         // Geboortedatum
         JLabel label2 = new JLabel();
-        label2.setText("Geboortedatum:");
+        label2.setText("Geboortedatum");
         label2.setFont(label2.getFont().deriveFont(14.0f));
         JPanel wrapper5 = new JPanel(new BorderLayout());
         
@@ -177,8 +177,7 @@ public class UserPanel extends JPanel {
                 
                 if (user != null) {
                     if(!user.isActive()){
-                        System.out.println("geod bezig");
-                        selected_user.setText(user.getName() + " Geschorst");
+                        selected_user.setText(user.getName() + " (geschorst)");
                     } else{
                     selected_user.setText(user.getName());
                     } 
@@ -217,6 +216,8 @@ public class UserPanel extends JPanel {
                 
                 if (!isValidDate(dbirthdate)) {
                     JOptionPane.showMessageDialog(null, "De datum die u heeft ingevoerd is invalide");
+                } else if (dusername.isEmpty() || dpassword.isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "U heeft niet alle verplichte velden ingevuld");
                 } else {
                     Wielwijk.db.exec("UPDATE users SET name = '" + dusername + "', password = '" + dpassword + "', address = '" + daddress + "', birthdate = '" + dbirthdate + "' WHERE id = " + active_user);
                     
@@ -229,7 +230,7 @@ public class UserPanel extends JPanel {
         ban.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e){
                Wielwijk.db.exec("UPDATE users SET active=0 WHERE id = " + active_user); 
-               selected_user.setText(username.getText() + " Geschorst");
+               selected_user.setText(username.getText() + " (geschorst)");
                repaintList();
             }
             

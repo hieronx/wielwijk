@@ -65,6 +65,9 @@ class LoginWindow {
         layout2.add(userlist);
         container.add(layout2);
         
+        JRootPane rootPane = Wielwijk.gui.getRootPane();
+        rootPane.setDefaultButton(submit);
+        
         Wielwijk.gui.addElement(window_id, container);
         
         Wielwijk.gui.showWindow();
