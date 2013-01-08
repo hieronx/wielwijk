@@ -42,6 +42,8 @@ public class UserListWindow {
         JLabel iconLabel = new JLabel(new ImageIcon("pic.jpg"));
         panel.add(iconLabel, BorderLayout.CENTER);
         
+        panel.add(Box.createRigidArea(new Dimension(40, 0)), BorderLayout.EAST);
+        
         container.add(panel);
     }
     
