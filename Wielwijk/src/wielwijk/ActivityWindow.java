@@ -21,6 +21,7 @@ public class ActivityWindow {
     Border blackline;
     boolean isAangemeld;
     
+    
     Accommodation eigenAcc;
     Accommodation aangemeldeAcc;
     Accommodation selectAcc;
@@ -132,28 +133,35 @@ public class ActivityWindow {
 
         //Slaapplaatsen lijst
         res = Wielwijk.db.query("SELECT * FROM accommodations WHERE activity_id = '" + act.getId() + "'");
-        java.util.List res2 = Wielwijk.db.query("SELECT * FROM accommodation_registrations WHERE user_id = '" + LoginWindow.CurrentUser.getId() + "'");
+        java.util.List res2 = Wielwijk.db.query("SELECT 'accommodation_id' FROM accommodation_registrations WHERE user_id = '" + LoginWindow.CurrentUser.getId() + "' AND accommodation_id='" + act.getId() + "'");
         
         ArrayList<Accommodation> data = new ArrayList<Accommodation>();
-        for (int i = 0; i < res.size(); i++) {
+        for (int i = 0; i < res.size(); i++) {      //ArrayList met accomodations wordt aangemaakt
             Map<String, Object> map = (HashMap<String, Object>) res.get(i);
             Accommodation acc;
             acc = new Accommodation((Long) map.get("id"), (Integer) map.get("activity_id"), (Integer) map.get("user_id"),
-                    (String)map.get("address"), (Integer) map.get("people"), (Integer)map.get("capacity"));
-            
-            if (acc.getUserId()==LoginWindow.CurrentUser.getId()) {
-                eigenAcc = acc;
-            }
-            
-            for (int j = 0; j < res2.size(); j++) {
-                Map<String, Object> map2 = (HashMap<String, Object>) res2.get(j);
-                if ((Integer) map2.get("accommodation_id")== acc.getId()) {
-                    aangemeldeAcc = acc;
-                }
-            }
+                    (String)map.get("address"), (Integer) map.get("people"), (Integer)map.get("capacity"));     //typecast data uit database
+                                                                                                                //naar een Accomodation
+//            if (acc.getUserId()==LoginWindow.CurrentUser.getId()) {
+//                eigenAcc = acc;         
+//            }
+//            
+//            for (int j = 0; j < res2.size(); j++) {
+//                Map<String, Object> map2 = (HashMap<String, Object>) res2.get(j);
+//                if ((Integer) map2.get("accommodation_id")== acc.getId()) {
+//                    aangemeldeAcc = acc;        //loop 
+//                }
+//            }
             
             data.add(acc);
         }
+        ArrayList<Integer> slaaptIn=new ArrayList<Integer>();
+        for (int i = 0; i < res2.size(); i++) {      
+            Map<String, Object> map2 = (HashMap<String, Object>) res2.get(i);
+            int hier=(Integer)map2.get("accomodation id");
+            slaaptIn.add(hier);
+        }
+        
         myList = new JList(data.toArray());
         myList.setFont(myList.getFont().deriveFont(16.0f));
         myList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -210,7 +218,7 @@ public class ActivityWindow {
                     
                     UpdateAccList();
                     return;
-                }
+                }else{
                 
                 if (selectAcc==null) return;
                 
@@ -223,21 +231,12 @@ public class ActivityWindow {
                 meldaan.setText("Afmelden voor "+aangemeldeAcc.getAddress());
                 nieuwslaap.setEnabled(false);
                 UpdateAccList();
+                }
             }
         });
         nieuwslaap.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if (aangemeldeAcc!=null) return;
-                if (eigenAcc!=null) {
-                    Wielwijk.db.exec("DELETE FROM accommodations WHERE id = '" + eigenAcc.getId() + "'");
-                    
-                    eigenAcc = null;
-                    meldaan.setEnabled(true);
-                    nieuwslaap.setText("Slaapplaats Toevoegen");
-                    UpdateAccList();
-                    ok.setEnabled(false);
-                    return;
-                }
+                
                 
                 Wielwijk.db.exec("INSERT INTO accommodations (user_id, activity_id, capacity, address) VALUES ('" + LoginWindow.CurrentUser.getId() + 
                         "', '" + act.getId() + "', '1', 'Nieuw Adres')");
@@ -308,9 +307,6 @@ public class ActivityWindow {
             acc = new Accommodation((Long) map.get("id"), (Integer) map.get("activity_id"), (Integer) map.get("user_id"),
                     (String)map.get("address"), (Integer) map.get("people"), (Integer)map.get("capacity"));
             
-            if (acc.getUserId()==LoginWindow.CurrentUser.getId()) {
-                eigenAcc = acc;
-            }
             
             data.add(acc);
         }
