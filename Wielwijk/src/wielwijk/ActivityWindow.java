@@ -9,6 +9,7 @@ import java.text.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+
 /**
  *
  * @author ylverhoog
@@ -21,6 +22,7 @@ public class ActivityWindow {
     Border blackline;
     boolean isAangemeld;
     
+    ArrayList<Integer> slaaptIn=new ArrayList<Integer>();
     
     Accommodation eigenAcc;
     Accommodation aangemeldeAcc;
@@ -133,7 +135,9 @@ public class ActivityWindow {
 
         //Slaapplaatsen lijst
         res = Wielwijk.db.query("SELECT * FROM accommodations WHERE activity_id = '" + act.getId() + "'");
-        java.util.List res2 = Wielwijk.db.query("SELECT 'accommodation_id' FROM accommodation_registrations WHERE user_id = '" + LoginWindow.CurrentUser.getId() + "' AND accommodation_id='" + act.getId() + "'");
+      
+      
+        
         
         ArrayList<Accommodation> data = new ArrayList<Accommodation>();
         for (int i = 0; i < res.size(); i++) {      //ArrayList met accomodations wordt aangemaakt
@@ -155,13 +159,18 @@ public class ActivityWindow {
             
             data.add(acc);
         }
-        ArrayList<Integer> slaaptIn=new ArrayList<Integer>();
-        for (int i = 0; i < res2.size(); i++) {      
-            Map<String, Object> map2 = (HashMap<String, Object>) res2.get(i);
-            int hier=(Integer)map2.get("accomodation id");
-            slaaptIn.add(hier);
+        for (Accommodation acc:data){
+            java.util.List res2 = Wielwijk.db.query("SELECT accommodation_id FROM accommodation_registrations WHERE user_id = '" + LoginWindow.CurrentUser.getId() + "' AND accommodation_id='" + acc.getId() + "'");
+            System.out.println("res2 size" + res2.size());
+            for (int i = 0; i < res2.size(); i++) {      
+                Map<String, Object> map2 = (HashMap<String, Object>) res2.get(i);
+                 int hier=(Integer)map2.get("accommodation_id");
+                System.out.println("hier"+String.valueOf(hier));
+            
+                slaaptIn.add(hier);
+                System.out.println("slaaptin:" + slaaptIn.toString());
+            }
         }
-        
         myList = new JList(data.toArray());
         myList.setFont(myList.getFont().deriveFont(16.0f));
         myList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -173,67 +182,66 @@ public class ActivityWindow {
         wrapper2.add(pane, BorderLayout.SOUTH);
         
         //Slaapplaats knoppen
-        slaappanel = new JPanel(new GridLayout(4,2));
+        slaappanel = new JPanel(new GridLayout(4,3));
         
         final JButton meldaan = new JButton("Aanmelden voor slaapplaats");
+        final JButton meldaf = new JButton("Afmelden voor slaapplaats");
         final JButton nieuwslaap = new JButton("Slaapplaats toevoegen");
         slaappanel.add(meldaan);
-        slaappanel.add(nieuwslaap);
-        
+        slaappanel.add(meldaf);
         slaappanel.add(new JLabel("Adres: "));
         final JTextField tfAdres = new JTextField();
         slaappanel.add(tfAdres);
         slaappanel.add(new JLabel("Capaciteit: "));
         final JTextField tfCap = new JTextField();
         slaappanel.add(tfCap);
+        
+        slaappanel.add(nieuwslaap);
         final JButton ok = new JButton("Gegevens opslaan");
         slaappanel.add(ok);
         
+       
         
-        if (eigenAcc!=null) {
-            meldaan.setEnabled(false);
-            nieuwslaap.setText(eigenAcc.getAddress()+" verwijderen");
-            tfAdres.setText(eigenAcc.getAddress());
-            tfCap.setText(eigenAcc.getCap()+"");
-        } else if (aangemeldeAcc!=null) {
-            meldaan.setText("Afmelden voor "+aangemeldeAcc.getAddress());
-            nieuwslaap.setEnabled(false);
-            ok.setEnabled(false);
-        } else {
-            meldaan.setEnabled(false);
-            ok.setEnabled(false);
-        }
+        
+        
+     
+  
         
         meldaan.addActionListener(new ActionListener() { 
             public void actionPerformed(ActionEvent e) {
-                if (aangemeldeAcc!=null) {
-                    Wielwijk.db.exec("DELETE FROM accommodation_registrations WHERE accommodation_id = '" + aangemeldeAcc.getId() +
-                            "' AND user_id = '" + LoginWindow.CurrentUser.getId() + "'");
-                    Wielwijk.db.exec("UPDATE accommodations SET people = people - 1 WHERE id = '" + aangemeldeAcc.getId() + "'");
-                    
-                    aangemeldeAcc = null;
-                    
-                    nieuwslaap.setEnabled(true);
-                    meldaan.setText("Aanmelden voor slaapplaats");
-                    
-                    UpdateAccList();
-                    return;
-                }else{
+                if (selectAcc != null){
+                    if (!slaaptIn.contains(selectAcc.getId())){
                 
-                if (selectAcc==null) return;
-                
-                aangemeldeAcc = selectAcc;
-                
-                Wielwijk.db.exec("INSERT INTO accommodation_registrations (accommodation_id, user_id) VALUES ( '" + aangemeldeAcc.getId() + 
-                        "', '" + LoginWindow.CurrentUser.getId() + "')");
-                Wielwijk.db.exec("UPDATE accommodations SET people = people + 1 WHERE id = '" + aangemeldeAcc.getId() + "'");
-                
-                meldaan.setText("Afmelden voor "+aangemeldeAcc.getAddress());
-                nieuwslaap.setEnabled(false);
-                UpdateAccList();
+                        Wielwijk.db.exec("INSERT INTO accommodation_registrations (accommodation_id, user_id) VALUES ( '" + selectAcc.getId() + 
+                            "', '" + LoginWindow.CurrentUser.getId() + "')");
+                        Wielwijk.db.exec("UPDATE accommodations SET people = people + 1 WHERE id = '" + selectAcc.getId() + "'");
+                        JOptionPane.showMessageDialog(null, "U heeft zich aangemeld voor de slaapplaats");
+                    }
                 }
-            }
+                UpdateAccList();
+           }
+            
         });
+        meldaf.addActionListener(new ActionListener() { 
+            public void actionPerformed(ActionEvent e) {
+                if (selectAcc!=null){
+                    System.out.println("slaaptIn: " + slaaptIn.toString());
+                    System.out.println("selectAcc: " + selectAcc.getId());
+                    if (slaaptIn.contains(selectAcc.getId())){
+
+                        Wielwijk.db.exec("DELETE FROM accommodation_registrations WHERE user_id =" + LoginWindow.CurrentUser.getId());
+                        Wielwijk.db.exec("UPDATE accommodations SET people = people - 1 WHERE id = '" + selectAcc.getId() + "'");
+                        slaaptIn.remove(slaaptIn.indexOf(selectAcc.getId()));
+                        JOptionPane.showMessageDialog(null, "U heeft zich afgemeld voor de slaapplaats.");
+                    }
+                }
+                
+                UpdateAccList();
+                
+                }
+            
+        });
+        
         nieuwslaap.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 
@@ -241,19 +249,19 @@ public class ActivityWindow {
                 Wielwijk.db.exec("INSERT INTO accommodations (user_id, activity_id, capacity, address) VALUES ('" + LoginWindow.CurrentUser.getId() + 
                         "', '" + act.getId() + "', '1', 'Nieuw Adres')");
                 
-                meldaan.setEnabled(false);
-                nieuwslaap.setText("Eigen slaapplaats verwijderen");
-                
                 UpdateAccList();
-                ok.setEnabled(true);
+                JOptionPane.showMessageDialog(null, "Nieuwe slaapplaats aangemaakt.");
+
             }
         });
         
         ok.addActionListener(new ActionListener() { 
             public void actionPerformed(ActionEvent e) {
                 Wielwijk.db.exec("UPDATE accommodations  SET address = '" + tfAdres.getText() + "', capacity = '" + tfCap.getText() + 
-                        "' WHERE activity_id = '" + act.getId() + "' AND user_id = '" + LoginWindow.CurrentUser.getId() + "'");
+                        "' WHERE id = '" + selectAcc.getId() + "' AND user_id = '" + LoginWindow.CurrentUser.getId() + "'");
                 UpdateAccList();
+                JOptionPane.showMessageDialog(null, "Gegevens bijgewerkt.");
+       
             }
         });
         
@@ -265,7 +273,8 @@ public class ActivityWindow {
                 Accommodation acc = (Accommodation) list.getSelectedValue();
                 
                 selectAcc = acc;
-                if (eigenAcc==null) meldaan.setEnabled(true);
+                tfAdres.setText(acc.getAddress());
+                tfCap.setText(String.valueOf(acc.getCap()));
             }
         });
         //
@@ -274,8 +283,7 @@ public class ActivityWindow {
         
         // Aanmeldknop voor wandeling
         final JButton aanmeld = new JButton("Aanmelden voor wandeling");
-        if (isAangemeld)
-            aanmeld.setText("Afmelden voor wandeling");
+
         aanmeld.addActionListener(new ActionListener() { 
             public void actionPerformed(ActionEvent e) {
                 aanmeld.setText("...");
@@ -284,13 +292,16 @@ public class ActivityWindow {
                             "' AND activity_id = '" + act.getId() + "'");
                     isAangemeld = false;
                     aanmeld.setText("Aanmelden voor wandeling");
+                    JOptionPane.showMessageDialog(null, "U heeft zich afgemeld voor de wandeling.");
                 } else {
                     Wielwijk.db.exec("INSERT INTO activity_registrations (user_id, activity_id, organiser) VALUES ('" + LoginWindow.CurrentUser.getId() +
                             "',  '" + act.getId() + "', '0')");
                     isAangemeld = true;
                     aanmeld.setText("Afmelden voor wandeling");
+                    JOptionPane.showMessageDialog(null, "U heeft zich aangemeld voor de wandeling.");
                 }
             }
+            
         });
         
         textpanel.add(aanmeld);
@@ -306,14 +317,28 @@ public class ActivityWindow {
             Accommodation acc;
             acc = new Accommodation((Long) map.get("id"), (Integer) map.get("activity_id"), (Integer) map.get("user_id"),
                     (String)map.get("address"), (Integer) map.get("people"), (Integer)map.get("capacity"));
-            
-            
+           
             data.add(acc);
-        }
-        myList.setListData(data.toArray());
-    }
-    
+           
+            }
+        
+       for (Accommodation acc:data){
+            java.util.List res2 = Wielwijk.db.query("SELECT accommodation_id FROM accommodation_registrations WHERE user_id = '" + LoginWindow.CurrentUser.getId() + "' AND accommodation_id='" + acc.getId() + "'");
+            
+           for (int i = 0; i < res2.size(); i++) {
+            
+            
+                Map<String, Object> map2 = (HashMap<String, Object>) res2.get(i);
+                int hier=(Integer)map2.get("accommodation_id");
+                System.out.println("hier"+String.valueOf(hier));
+                slaaptIn.add(hier);
+                System.out.println("slaaptin:" + slaaptIn.toString());
 
+
+                }
+            myList.setListData(data.toArray());
+            }
+        }
 //    public static void main(String[] args) {
 //        Wielwijk.gui = new GUI();
 //        Wielwijk.getDBConnection();
